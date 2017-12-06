@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <simd/simd.h>
 
 int main(int argc, const char * argv[]) {
     
@@ -23,9 +24,12 @@ int main(int argc, const char * argv[]) {
             float r = float(i)/float(nx);
             float g = float(j)/float(ny);
             float b = 0.2f;
-            int rr = int(ceil(255.0f * r));
-            int gg = int(ceil(255.0f * g));
-            int bb = int(ceil(255.0f * b));
+            simd::float3 color = simd::make_float3(r, g, b);
+            simd::float3 colorScaled = color * 255.0f;
+            
+            int rr = int(ceil(colorScaled.r));
+            int gg = int(ceil(colorScaled.g));
+            int bb = int(ceil(colorScaled.b));
             std::cout << rr << " " << gg << " " << bb << std::endl;
         }
     }
