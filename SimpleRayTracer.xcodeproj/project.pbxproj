@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4244504A1FD8A6C900B7814A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424450491FD8A6C900B7814A /* main.cpp */; };
+		42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42DCD40A1FD9FD9600C39D25 /* Ray.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		424450461FD8A6C900B7814A /* SimpleRayTracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRayTracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		424450491FD8A6C900B7814A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		42DCD40A1FD9FD9600C39D25 /* Ray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ray.cpp; sourceTree = "<group>"; };
+		42DCD40B1FD9FD9600C39D25 /* Ray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ray.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				424450491FD8A6C900B7814A /* main.cpp */,
+				42DCD40A1FD9FD9600C39D25 /* Ray.cpp */,
+				42DCD40B1FD9FD9600C39D25 /* Ray.hpp */,
 			);
 			path = SimpleRayTracer;
 			sourceTree = "<group>";
@@ -72,6 +77,7 @@
 				424450421FD8A6C900B7814A /* Sources */,
 				424450431FD8A6C900B7814A /* Frameworks */,
 				424450441FD8A6C900B7814A /* CopyFiles */,
+				42DCD4091FD9FC5600C39D25 /* Execute */,
 			);
 			buildRules = (
 			);
@@ -114,11 +120,29 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		42DCD4091FD9FC5600C39D25 /* Execute */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Execute;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/bin/rst > $SRCROOT/image.ppm";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		424450421FD8A6C900B7814A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */,
 				4244504A1FD8A6C900B7814A /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

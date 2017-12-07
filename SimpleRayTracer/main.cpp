@@ -10,6 +10,17 @@
 #include <iostream>
 #include <simd/simd.h>
 
+#include "Ray.hpp"
+
+simd::float3 getColor(const Ray &ray)
+{
+    simd::float3 direction = simd::normalize(ray.getDirection());
+    float t = (direction.y + 1.0f) * 0.5f;
+    simd::float3 startColor = simd::make_float3(1.0f, 1.0f, 1.0f);
+    simd::float3 endColor = simd::make_float3(0.0f, 0.0f, 0.0f);
+    return ((1.0f - t) * startColor) + (t * endColor);
+}
+
 int main(int argc, const char * argv[]) {
     
     int nx = 200;
@@ -19,12 +30,19 @@ int main(int argc, const char * argv[]) {
     std::cout << nx << " " << ny << std::endl;
     std::cout << "255" << std::endl;
     
-    for (int j = 0; j < ny; ++j) {
+    simd::float3 bottomLeft = simd::make_float3(-2.0f, -1.0f, -1.0f);
+    simd::float3 horizontal = simd::make_float3(4.0f, 0.0f, 0.0f);
+    simd::float3 vertical = simd::make_float3(0.0f, 2.0f, 0.0f);
+    simd::float3 origin = simd::make_float3(0.0f, 0.0f, 0.0f);
+    
+    for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
-            float r = float(i)/float(nx);
-            float g = float(j)/float(ny);
-            float b = 0.2f;
-            simd::float3 color = simd::make_float3(r, g, b);
+            float u = float(i)/float(nx);
+            float v = float(j)/float(ny);
+            
+            Ray ray(origin, bottomLeft + (horizontal * u) + (vertical * v));
+            simd::float3 color = getColor(ray);
+            
             simd::float3 colorScaled = color * 255.0f;
             
             int rr = int(ceil(colorScaled.r));
@@ -32,7 +50,6 @@ int main(int argc, const char * argv[]) {
             int bb = int(ceil(colorScaled.b));
             std::cout << rr << " " << gg << " " << bb << std::endl;
         }
-    }
-    
+    }    
     return 0;
 }
