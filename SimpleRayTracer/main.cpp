@@ -11,15 +11,8 @@
 #include <simd/simd.h>
 
 #include "Ray.hpp"
-
-simd::float3 getColor(const Ray &ray)
-{
-    simd::float3 direction = simd::normalize(ray.getDirection());
-    float t = (direction.y + 1.0f) * 0.5f;
-    simd::float3 startColor = simd::make_float3(1.0f, 1.0f, 1.0f);
-    simd::float3 endColor = simd::make_float3(0.0f, 0.0f, 0.0f);
-    return ((1.0f - t) * startColor) + (t * endColor);
-}
+#include "Sphere.hpp"
+#include "Utils.hpp"
 
 int main(int argc, const char * argv[]) {
     
@@ -35,13 +28,15 @@ int main(int argc, const char * argv[]) {
     simd::float3 vertical = simd::make_float3(0.0f, 2.0f, 0.0f);
     simd::float3 origin = simd::make_float3(0.0f, 0.0f, 0.0f);
     
+    Sphere sphere(simd::make_float3(0, 0, -1), 0.5);
+    
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
             float u = float(i)/float(nx);
             float v = float(j)/float(ny);
             
             Ray ray(origin, bottomLeft + (horizontal * u) + (vertical * v));
-            simd::float3 color = getColor(ray);
+            simd::float3 color = Utils::trace(ray, sphere);
             
             simd::float3 colorScaled = color * 255.0f;
             
