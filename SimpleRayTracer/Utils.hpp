@@ -13,10 +13,14 @@
 
 class Ray;
 class Sphere;
+class Intersection;
 
 struct Utils {
-    static simd::float3 trace(const Ray &ray, const Sphere &sphere);
-    static bool hit(const Ray &ray, const Sphere &sphere);
+    static
+    simd::float3 trace(const Ray &ray, const Sphere &sphere);
+    
+    static
+    Intersection hit(const Ray &ray, const Sphere &sphere);
 };
 
 #endif /* Utils_hpp */
