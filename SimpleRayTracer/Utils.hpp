@@ -12,15 +12,11 @@
 #include <simd/simd.h>
 
 class Ray;
-class Sphere;
-class Intersection;
+class HitTestable;
 
 struct Utils {
     static
-    simd::float3 trace(const Ray &ray, const Sphere &sphere);
-    
-    static
-    Intersection hit(const Ray &ray, const Sphere &sphere);
+    simd::float3 trace(const Ray &ray, const HitTestable &item);
 };
 
 #endif /* Utils_hpp */

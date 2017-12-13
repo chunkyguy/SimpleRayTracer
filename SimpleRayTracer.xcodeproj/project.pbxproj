@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		424261181FE0AA8F00AC5BF7 /* Space.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424261161FE0AA8F00AC5BF7 /* Space.cpp */; };
 		4244504A1FD8A6C900B7814A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424450491FD8A6C900B7814A /* main.cpp */; };
 		424653FA1FDD773200A5613C /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653F81FDD773200A5613C /* Sphere.cpp */; };
 		424653FD1FDD77B600A5613C /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653FB1FDD77B600A5613C /* Utils.cpp */; };
@@ -27,6 +28,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		424261151FE0AA2500AC5BF7 /* HitTestable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HitTestable.h; sourceTree = "<group>"; };
+		424261161FE0AA8F00AC5BF7 /* Space.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Space.cpp; sourceTree = "<group>"; };
+		424261171FE0AA8F00AC5BF7 /* Space.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Space.hpp; sourceTree = "<group>"; };
 		424450461FD8A6C900B7814A /* SimpleRayTracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRayTracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		424450491FD8A6C900B7814A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		424653F81FDD773200A5613C /* Sphere.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sphere.cpp; sourceTree = "<group>"; };
@@ -73,6 +77,9 @@
 				42DCD40A1FD9FD9600C39D25 /* Ray.cpp */,
 				42DCD40B1FD9FD9600C39D25 /* Ray.hpp */,
 				424653F81FDD773200A5613C /* Sphere.cpp */,
+				424261151FE0AA2500AC5BF7 /* HitTestable.h */,
+				424261161FE0AA8F00AC5BF7 /* Space.cpp */,
+				424261171FE0AA8F00AC5BF7 /* Space.hpp */,
 				424653F91FDD773200A5613C /* Sphere.hpp */,
 				424653FE1FDD7FEF00A5613C /* Intersection.cpp */,
 				424653FF1FDD7FEF00A5613C /* Intersection.hpp */,
@@ -159,6 +166,7 @@
 			files = (
 				42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */,
 				424653FA1FDD773200A5613C /* Sphere.cpp in Sources */,
+				424261181FE0AA8F00AC5BF7 /* Space.cpp in Sources */,
 				4244504A1FD8A6C900B7814A /* main.cpp in Sources */,
 				424654001FDD7FEF00A5613C /* Intersection.cpp in Sources */,
 				424653FD1FDD77B600A5613C /* Utils.cpp in Sources */,

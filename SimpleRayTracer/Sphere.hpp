@@ -8,18 +8,17 @@
 
 #ifndef Sphere_hpp
 #define Sphere_hpp
-
 #include <simd/simd.h>
+#include "HitTestable.h"
 
-struct Sphere {
+class Sphere: public HitTestable {
+public:
     Sphere(const simd::float3 &center, float radius);
-    
-    simd::float3 center;
-    float radius;
-};
+    virtual Intersection hit(const Ray &ray, const std::array<float, 2> &range) const;
 
-inline Sphere::Sphere(const simd::float3 &center, float radius)
-: center(center), radius(radius)
-{}
+private:
+    simd::float3 _center;
+    float _radius;
+};
 
 #endif /* Sphere_hpp */
