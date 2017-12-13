@@ -12,6 +12,7 @@
 		424653FA1FDD773200A5613C /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653F81FDD773200A5613C /* Sphere.cpp */; };
 		424653FD1FDD77B600A5613C /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653FB1FDD77B600A5613C /* Utils.cpp */; };
 		424654001FDD7FEF00A5613C /* Intersection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653FE1FDD7FEF00A5613C /* Intersection.cpp */; };
+		42AECAE41FE1CF9900729239 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42AECAE21FE1CF9900729239 /* Camera.cpp */; };
 		42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42DCD40A1FD9FD9600C39D25 /* Ray.cpp */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,8 @@
 		424653FC1FDD77B600A5613C /* Utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
 		424653FE1FDD7FEF00A5613C /* Intersection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Intersection.cpp; sourceTree = "<group>"; };
 		424653FF1FDD7FEF00A5613C /* Intersection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Intersection.hpp; sourceTree = "<group>"; };
+		42AECAE21FE1CF9900729239 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		42AECAE31FE1CF9900729239 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 		42DCD40A1FD9FD9600C39D25 /* Ray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ray.cpp; sourceTree = "<group>"; };
 		42DCD40B1FD9FD9600C39D25 /* Ray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ray.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +82,8 @@
 				424653F81FDD773200A5613C /* Sphere.cpp */,
 				424261151FE0AA2500AC5BF7 /* HitTestable.h */,
 				424261161FE0AA8F00AC5BF7 /* Space.cpp */,
+				42AECAE21FE1CF9900729239 /* Camera.cpp */,
+				42AECAE31FE1CF9900729239 /* Camera.hpp */,
 				424261171FE0AA8F00AC5BF7 /* Space.hpp */,
 				424653F91FDD773200A5613C /* Sphere.hpp */,
 				424653FE1FDD7FEF00A5613C /* Intersection.cpp */,
@@ -166,6 +171,7 @@
 			files = (
 				42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */,
 				424653FA1FDD773200A5613C /* Sphere.cpp in Sources */,
+				42AECAE41FE1CF9900729239 /* Camera.cpp in Sources */,
 				424261181FE0AA8F00AC5BF7 /* Space.cpp in Sources */,
 				4244504A1FD8A6C900B7814A /* main.cpp in Sources */,
 				424654001FDD7FEF00A5613C /* Intersection.cpp in Sources */,
