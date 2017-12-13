@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <random>
 #include <simd/simd.h>
 #include "Camera.hpp"
 #include "Ray.hpp"
@@ -19,6 +20,10 @@ int main(int argc, const char * argv[]) {
     
     int nx = 200;
     int ny = 100;
+    int ns = 100;
+    
+    std::default_random_engine randGen;
+    std::uniform_real_distribution<float> rand(0.0f, 1.0f);
     
     std::cout << "P3" << std::endl;
     std::cout << nx << " " << ny << std::endl;
@@ -36,9 +41,13 @@ int main(int argc, const char * argv[]) {
     
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
-            Ray ray = camera.getRay(simd::make_float2(float(i)/float(nx), float(j)/float(ny)));
-            simd::float3 color = Utils::trace(ray, space);
-            simd::float3 colorScaled = color * 255.0f;
+            simd::float3 color = {0};
+            for (int s = 0; s < ns; ++s) {
+                Ray ray = camera.getRay(simd::make_float2(float(i + rand(randGen))/float(nx),
+                                                          float(j + rand(randGen))/float(ny)));
+                color += Utils::trace(ray, space);
+            }
+            simd::float3 colorScaled = (color/float(ns)) * 255.0f;
             int rr = int(ceil(colorScaled.r));
             int gg = int(ceil(colorScaled.g));
             int bb = int(ceil(colorScaled.b));
