@@ -13,12 +13,14 @@
 class RandomNumGen {
 public:
     RandomNumGen();
+    ~RandomNumGen();
+
     float generate();
     
 private:
-    
-    std::default_random_engine _randGen;
-    std::uniform_real_distribution<float> _distr;
+    std::random_device _device;
+    std::mt19937 *_engine;
+    std::uniform_real_distribution<double> _distr;
 };
 
 #endif /* RandomNumGen_hpp */
