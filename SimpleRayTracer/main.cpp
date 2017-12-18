@@ -45,10 +45,14 @@ int main(int argc, const char * argv[]) {
                 Ray ray = camera.getRay(uv);
                 color += Utils::trace(ray, space);
             }
-            simd::float3 colorScaled = (color/float(ns)) * 255.0f;
-            int rr = int(ceil(colorScaled.r));
-            int gg = int(ceil(colorScaled.g));
-            int bb = int(ceil(colorScaled.b));
+            simd::float3 aggregateColor = color/float(ns);
+            simd::float3 gammaCorrectedColor = simd::make_float3(simd::sqrt(aggregateColor.x),
+                                                                 simd::sqrt(aggregateColor.y),
+                                                                 simd::sqrt(aggregateColor.z));
+            simd::float3 colorRGB = gammaCorrectedColor * 255.0f;
+            int rr = int(ceil(colorRGB.r));
+            int gg = int(ceil(colorRGB.g));
+            int bb = int(ceil(colorRGB.b));
             std::cout << rr << " " << gg << " " << bb << std::endl;
         }
     }
