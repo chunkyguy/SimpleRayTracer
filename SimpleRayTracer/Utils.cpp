@@ -40,7 +40,7 @@ simd::float3 Utils::toNormalSpace(simd::float3 p)
 
 simd::float3 Utils::trace(const Ray &ray, const HitTestable &item)
 {
-    std::array<float, 2> range = {0.0f, MAXFLOAT};
+    std::array<float, 2> range = {0.001f, MAXFLOAT};
     Intersection intersect;
     if (item.hit(ray, range, intersect)) {
         // return sphere color
