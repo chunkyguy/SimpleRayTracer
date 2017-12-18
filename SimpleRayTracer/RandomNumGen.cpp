@@ -7,19 +7,9 @@
 //
 
 #include "RandomNumGen.hpp"
-
-RandomNumGen::RandomNumGen()
-{
-    _engine = new std::mt19937(_device());
-    _distr = std::uniform_real_distribution<double>(0.0f, 1.0f);
-}
-
-RandomNumGen::~RandomNumGen()
-{
-    delete _engine;
-}
+#include <cstdlib>
 
 float RandomNumGen::generate()
 {
-    return float(_distr(*_engine));
+    return float(drand48());
 }
