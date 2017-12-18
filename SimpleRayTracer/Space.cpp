@@ -13,17 +13,18 @@ Space::Space(const std::vector<HitTestable *> &objects) :
 _objects(objects)
 {}
 
-Intersection Space::hit(const Ray &ray, const std::array<float, 2> &range) const
+bool Space::hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const
 {
-    Intersection intersects(false, 0, 0, 0);
+    bool isIntersecting = false;
     float lastDistance = range[1];
     for (std::vector<HitTestable *>::const_iterator it = _objects.begin(); it != _objects.end(); ++it) {
         std::array<float, 2> lastRange = {range[0], lastDistance};
-        Intersection localIntersects = (*it)->hit(ray, lastRange);
-        if (localIntersects.isIntersecting) {
-            lastDistance = localIntersects.position;
-            intersects = localIntersects;
+        Intersection localIntersects;
+        if ((*it)->hit(ray, lastRange, localIntersects)) {
+            lastDistance = localIntersects.distance;
+            intersect = localIntersects;
+            isIntersecting = true;
         }
     }
-    return intersects;
+    return isIntersecting;
 }

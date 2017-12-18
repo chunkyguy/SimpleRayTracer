@@ -16,7 +16,7 @@ Camera::Camera(const simd::float3 &origin, const simd::float3 &lowerLeft,
 
 Ray Camera::getRay(const simd::float2 &uv) const
 {
-    simd::float3 direction = _lowerLeft + _horizontal * uv.x + _vertical * uv.y - _origin;
+    simd::float3 direction = _lowerLeft + (_horizontal * uv.x) + (_vertical * uv.y) - _origin;
     return Ray(_origin, direction);
 }
 

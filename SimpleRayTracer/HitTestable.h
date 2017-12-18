@@ -14,7 +14,7 @@ class Intersection;
 class Ray;
 
 struct HitTestable {
-    virtual Intersection hit(const Ray &ray, const std::array<float, 2> &range) const = 0;
+    virtual bool hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const = 0;
 };
 
 #endif /* HitTestable_h */

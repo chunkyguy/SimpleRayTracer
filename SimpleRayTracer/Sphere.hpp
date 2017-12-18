@@ -14,7 +14,7 @@
 class Sphere: public HitTestable {
 public:
     Sphere(const simd::float3 &center, float radius);
-    virtual Intersection hit(const Ray &ray, const std::array<float, 2> &range) const;
+    virtual bool hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const;
 
 private:
     simd::float3 _center;

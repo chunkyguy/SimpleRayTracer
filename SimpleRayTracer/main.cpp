@@ -8,12 +8,12 @@
 
 #include <cmath>
 #include <iostream>
-#include <random>
 #include <simd/simd.h>
 #include "Camera.hpp"
+#include "RandomNumGen.hpp"
 #include "Ray.hpp"
-#include "Sphere.hpp"
 #include "Space.hpp"
+#include "Sphere.hpp"
 #include "Utils.hpp"
 
 int main(int argc, const char * argv[]) {
@@ -21,9 +21,7 @@ int main(int argc, const char * argv[]) {
     int nx = 200;
     int ny = 100;
     int ns = 100;
-    
-    std::default_random_engine randGen;
-    std::uniform_real_distribution<float> rand(0.0f, 1.0f);
+    RandomNumGen rand;
     
     std::cout << "P3" << std::endl;
     std::cout << nx << " " << ny << std::endl;
@@ -41,10 +39,10 @@ int main(int argc, const char * argv[]) {
     
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
-            simd::float3 color = {0};
+            simd::float3 color = simd::make_float3(0.0f, 0.0f, 0.0f);
             for (int s = 0; s < ns; ++s) {
-                Ray ray = camera.getRay(simd::make_float2(float(i + rand(randGen))/float(nx),
-                                                          float(j + rand(randGen))/float(ny)));
+                simd::float2 uv = simd::make_float2(float(i + rand.generate())/float(nx), float(j + rand.generate())/float(ny));
+                Ray ray = camera.getRay(uv);
                 color += Utils::trace(ray, space);
             }
             simd::float3 colorScaled = (color/float(ns)) * 255.0f;
