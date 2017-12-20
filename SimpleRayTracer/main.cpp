@@ -10,6 +10,7 @@
 #include <iostream>
 #include <simd/simd.h>
 #include "Camera.hpp"
+#include "LambertianMaterial.hpp"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
 #include "Space.hpp"
@@ -32,8 +33,8 @@ int main(int argc, const char * argv[]) {
                   simd::make_float3(4.0f, 0.0f, 0.0f),
                   simd::make_float3(0.0f, 2.0f, 0.0f));
 
-    Sphere *sphere0 = new Sphere(simd::make_float3(0, 0, -1), 0.5);
-    Sphere *sphere1 = new Sphere(simd::make_float3(0, -100.5, -1), 100);
+    Sphere *sphere0 = new Sphere(simd::make_float3(0, 0, -1), 0.5, new LambertianMaterial(simd::make_float3(0.5f)));
+    Sphere *sphere1 = new Sphere(simd::make_float3(0, -100.5, -1), 100, new LambertianMaterial(simd::make_float3(0.5f)));
     std::vector<HitTestable *> spheres = {sphere0, sphere1};
     Space space(spheres);
     

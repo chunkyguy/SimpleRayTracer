@@ -8,11 +8,17 @@
 
 #include "Sphere.hpp"
 #include "Intersection.hpp"
+#include "Material.h"
 #include "Ray.hpp"
 
-Sphere::Sphere(const simd::float3 &center, float radius)
-: _center(center), _radius(radius)
+Sphere::Sphere(const simd::float3 &center, float radius, const Material *material)
+: _center(center), _radius(radius), _material(material)
 {}
+
+Sphere::~Sphere()
+{
+    delete _material;
+}
 
 bool Sphere::hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const
 {
@@ -41,9 +47,7 @@ bool Sphere::hit(const Ray &ray, const std::array<float, 2> &range, Intersection
     
     if (isIntersecting) {
         simd::float3 point = ray.pointAt(t);
-        intersect.point = point;
-        intersect.distance = t;
-        intersect.normal = (point - _center)/_radius;
+        intersect = Intersection(t, point, (point - _center)/_radius, _material);
     }
     
     return isIntersecting;

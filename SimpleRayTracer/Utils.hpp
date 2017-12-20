@@ -15,6 +15,9 @@ class Ray;
 class HitTestable;
 
 struct Utils {
+    
+    static
+    simd::float3 pointInUnitSphere();
 
     static
     simd::float3 toColorSpace(simd::float3 point);

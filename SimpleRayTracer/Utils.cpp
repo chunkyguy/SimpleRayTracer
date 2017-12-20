@@ -10,20 +10,19 @@
 #include <cassert>
 #include "Intersection.hpp"
 #include "HitTestable.h"
+#include "Material.h"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
 
-namespace {
-    simd::float3 pointInUnitSphere()
-    {
-        RandomNumGen rand;
-        simd::float3 point;
-        do {
-            point = Utils::toNormalSpace(simd::make_float3(rand.generate(), rand.generate(), rand.generate()));
-        } while (simd::length_squared(point) >= 1.0f);
-        
-        return point;
-    }
+simd::float3 Utils::pointInUnitSphere()
+{
+    RandomNumGen rand;
+    simd::float3 point;
+    do {
+        point = Utils::toNormalSpace(simd::make_float3(rand.generate(), rand.generate(), rand.generate()));
+    } while (simd::length_squared(point) >= 1.0f);
+    
+    return point;
 }
 
 // [-1, +1] -> [0, 1]
@@ -44,9 +43,11 @@ simd::float3 Utils::trace(const Ray &ray, const HitTestable &item)
     Intersection intersect;
     if (item.hit(ray, range, intersect)) {
         // return sphere color
-        simd::float3 target = intersect.point + intersect.normal + pointInUnitSphere();
-        Ray bounceRay(intersect.point, target - intersect.point);
-        return Utils::trace(bounceRay, item) * 0.5f;
+        assert(intersect.getMaterial());
+        Ray bounceRay;
+        simd::float3 attenuation;
+        intersect.getMaterial()->scatter(ray, intersect, attenuation, bounceRay);
+        return Utils::trace(bounceRay, item) * attenuation;
     } else {
         // return background
         simd::float3 direction = simd::normalize(ray.getDirection());

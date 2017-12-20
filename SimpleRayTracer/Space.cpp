@@ -21,7 +21,7 @@ bool Space::hit(const Ray &ray, const std::array<float, 2> &range, Intersection 
         std::array<float, 2> lastRange = {range[0], lastDistance};
         Intersection localIntersects;
         if ((*it)->hit(ray, lastRange, localIntersects)) {
-            lastDistance = localIntersects.distance;
+            lastDistance = localIntersects.getDistance();
             intersect = localIntersects;
             isIntersecting = true;
         }
