@@ -37,7 +37,7 @@ simd::float3 Utils::toNormalSpace(simd::float3 p)
     return (p * 2.0) - simd::make_float3(1.0f, 1.0f, 1.0f);
 }
 
-simd::float3 Utils::trace(const Ray &ray, const HitTestable &item)
+simd::float3 Utils::trace(const Ray &ray, const HitTestable &item, const int &depth)
 {
     std::array<float, 2> range = {0.001f, MAXFLOAT};
     Intersection intersect;
@@ -46,8 +46,11 @@ simd::float3 Utils::trace(const Ray &ray, const HitTestable &item)
         assert(intersect.getMaterial());
         Ray bounceRay;
         simd::float3 attenuation;
-        intersect.getMaterial()->scatter(ray, intersect, attenuation, bounceRay);
-        return Utils::trace(bounceRay, item) * attenuation;
+        if (depth < 50 && intersect.getMaterial()->scatter(ray, intersect, attenuation, bounceRay)) {
+            return Utils::trace(bounceRay, item, depth + 1) * attenuation;
+        } else {
+            return simd::make_float3(0.0f, 0.0f, 0.0f);
+        }
     } else {
         // return background
         simd::float3 direction = simd::normalize(ray.getDirection());

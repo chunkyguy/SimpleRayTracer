@@ -12,6 +12,7 @@
 		424653FA1FDD773200A5613C /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653F81FDD773200A5613C /* Sphere.cpp */; };
 		424653FD1FDD77B600A5613C /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653FB1FDD77B600A5613C /* Utils.cpp */; };
 		424654001FDD7FEF00A5613C /* Intersection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424653FE1FDD7FEF00A5613C /* Intersection.cpp */; };
+		424733371FEF18E500CA7C9E /* MetalMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424733351FEF18E500CA7C9E /* MetalMaterial.cpp */; };
 		424896311FEB1C1F009909F3 /* LambertianMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4248962F1FEB1C1F009909F3 /* LambertianMaterial.cpp */; };
 		4249370E1FE577D80047B119 /* RandomNumGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4249370C1FE577D80047B119 /* RandomNumGen.cpp */; };
 		42AECAE41FE1CF9900729239 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42AECAE21FE1CF9900729239 /* Camera.cpp */; };
@@ -43,6 +44,8 @@
 		424653FC1FDD77B600A5613C /* Utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
 		424653FE1FDD7FEF00A5613C /* Intersection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Intersection.cpp; sourceTree = "<group>"; };
 		424653FF1FDD7FEF00A5613C /* Intersection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Intersection.hpp; sourceTree = "<group>"; };
+		424733351FEF18E500CA7C9E /* MetalMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalMaterial.cpp; sourceTree = "<group>"; };
+		424733361FEF18E500CA7C9E /* MetalMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalMaterial.hpp; sourceTree = "<group>"; };
 		4248962F1FEB1C1F009909F3 /* LambertianMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LambertianMaterial.cpp; sourceTree = "<group>"; };
 		424896301FEB1C1F009909F3 /* LambertianMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LambertianMaterial.hpp; sourceTree = "<group>"; };
 		4249370C1FE577D80047B119 /* RandomNumGen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RandomNumGen.cpp; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 				423FCBB91FE86F4F000ECD9B /* Material.h */,
 				4248962F1FEB1C1F009909F3 /* LambertianMaterial.cpp */,
 				424896301FEB1C1F009909F3 /* LambertianMaterial.hpp */,
+				424733351FEF18E500CA7C9E /* MetalMaterial.cpp */,
+				424733361FEF18E500CA7C9E /* MetalMaterial.hpp */,
 			);
 			path = SimpleRayTracer;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				424733371FEF18E500CA7C9E /* MetalMaterial.cpp in Sources */,
 				42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */,
 				424653FA1FDD773200A5613C /* Sphere.cpp in Sources */,
 				424896311FEB1C1F009909F3 /* LambertianMaterial.cpp in Sources */,

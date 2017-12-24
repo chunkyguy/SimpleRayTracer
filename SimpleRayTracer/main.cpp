@@ -11,6 +11,7 @@
 #include <simd/simd.h>
 #include "Camera.hpp"
 #include "LambertianMaterial.hpp"
+#include "MetalMaterial.hpp"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
 #include "Space.hpp"
@@ -33,9 +34,11 @@ int main(int argc, const char * argv[]) {
                   simd::make_float3(4.0f, 0.0f, 0.0f),
                   simd::make_float3(0.0f, 2.0f, 0.0f));
 
-    Sphere *sphere0 = new Sphere(simd::make_float3(0, 0, -1), 0.5, new LambertianMaterial(simd::make_float3(0.5f)));
-    Sphere *sphere1 = new Sphere(simd::make_float3(0, -100.5, -1), 100, new LambertianMaterial(simd::make_float3(0.5f)));
-    std::vector<HitTestable *> spheres = {sphere0, sphere1};
+    std::vector<HitTestable *> spheres;
+    spheres.push_back(new Sphere(simd::make_float3(0, 0, -1), 0.5, new LambertianMaterial(simd::make_float3(0.8f, 0.3f, 0.3f))));
+    spheres.push_back(new Sphere(simd::make_float3(0, -100.5, -1), 100, new LambertianMaterial(simd::make_float3(0.8f, 0.8f, 0.0f))));
+    spheres.push_back(new Sphere(simd::make_float3(1, 0, -1), 0.5, new MetalMaterial(simd::make_float3(0.8f, 0.6f, 0.2f))));
+    spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), 0.5, new MetalMaterial(simd::make_float3(0.8f, 0.8f, 0.8f))));
     Space space(spheres);
     
     for (int j = ny - 1; j >= 0; --j) {
@@ -44,7 +47,7 @@ int main(int argc, const char * argv[]) {
             for (int s = 0; s < ns; ++s) {
                 simd::float2 uv = simd::make_float2(float(i + rand.generate())/float(nx), float(j + rand.generate())/float(ny));
                 Ray ray = camera.getRay(uv);
-                color += Utils::trace(ray, space);
+                color += Utils::trace(ray, space, 0);
             }
             simd::float3 aggregateColor = color/float(ns);
             simd::float3 gammaCorrectedColor = simd::make_float3(simd::sqrt(aggregateColor.x),
@@ -57,9 +60,10 @@ int main(int argc, const char * argv[]) {
             std::cout << rr << " " << gg << " " << bb << std::endl;
         }
     }
-    
-    delete sphere0;
-    delete sphere1;
+
+    for (HitTestable *sphere : spheres) {
+        delete sphere;
+    }
     
     return 0;
 }
