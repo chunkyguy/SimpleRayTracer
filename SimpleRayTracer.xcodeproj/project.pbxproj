@@ -15,6 +15,7 @@
 		424733371FEF18E500CA7C9E /* ReflectiveMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424733351FEF18E500CA7C9E /* ReflectiveMaterial.cpp */; };
 		424896311FEB1C1F009909F3 /* LambertianMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4248962F1FEB1C1F009909F3 /* LambertianMaterial.cpp */; };
 		4249370E1FE577D80047B119 /* RandomNumGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4249370C1FE577D80047B119 /* RandomNumGen.cpp */; };
+		4253F7F81FF14674003F0F2C /* RefractiveMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4253F7F61FF14674003F0F2C /* RefractiveMaterial.cpp */; };
 		42AECAE41FE1CF9900729239 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42AECAE21FE1CF9900729239 /* Camera.cpp */; };
 		42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42DCD40A1FD9FD9600C39D25 /* Ray.cpp */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,8 @@
 		424896301FEB1C1F009909F3 /* LambertianMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LambertianMaterial.hpp; sourceTree = "<group>"; };
 		4249370C1FE577D80047B119 /* RandomNumGen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RandomNumGen.cpp; sourceTree = "<group>"; };
 		4249370D1FE577D80047B119 /* RandomNumGen.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RandomNumGen.hpp; sourceTree = "<group>"; };
+		4253F7F61FF14674003F0F2C /* RefractiveMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RefractiveMaterial.cpp; sourceTree = "<group>"; };
+		4253F7F71FF14674003F0F2C /* RefractiveMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RefractiveMaterial.hpp; sourceTree = "<group>"; };
 		42AECAE21FE1CF9900729239 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		42AECAE31FE1CF9900729239 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 		42DCD40A1FD9FD9600C39D25 /* Ray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ray.cpp; sourceTree = "<group>"; };
@@ -115,6 +118,8 @@
 				424896301FEB1C1F009909F3 /* LambertianMaterial.hpp */,
 				424733351FEF18E500CA7C9E /* ReflectiveMaterial.cpp */,
 				424733361FEF18E500CA7C9E /* ReflectiveMaterial.hpp */,
+				4253F7F61FF14674003F0F2C /* RefractiveMaterial.cpp */,
+				4253F7F71FF14674003F0F2C /* RefractiveMaterial.hpp */,
 			);
 			name = Material;
 			sourceTree = "<group>";
@@ -129,7 +134,8 @@
 				424450421FD8A6C900B7814A /* Sources */,
 				424450431FD8A6C900B7814A /* Frameworks */,
 				424450441FD8A6C900B7814A /* CopyFiles */,
-				42DCD4091FD9FC5600C39D25 /* Execute */,
+				42DCD4091FD9FC5600C39D25 /* Generate image */,
+				4253F7F91FF156C9003F0F2C /* Save image */,
 			);
 			buildRules = (
 			);
@@ -173,14 +179,28 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		42DCD4091FD9FC5600C39D25 /* Execute */ = {
+		4253F7F91FF156C9003F0F2C /* Save image */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Save image";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = " convert $SRCROOT/image.ppm $SRCROOT/images/012_refraction.png";
+		};
+		42DCD4091FD9FC5600C39D25 /* Generate image */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = Execute;
+			name = "Generate image";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,6 +223,7 @@
 				4249370E1FE577D80047B119 /* RandomNumGen.cpp in Sources */,
 				4244504A1FD8A6C900B7814A /* main.cpp in Sources */,
 				424654001FDD7FEF00A5613C /* Intersection.cpp in Sources */,
+				4253F7F81FF14674003F0F2C /* RefractiveMaterial.cpp in Sources */,
 				424653FD1FDD77B600A5613C /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

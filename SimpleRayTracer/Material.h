@@ -14,8 +14,11 @@ class Ray;
 class Intersection;
 
 struct Material {
-    virtual ~Material();
-    virtual bool scatter (const Ray &ray, const Intersection &intersect,
+    virtual
+    ~Material();
+    
+    virtual
+    bool scatter (const Ray &ray, const Intersection &intersect,
                           simd::float3 &attenuation, Ray &bounce) const = 0;
 };
 

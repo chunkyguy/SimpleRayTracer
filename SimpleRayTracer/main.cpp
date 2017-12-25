@@ -12,6 +12,7 @@
 #include "Camera.hpp"
 #include "LambertianMaterial.hpp"
 #include "ReflectiveMaterial.hpp"
+#include "RefractiveMaterial.hpp"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
 #include "Space.hpp"
@@ -37,13 +38,13 @@ int main(int argc, const char * argv[]) {
     std::vector<HitTestable *> spheres;
     
     spheres.push_back(new Sphere(simd::make_float3(0, 0, -1), 0.5,
-                                 new LambertianMaterial(simd::make_float3(0.8f, 0.3f, 0.3f))));
+                                 new LambertianMaterial(simd::make_float3(0.1f, 0.2f, 0.5f))));
     spheres.push_back(new Sphere(simd::make_float3(0, -100.5, -1), 100,
                                  new LambertianMaterial(simd::make_float3(0.8f, 0.8f, 0.0f))));
     spheres.push_back(new Sphere(simd::make_float3(1, 0, -1), 0.5,
                                  new ReflectiveMaterial(simd::make_float3(0.8f, 0.6f, 0.2f), rand.generate(0.3f, 1.0f))));
     spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), 0.5,
-                                 new ReflectiveMaterial(simd::make_float3(0.8f, 0.8f, 0.8f), rand.generate(0.3f, 1.0f))));
+                                 new RefractiveMaterial(1.5f)));
     Space space(spheres);
     
     for (int j = ny - 1; j >= 0; --j) {
