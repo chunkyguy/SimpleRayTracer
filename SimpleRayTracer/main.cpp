@@ -11,7 +11,7 @@
 #include <simd/simd.h>
 #include "Camera.hpp"
 #include "LambertianMaterial.hpp"
-#include "MetalMaterial.hpp"
+#include "ReflectiveMaterial.hpp"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
 #include "Space.hpp"
@@ -35,10 +35,15 @@ int main(int argc, const char * argv[]) {
                   simd::make_float3(0.0f, 2.0f, 0.0f));
 
     std::vector<HitTestable *> spheres;
-    spheres.push_back(new Sphere(simd::make_float3(0, 0, -1), 0.5, new LambertianMaterial(simd::make_float3(0.8f, 0.3f, 0.3f))));
-    spheres.push_back(new Sphere(simd::make_float3(0, -100.5, -1), 100, new LambertianMaterial(simd::make_float3(0.8f, 0.8f, 0.0f))));
-    spheres.push_back(new Sphere(simd::make_float3(1, 0, -1), 0.5, new MetalMaterial(simd::make_float3(0.8f, 0.6f, 0.2f))));
-    spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), 0.5, new MetalMaterial(simd::make_float3(0.8f, 0.8f, 0.8f))));
+    
+    spheres.push_back(new Sphere(simd::make_float3(0, 0, -1), 0.5,
+                                 new LambertianMaterial(simd::make_float3(0.8f, 0.3f, 0.3f))));
+    spheres.push_back(new Sphere(simd::make_float3(0, -100.5, -1), 100,
+                                 new LambertianMaterial(simd::make_float3(0.8f, 0.8f, 0.0f))));
+    spheres.push_back(new Sphere(simd::make_float3(1, 0, -1), 0.5,
+                                 new ReflectiveMaterial(simd::make_float3(0.8f, 0.6f, 0.2f), rand.generate(0.3f, 1.0f))));
+    spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), 0.5,
+                                 new ReflectiveMaterial(simd::make_float3(0.8f, 0.8f, 0.8f), rand.generate(0.3f, 1.0f))));
     Space space(spheres);
     
     for (int j = ny - 1; j >= 0; --j) {

@@ -13,3 +13,8 @@ float RandomNumGen::generate()
 {
     return float(drand48());
 }
+
+float RandomNumGen::generate(const float min, const float max)
+{
+    return min + (generate() * (max - min));
+}

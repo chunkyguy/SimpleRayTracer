@@ -12,6 +12,7 @@
 class RandomNumGen {
 public:
     float generate();
+    float generate(const float min, const float max);
     
 private:
 };
