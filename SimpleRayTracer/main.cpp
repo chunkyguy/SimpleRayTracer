@@ -45,6 +45,9 @@ int main(int argc, const char * argv[]) {
                                  new ReflectiveMaterial(simd::make_float3(0.8f, 0.6f, 0.2f), rand.generate(0.3f, 1.0f))));
     spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), 0.5,
                                  new RefractiveMaterial(1.5f)));
+    // negative  radius generates a sphere with inverted normals.. for a hollow sphere
+    spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), -0.45,
+                                 new RefractiveMaterial(1.5f)));
     Space space(spheres);
     
     for (int j = ny - 1; j >= 0; --j) {

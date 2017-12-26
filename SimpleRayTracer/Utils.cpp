@@ -49,7 +49,7 @@ simd::float3 Utils::trace(const Ray &ray, const HitTestable &item, const int &de
         if (depth < 50 && intersect.getMaterial()->scatter(ray, intersect, attenuation, bounceRay)) {
             return Utils::trace(bounceRay, item, depth + 1) * attenuation;
         } else {
-            return simd::make_float3(0.0f, 1.0f, 0.0f);
+            return simd::make_float3(0.0f, 0.0f, 0.0f);
         }
     } else {
         // return background
@@ -61,4 +61,9 @@ simd::float3 Utils::trace(const Ray &ray, const HitTestable &item, const int &de
         return ((1.0f - t) * startColor) + (t * endColor);
     }
 }
-
+// https://en.wikipedia.org/wiki/Schlick%27s_approximation
+float Utils::fresnel(const float cosine, const float referactiveIndex)
+{
+    float r = simd::pow((1 - referactiveIndex)/(1 + referactiveIndex), 2.0f);
+    return r + (1 - r) * simd::pow(1 - cosine, 5.0f);
+}

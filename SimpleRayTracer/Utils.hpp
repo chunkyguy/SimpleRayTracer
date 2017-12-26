@@ -26,7 +26,10 @@ struct Utils {
     simd::float3 toNormalSpace(simd::float3 p);
 
     static
-    simd::float3 trace(const Ray &ray, const HitTestable &item, const int &depth);    
+    simd::float3 trace(const Ray &ray, const HitTestable &item, const int &depth);
+    
+    static
+    float fresnel(const float cosine, const float referactiveIndex);
 };
 
 #endif /* Utils_hpp */
