@@ -191,7 +191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " convert $SRCROOT/image.ppm $SRCROOT/images/013_fresnel.png";
+			shellScript = " convert $SRCROOT/image.ppm $SRCROOT/images/014_camera.png";
 		};
 		42DCD4091FD9FC5600C39D25 /* Generate image */ = {
 			isa = PBXShellScriptBuildPhase;

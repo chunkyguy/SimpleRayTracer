@@ -30,11 +30,13 @@ int main(int argc, const char * argv[]) {
     std::cout << nx << " " << ny << std::endl;
     std::cout << "255" << std::endl;
     
-    Camera camera(simd::make_float3(0.0f, 0.0f, 0.0f),
-                  simd::make_float3(-2.0f, -1.0f, -1.0f),
-                  simd::make_float3(4.0f, 0.0f, 0.0f),
-                  simd::make_float3(0.0f, 2.0f, 0.0f));
-
+    Camera camera(simd::make_float3(-2.0f, 2.0f, 1.0f), // from
+                  simd::make_float3(0.0f, 0.0f, -1.0f), // target
+                  simd::make_float3(0.0f, 1.0f, 0.0f), // up
+                  60.0f, // fov in degrees
+                  float(nx)/float(ny) // aspect ratio
+                  );
+    
     std::vector<HitTestable *> spheres;
     
     spheres.push_back(new Sphere(simd::make_float3(0, 0, -1), 0.5,

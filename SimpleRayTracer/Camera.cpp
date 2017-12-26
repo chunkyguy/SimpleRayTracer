@@ -9,10 +9,23 @@
 #include "Camera.hpp"
 #include "Ray.hpp"
 
-Camera::Camera(const simd::float3 &origin, const simd::float3 &lowerLeft,
-       const simd::float3 &horizontal, const simd::float3 &vertical)
-: _origin(origin), _lowerLeft(lowerLeft), _horizontal(horizontal), _vertical(vertical)
-{}
+Camera::Camera(const simd::float3 &from, const simd::float3 &at, const simd::float3 &up,
+               const float fov, const float aspectRatio)
+{
+    float angle = fov * M_PI/180.0f;
+    float halfHeight = simd::tan(angle/2.0f);
+    float halfWidth = halfHeight * aspectRatio;
+    
+    // camera basis vectors
+    simd::float3 w = simd::normalize(from - at);
+    simd::float3 u = simd::normalize(simd::cross(up, w));
+    simd::float3 v = simd::cross(w, u);
+    
+    _lowerLeft = from - halfWidth * u - halfHeight * v - w;
+    _horizontal = 2.0f * halfWidth * u;
+    _vertical = 2.0f * halfHeight * v;
+    _origin = from;
+}
 
 Ray Camera::getRay(const simd::float2 &uv) const
 {

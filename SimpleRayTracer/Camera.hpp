@@ -15,8 +15,8 @@ class Ray;
 class Camera {
 public:
     
-    Camera(const simd::float3 &origin, const simd::float3 &lowerLeft,
-           const simd::float3 &horizontal, const simd::float3 &vertical);
+    Camera(const simd::float3 &from, const simd::float3 &at, const simd::float3 &up,
+           const float fov, const float aspectRatio);
 
     Ray getRay(const simd::float2 &uv) const;
     
