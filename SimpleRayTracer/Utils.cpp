@@ -25,6 +25,16 @@ simd::float3 Utils::pointInUnitSphere()
     return point;
 }
 
+simd::float3 Utils::pointInUnitDisk()
+{
+    simd::float3 point;
+    do {
+        point = Utils::pointInUnitSphere();
+        point.z = 0.0f;
+    } while (simd::dot(point, point) >= 1.0f);
+    return point;
+}
+
 // [-1, +1] -> [0, 1]
 simd::float3 Utils::toColorSpace(simd::float3 point)
 {

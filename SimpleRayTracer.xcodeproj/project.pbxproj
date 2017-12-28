@@ -191,7 +191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " convert $SRCROOT/image.ppm $SRCROOT/images/014_camera.png";
+			shellScript = " convert $SRCROOT/image.ppm $SRCROOT/images/015_defocus_blur.png";
 		};
 		42DCD4091FD9FC5600C39D25 /* Generate image */ = {
 			isa = PBXShellScriptBuildPhase;
