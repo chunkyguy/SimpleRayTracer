@@ -6,6 +6,21 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		424AAAE91FF7A60D00F5935A /* srt */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 424AAAEA1FF7A60D00F5935A /* Build configuration list for PBXAggregateTarget "srt" */;
+			buildPhases = (
+				424AAAED1FF7A62100F5935A /* ShellScript */,
+			);
+			dependencies = (
+				424AAAEF1FF7A69300F5935A /* PBXTargetDependency */,
+			);
+			name = srt;
+			productName = srt;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		424261181FE0AA8F00AC5BF7 /* Space.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424261161FE0AA8F00AC5BF7 /* Space.cpp */; };
 		4244504A1FD8A6C900B7814A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424450491FD8A6C900B7814A /* main.cpp */; };
@@ -16,9 +31,20 @@
 		424896311FEB1C1F009909F3 /* LambertianMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4248962F1FEB1C1F009909F3 /* LambertianMaterial.cpp */; };
 		4249370E1FE577D80047B119 /* RandomNumGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4249370C1FE577D80047B119 /* RandomNumGen.cpp */; };
 		4253F7F81FF14674003F0F2C /* RefractiveMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4253F7F61FF14674003F0F2C /* RefractiveMaterial.cpp */; };
+		42858D321FF5B21B00BB3AC6 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42858D301FF5B21B00BB3AC6 /* Scene.cpp */; };
 		42AECAE41FE1CF9900729239 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42AECAE21FE1CF9900729239 /* Camera.cpp */; };
 		42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42DCD40A1FD9FD9600C39D25 /* Ray.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		424AAAEE1FF7A69300F5935A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4244503E1FD8A6C900B7814A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 424450451FD8A6C900B7814A;
+			remoteInfo = SimpleRayTracer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		424450441FD8A6C900B7814A /* CopyFiles */ = {
@@ -53,6 +79,8 @@
 		4249370D1FE577D80047B119 /* RandomNumGen.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RandomNumGen.hpp; sourceTree = "<group>"; };
 		4253F7F61FF14674003F0F2C /* RefractiveMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RefractiveMaterial.cpp; sourceTree = "<group>"; };
 		4253F7F71FF14674003F0F2C /* RefractiveMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RefractiveMaterial.hpp; sourceTree = "<group>"; };
+		42858D301FF5B21B00BB3AC6 /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		42858D311FF5B21B00BB3AC6 /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
 		42AECAE21FE1CF9900729239 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		42AECAE31FE1CF9900729239 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 		42DCD40A1FD9FD9600C39D25 /* Ray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ray.cpp; sourceTree = "<group>"; };
@@ -105,6 +133,8 @@
 				424653FC1FDD77B600A5613C /* Utils.hpp */,
 				4249370C1FE577D80047B119 /* RandomNumGen.cpp */,
 				4249370D1FE577D80047B119 /* RandomNumGen.hpp */,
+				42858D301FF5B21B00BB3AC6 /* Scene.cpp */,
+				42858D311FF5B21B00BB3AC6 /* Scene.hpp */,
 				4253F7F51FF14619003F0F2C /* Material */,
 			);
 			path = SimpleRayTracer;
@@ -134,8 +164,7 @@
 				424450421FD8A6C900B7814A /* Sources */,
 				424450431FD8A6C900B7814A /* Frameworks */,
 				424450441FD8A6C900B7814A /* CopyFiles */,
-				42DCD4091FD9FC5600C39D25 /* Generate image */,
-				4253F7F91FF156C9003F0F2C /* Save image */,
+				42DCD4091FD9FC5600C39D25 /* Copy binary */,
 			);
 			buildRules = (
 			);
@@ -159,6 +188,10 @@
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
 					};
+					424AAAE91FF7A60D00F5935A = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 424450411FD8A6C900B7814A /* Build configuration list for PBXProject "SimpleRayTracer" */;
@@ -174,38 +207,38 @@
 			projectRoot = "";
 			targets = (
 				424450451FD8A6C900B7814A /* SimpleRayTracer */,
+				424AAAE91FF7A60D00F5935A /* srt */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4253F7F91FF156C9003F0F2C /* Save image */ = {
+		424AAAED1FF7A62100F5935A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Save image";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " convert $SRCROOT/image.ppm $SRCROOT/images/015_defocus_blur.png";
+			shellScript = "$SRCROOT/bin/srt > $SRCROOT/image.ppm\nconvert $SRCROOT/image.ppm $SRCROOT/images/016_scene.png";
 		};
-		42DCD4091FD9FC5600C39D25 /* Generate image */ = {
+		42DCD4091FD9FC5600C39D25 /* Copy binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Generate image";
+			name = "Copy binary";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$BUILD_DIR/Debug/SimpleRayTracer > $SRCROOT/image.ppm";
+			shellScript = "cp $BUILD_DIR/Debug/SimpleRayTracer $SRCROOT/bin/srt";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -214,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42858D321FF5B21B00BB3AC6 /* Scene.cpp in Sources */,
 				424733371FEF18E500CA7C9E /* ReflectiveMaterial.cpp in Sources */,
 				42DCD40C1FD9FD9600C39D25 /* Ray.cpp in Sources */,
 				424653FA1FDD773200A5613C /* Sphere.cpp in Sources */,
@@ -229,6 +263,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		424AAAEF1FF7A69300F5935A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 424450451FD8A6C900B7814A /* SimpleRayTracer */;
+			targetProxy = 424AAAEE1FF7A69300F5935A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4244504B1FD8A6C900B7814A /* Debug */ = {
@@ -352,6 +394,24 @@
 			};
 			name = Release;
 		};
+		424AAAEB1FF7A60D00F5935A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B8H28JR3TT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		424AAAEC1FF7A60D00F5935A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B8H28JR3TT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -369,6 +429,15 @@
 			buildConfigurations = (
 				4244504E1FD8A6C900B7814A /* Debug */,
 				4244504F1FD8A6C900B7814A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		424AAAEA1FF7A60D00F5935A /* Build configuration list for PBXAggregateTarget "srt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				424AAAEB1FF7A60D00F5935A /* Debug */,
+				424AAAEC1FF7A60D00F5935A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

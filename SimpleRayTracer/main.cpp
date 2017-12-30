@@ -10,49 +10,34 @@
 #include <iostream>
 #include <simd/simd.h>
 #include "Camera.hpp"
-#include "LambertianMaterial.hpp"
-#include "ReflectiveMaterial.hpp"
-#include "RefractiveMaterial.hpp"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
+#include "Scene.hpp"
 #include "Space.hpp"
-#include "Sphere.hpp"
 #include "Utils.hpp"
 
 int main(int argc, const char * argv[]) {
     
-    int nx = 200;
-    int ny = 100;
-    int ns = 100;
+    int nx = 1200;
+    int ny = 800;
+    int ns = 10;
     RandomNumGen rand;
     
     std::cout << "P3" << std::endl;
     std::cout << nx << " " << ny << std::endl;
     std::cout << "255" << std::endl;
     
-    simd::float3 from = simd::make_float3(3.0f, 3.0f, 2.0f);
-    simd::float3 target = simd::make_float3(0.0f, 0.0f, -1.0f);
+    simd::float3 from = simd::make_float3(13.0f, 2.0f, 3.0f);
+    simd::float3 target = simd::make_float3(0.0f, 0.0f, 0.0f);
     simd::float3 up = simd::make_float3(0.0f, 1.0f, 0.0f);
     float fov = 20.0f;
     float aspectRatio = float(nx)/float(ny);
-    float aperture = 2.0f;
-    float focalDistance = simd::length(from - target);
+    float aperture = 0.1f;
+    float focalDistance = 10.0f;
     Camera camera(from, target, up, fov, aspectRatio, aperture, focalDistance);
     
-    std::vector<HitTestable *> spheres;
-    
-    spheres.push_back(new Sphere(simd::make_float3(0, 0, -1), 0.5,
-                                 new LambertianMaterial(simd::make_float3(0.1f, 0.2f, 0.5f))));
-    spheres.push_back(new Sphere(simd::make_float3(0, -100.5, -1), 100,
-                                 new LambertianMaterial(simd::make_float3(0.8f, 0.8f, 0.0f))));
-    spheres.push_back(new Sphere(simd::make_float3(1, 0, -1), 0.5,
-                                 new ReflectiveMaterial(simd::make_float3(0.8f, 0.6f, 0.2f), rand.generate(0.3f, 1.0f))));
-    spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), 0.5,
-                                 new RefractiveMaterial(1.5f)));
-    // negative  radius generates a sphere with inverted normals.. for a hollow sphere
-    spheres.push_back(new Sphere(simd::make_float3(-1, 0, -1), -0.45,
-                                 new RefractiveMaterial(1.5f)));
-    Space space(spheres);
+    Scene scene;
+    const Space space = scene.getSpace();
     
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
@@ -74,9 +59,6 @@ int main(int argc, const char * argv[]) {
         }
     }
 
-    for (HitTestable *sphere : spheres) {
-        delete sphere;
-    }
     
     return 0;
 }
