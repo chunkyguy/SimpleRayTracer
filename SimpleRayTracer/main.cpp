@@ -8,7 +8,10 @@
 
 #include <cmath>
 #include <iostream>
+
+#include <dispatch/dispatch.h>
 #include <simd/simd.h>
+
 #include "Camera.hpp"
 #include "Film.hpp"
 #include "RandomNumGen.hpp"
@@ -50,19 +53,37 @@ int main(int argc, const char * argv[]) {
     float focalDistance = 10.0f;
     Camera camera(from, target, up, fov, aspectRatio, aperture, focalDistance);
     
-    Film film(nx, ny);
+    __block Film film(nx, ny);
     
     Scene scene;
     const Space space = scene.getSpace();
     
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    dispatch_queue_t rayQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_queue_t filmQueue = dispatch_queue_create("com.whackylabs.srt", DISPATCH_QUEUE_SERIAL);
+    dispatch_group_t rayTask = dispatch_group_create();
+
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
-            simd::float3 color = getColor(nx, ny, ns, i, j, camera, space);
-            film.updateColor(color, i, j);
+            dispatch_group_enter(rayTask);
+            dispatch_async(rayQueue, ^{
+                simd::float3 color = getColor(nx, ny, ns, i, j, camera, space);
+                dispatch_async(filmQueue, ^{
+                    film.updateColor(color, i, j);
+                    dispatch_group_leave(rayTask);
+                });
+            });
         }
     }
     
-    film.process();
+    dispatch_group_notify(rayTask, filmQueue, ^{
+        film.process();
+        dispatch_async(mainQueue, ^{
+            exit(0);
+        });
+    });
+    
+    dispatch_main();
     
     return 0;
 }
