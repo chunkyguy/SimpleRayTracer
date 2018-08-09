@@ -10,17 +10,17 @@
 #define MetalMaterial_hpp
 
 #include "Material.h"
-#include <simd/simd.h>
+#include <glm\glm.hpp>
 
 class ReflectiveMaterial : public Material {
 public:
-    ReflectiveMaterial(const simd::float3 &albedo, const float fuzziness);
+    ReflectiveMaterial(const glm::vec3 &albedo, const float fuzziness);
     
     virtual
-    bool scatter(const Ray &ray, const Intersection &intersect, simd::float3 &attenuation, Ray &bounce) const;
+    bool scatter(const Ray &ray, const Intersection &intersect, glm::vec3 &attenuation, Ray &bounce) const;
     
 private:
-    simd::float3 _albedo;
+    glm::vec3 _albedo;
     float _fuzziness;
 };
 

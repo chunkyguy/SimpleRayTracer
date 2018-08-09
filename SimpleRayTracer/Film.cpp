@@ -14,7 +14,7 @@ Film::Film(const int x, const int y)
 : _x(x), _y(y), _pixelData()
 {}
 
-void Film::updateColor(const simd::float3 &color, const int i, const int j)
+void Film::updateColor(const glm::vec3 &color, const int i, const int j)
 {
     _pixelData[getPosition(i, j)] = color;
 }
@@ -32,8 +32,8 @@ void Film::process() const
 
     for (int j = _y - 1; j >= 0; --j) {
         for (int i = 0; i < _x; ++i) {
-            simd::float3 color = _pixelData.at(getPosition(i, j));
-            simd::float3 colorRGB = color * 255.0f;
+            glm::vec3 color = _pixelData.at(getPosition(i, j));
+            glm::vec3 colorRGB = color * 255.0f;
             int rr = int(ceil(colorRGB.r));
             int gg = int(ceil(colorRGB.g));
             int bb = int(ceil(colorRGB.b));

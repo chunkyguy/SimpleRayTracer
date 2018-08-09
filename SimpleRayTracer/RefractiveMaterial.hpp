@@ -18,7 +18,7 @@ public:
     
     virtual
     bool scatter (const Ray &ray, const Intersection &intersect,
-                          simd::float3 &attenuation, Ray &bounce) const;
+                          glm::vec3 &attenuation, Ray &bounce) const;
     
 private:
     float _refractiveIndex;

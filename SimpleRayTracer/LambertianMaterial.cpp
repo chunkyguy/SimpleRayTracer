@@ -13,9 +13,9 @@
 #include "Utils.hpp"
 
 bool LambertianMaterial::scatter(const Ray &ray, const Intersection &intersect,
-                                         simd::float3 &attenuation, Ray &bounce) const
+                                         glm::vec3 &attenuation, Ray &bounce) const
 {
-    simd::float3 target = intersect.getTarget() + Utils::pointInUnitSphere();
+    glm::vec3 target = intersect.getTarget() + Utils::pointInUnitSphere();
     bounce = Ray(intersect.getPoint(), target - intersect.getPoint());
     attenuation = _albedo;
     return true;

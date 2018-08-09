@@ -8,21 +8,21 @@
 
 #ifndef Sphere_hpp
 #define Sphere_hpp
-#include <simd/simd.h>
+#include <glm\glm.hpp>
 #include "HitTestable.h"
 
 class Material;
 
 class Sphere: public HitTestable {
 public:
-    Sphere(const simd::float3 &center, float radius, const Material *material);
+    Sphere(const glm::vec3 &center, float radius, const Material *material);
     virtual ~Sphere();
     
     virtual
     bool hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const;
 
 private:
-    simd::float3 _center;
+    glm::vec3 _center;
     float _radius;
     const Material *_material;
 };

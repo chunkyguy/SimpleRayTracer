@@ -8,7 +8,7 @@
 
 #ifndef Intersection_hpp
 #define Intersection_hpp
-#include <simd/simd.h>
+#include <glm\glm.hpp>
 
 class Material;
 class Ray;
@@ -16,19 +16,19 @@ class Ray;
 class Intersection {
 public:
     Intersection();
-    Intersection(const float distance, const simd::float3 &point,
-                 const simd::float3 &normal, const Material *material);
+    Intersection(const float distance, const glm::vec3 &point,
+                 const glm::vec3 &normal, const Material *material);
 
-    simd::float3 getTarget() const;
-    simd::float3 getPoint() const;
+    glm::vec3 getTarget() const;
+    glm::vec3 getPoint() const;
     float getDistance() const;
-    simd::float3 getNormal() const;
+    glm::vec3 getNormal() const;
     const Material *getMaterial() const;
 
 private:
     float _distance;
-    simd::float3 _point;
-    simd::float3 _normal;
+    glm::vec3 _point;
+    glm::vec3 _normal;
     const Material *_material;
 };
 
@@ -38,8 +38,8 @@ Intersection::Intersection()
 {}
 
 inline
-Intersection::Intersection(const float distance, const simd::float3 &point,
-             const simd::float3 &normal, const Material *material)
+Intersection::Intersection(const float distance, const glm::vec3 &point,
+             const glm::vec3 &normal, const Material *material)
 : _distance(distance), _point(point), _normal(normal), _material(material)
 {}
 
@@ -50,13 +50,13 @@ float Intersection::getDistance() const
 }
 
 inline
-simd::float3 Intersection::getPoint() const
+glm::vec3 Intersection::getPoint() const
 {
     return _point;
 }
 
 inline
-simd::float3 Intersection::getNormal() const
+glm::vec3 Intersection::getNormal() const
 {
     return _normal;
 }
@@ -68,7 +68,7 @@ const Material *Intersection::getMaterial() const
 }
 
 inline 
-simd::float3 Intersection::getTarget() const
+glm::vec3 Intersection::getTarget() const
 {
     return _point + _normal;
 }

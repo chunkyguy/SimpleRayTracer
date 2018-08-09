@@ -9,13 +9,13 @@
 #ifndef Film_hpp
 #define Film_hpp
 #include <map>
-#include <simd/simd.h>
+#include <glm\glm.hpp>
 
 // Store all color information. Not threadsafe
 class Film {
 public:
     Film(const int x, const int y);
-    void updateColor(const simd::float3 &color, const int i, const int j);
+    void updateColor(const glm::vec3 &color, const int i, const int j);
     void process() const;
     
 private:
@@ -24,7 +24,7 @@ private:
     
     int _x;
     int _y;
-    std::map<int, simd::float3> _pixelData;
+    std::map<int, glm::vec3> _pixelData;
 };
 
 #endif /* Film_hpp */

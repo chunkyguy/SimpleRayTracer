@@ -11,7 +11,7 @@
 
 float RandomNumGen::generate()
 {
-    return float(drand48());
+    return float(rand());
 }
 
 float RandomNumGen::generate(const float min, const float max)
