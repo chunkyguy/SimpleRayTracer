@@ -13,14 +13,14 @@ Film::Film(const int x, const int y)
 : _x(x), _y(y), _pixelData()
 {}
 
-void Film::updateColor(const glm::vec3 &color, const int i, const int j)
+void Film::updateColor(const glm::vec3 &color, const glm::uvec2 &point)
 {
-    _pixelData[getPosition(i, j)] = color;
+    _pixelData[getPosition(point)] = color;
 }
 
-int Film::getPosition(const int i, const int j) const
+int Film::getPosition(const glm::uvec2 &point) const
 {
-    return j * _x + i;
+    return point.y * _x + point.x;
 }
 
 void Film::process() const
@@ -33,7 +33,7 @@ void Film::process() const
 
     for (int j = _y - 1; j >= 0; --j) {
         for (int i = 0; i < _x; ++i) {
-            glm::vec3 color = _pixelData.at(getPosition(i, j));
+            glm::vec3 color = _pixelData.at(getPosition(glm::uvec2(i, j)));
             glm::vec3 colorRGB = color * 255.0f;
             int rr = int(ceil(colorRGB.r));
             int gg = int(ceil(colorRGB.g));

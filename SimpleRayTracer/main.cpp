@@ -7,8 +7,9 @@
 //
 
 #include <cmath>
-#include <iostream>
 
+#include <ppl.h>
+#include <concurrent_vector.h>
 #include <glm\glm.hpp>
 
 #include "Camera.hpp"
@@ -56,12 +57,17 @@ int main(int argc, const char * argv[]) {
 	Scene scene;
 	const Space space = scene.getSpace();
 
+	concurrency::concurrent_vector<glm::uvec2> points;
 	for (int j = ny - 1; j >= 0; --j) {
 		for (int i = 0; i < nx; ++i) {
-			glm::vec3 color = getColor(nx, ny, ns, i, j, camera, space);
-			film.updateColor(color, i, j);
+			points.push_back(glm::uvec2(i, j));
 		}
 	}
+
+	concurrency::parallel_for_each(points.begin(), points.end(), [&](const glm::uvec2 & point) {
+		glm::vec3 color = getColor(nx, ny, ns, point.x, point.y, camera, space);
+		film.updateColor(color, point);
+	});
 
 	film.process();
 

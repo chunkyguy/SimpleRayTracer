@@ -15,12 +15,12 @@
 class Film {
 public:
     Film(const int x, const int y);
-    void updateColor(const glm::vec3 &color, const int i, const int j);
+    void updateColor(const glm::vec3 &color, const glm::uvec2 &point);
     void process() const;
     
 private:
     
-    int getPosition(const int i, const int j) const;
+    int getPosition(const glm::uvec2 &point) const;
     
     int _x;
     int _y;
