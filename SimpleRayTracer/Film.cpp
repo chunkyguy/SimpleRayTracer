@@ -7,8 +7,7 @@
 //
 
 #include "Film.hpp"
-
-#include <iostream>
+#include <fstream>
 
 Film::Film(const int x, const int y)
 : _x(x), _y(y), _pixelData()
@@ -26,9 +25,11 @@ int Film::getPosition(const int i, const int j) const
 
 void Film::process() const
 {
-    std::cout << "P3" << std::endl;
-    std::cout << _x << " " << _y << std::endl;
-    std::cout << "255" << std::endl;
+	std::ofstream file("image.ppm");
+
+	file << "P3\n";
+	file << _x << " " << _y << "\n";
+	file << "255\n";
 
     for (int j = _y - 1; j >= 0; --j) {
         for (int i = 0; i < _x; ++i) {
@@ -37,7 +38,7 @@ void Film::process() const
             int rr = int(ceil(colorRGB.r));
             int gg = int(ceil(colorRGB.g));
             int bb = int(ceil(colorRGB.b));
-            std::cout << rr << " " << gg << " " << bb << std::endl;
+            file << rr << " " << gg << " " << bb << "\n";
         }
     }
 }
