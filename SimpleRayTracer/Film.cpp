@@ -12,9 +12,9 @@
 Film::Film(const glm::uvec2 & size) 
 	: size_(size) {}
 
-void Film::updateColor(const glm::vec3 &color, const glm::uvec2 &point)
+void Film::updateData(const PixelData & data) 
 {
-    _pixelData[getPosition(point)] = color;
+    _pixelData[getPosition(data.point)] = data.color;
 }
 
 std::vector<glm::uvec2> Film::getPoints() const {

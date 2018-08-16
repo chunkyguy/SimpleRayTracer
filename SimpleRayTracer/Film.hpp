@@ -12,11 +12,16 @@
 #include <vector>
 #include <glm\glm.hpp>
 
+struct PixelData {
+	glm::vec3 color;
+	glm::uvec2 point;
+};
+
 // Store all color information. Not threadsafe
 class Film {
 public:
     Film(const glm::uvec2 &size);
-    void updateColor(const glm::vec3 &color, const glm::uvec2 &point);
+	void updateData(const PixelData &data);
     void process() const;
 	std::vector<glm::uvec2> getPoints() const;
 

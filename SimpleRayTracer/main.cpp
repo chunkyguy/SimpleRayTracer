@@ -66,9 +66,16 @@ int main(int argc, const char * argv[])
 	const Space space = scene.getSpace();
 
 	std::vector<glm::uvec2> points = film.getPoints();
-	std::for_each(points.begin(), points.end(), [&](const glm::uvec2 &point) {
-		glm::vec3 color = getColor(targetWidth, targetHeight, resolution, point.x, point.y, camera, space);
-		film.updateColor(color, point);
+	concurrency::concurrent_vector<PixelData> pixelData;
+	concurrency::parallel_for_each(points.begin(), points.end(), [&](const glm::uvec2 &point) {
+		PixelData data = {};
+		data.point = point;
+		data.color = getColor(targetWidth, targetHeight, resolution, point.x, point.y, camera, space);
+		pixelData.push_back(data);
+	});
+
+	std::for_each(pixelData.begin(), pixelData.end(), [&](const PixelData &data) {
+		film.updateData(data);
 	});
 
 	film.process();
