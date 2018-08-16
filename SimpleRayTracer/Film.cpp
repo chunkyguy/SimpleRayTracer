@@ -9,18 +9,27 @@
 #include "Film.hpp"
 #include <fstream>
 
-Film::Film(const int x, const int y)
-: _x(x), _y(y), _pixelData()
-{}
+Film::Film(const glm::uvec2 & size) 
+	: size_(size) {}
 
 void Film::updateColor(const glm::vec3 &color, const glm::uvec2 &point)
 {
     _pixelData[getPosition(point)] = color;
 }
 
+std::vector<glm::uvec2> Film::getPoints() const {
+	std::vector<glm::uvec2> points;
+	for (int j = size_.y - 1; j >= 0; --j) {
+		for (int i = 0; i < size_.x; ++i) {
+			points.push_back(glm::uvec2(i, j));
+		}
+	}
+	return points;
+}
+
 int Film::getPosition(const glm::uvec2 &point) const
 {
-    return point.y * _x + point.x;
+	return point.x + (point.y * size_.x);
 }
 
 void Film::process() const
@@ -28,17 +37,16 @@ void Film::process() const
 	std::ofstream file("image.ppm");
 
 	file << "P3\n";
-	file << _x << " " << _y << "\n";
+	file << size_.x << " " << size_.y << "\n";
 	file << "255\n";
 
-    for (int j = _y - 1; j >= 0; --j) {
-        for (int i = 0; i < _x; ++i) {
-            glm::vec3 color = _pixelData.at(getPosition(glm::uvec2(i, j)));
-            glm::vec3 colorRGB = color * 255.0f;
-            int rr = int(ceil(colorRGB.r));
-            int gg = int(ceil(colorRGB.g));
-            int bb = int(ceil(colorRGB.b));
-            file << rr << " " << gg << " " << bb << "\n";
-        }
-    }
+	std::vector<glm::uvec2> points = getPoints();
+	for (std::vector<glm::uvec2>::const_iterator it = points.begin(); it != points.end(); ++it) {
+		glm::vec3 color = _pixelData.at(getPosition(*it));
+		glm::vec3 colorRGB = color * 255.0f;
+		int rr = int(ceil(colorRGB.r));
+		int gg = int(ceil(colorRGB.g));
+		int bb = int(ceil(colorRGB.b));
+		file << rr << " " << gg << " " << bb << "\n";
+	}
 }

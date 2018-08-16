@@ -9,21 +9,22 @@
 #ifndef Film_hpp
 #define Film_hpp
 #include <map>
+#include <vector>
 #include <glm\glm.hpp>
 
 // Store all color information. Not threadsafe
 class Film {
 public:
-    Film(const int x, const int y);
+    Film(const glm::uvec2 &size);
     void updateColor(const glm::vec3 &color, const glm::uvec2 &point);
     void process() const;
-    
+	std::vector<glm::uvec2> getPoints() const;
+
 private:
     
     int getPosition(const glm::uvec2 &point) const;
     
-    int _x;
-    int _y;
+	glm::uvec2 size_;
     std::map<int, glm::vec3> _pixelData;
 };
 

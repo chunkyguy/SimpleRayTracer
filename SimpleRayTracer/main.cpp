@@ -20,52 +20,54 @@
 #include "Space.hpp"
 #include "Utils.hpp"
 
-glm::vec3 getColor(const int nx, const int ny, const int ns,
-	const int i, const int j,
-	const Camera &camera, const Space &space) {
-	RandomNumGen rand;
-	glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
-	for (int s = 0; s < ns; ++s) {
-		glm::vec2 uv = glm::vec2(float(i + rand.generate()) / float(nx),
-			float(j + rand.generate()) / float(ny));
-		Ray ray = camera.getRay(uv);
-		color += Utils::trace(ray, space, 0);
-	}
-	glm::vec3 aggregateColor = color / float(ns);
-	return glm::vec3(glm::sqrt(aggregateColor.x),
-		glm::sqrt(aggregateColor.y),
-		glm::sqrt(aggregateColor.z));
+glm::vec3 getColor(
+	const int targetWidth, const int targetHeight, const int resolution, 
+	const int pointX, const int pointY,
+	const Camera &camera, const Space &space)
+{
+	float r = float(pointX) / float(targetWidth);
+	float g = float(pointY) / float(targetHeight);
+	float b = 0.2f;
+
+	return glm::vec3(r, g, b);
+
+	//RandomNumGen rand;
+	//glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
+	//for (int s = 0; s < resolution; ++s) {
+	//	glm::vec2 uv = glm::vec2(float(pointX + rand.generate()) / float(targetWidth),
+	//		float(pointY + rand.generate()) / float(targetHeight));
+	//	Ray ray = camera.getRay(uv);
+	//	color += Utils::trace(ray, space, 0);
+	//}
+	//glm::vec3 aggregateColor = color / float(resolution);
+	//return glm::vec3(glm::sqrt(aggregateColor.x),
+	//	glm::sqrt(aggregateColor.y),
+	//	glm::sqrt(aggregateColor.z));
 }
 
-int main(int argc, const char * argv[]) {
-
-	int nx = 1200;
-	int ny = 800;
-	int ns = 10;
+int main(int argc, const char * argv[]) 
+{
+	int targetWidth = 1200;
+	int targetHeight = 800;
+	int resolution = 10;
 
 	glm::vec3 from = glm::vec3(13.0f, 2.0f, 3.0f);
 	glm::vec3 target = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 	float fov = 20.0f;
-	float aspectRatio = float(nx) / float(ny);
+	float aspectRatio = float(targetWidth) / float(targetHeight);
 	float aperture = 0.1f;
 	float focalDistance = 10.0f;
 	Camera camera(from, target, up, fov, aspectRatio, aperture, focalDistance);
 
-	Film film(nx, ny);
+	Film film(glm::uvec2(targetWidth, targetHeight));
 
 	Scene scene;
 	const Space space = scene.getSpace();
 
-	concurrency::concurrent_vector<glm::uvec2> points;
-	for (int j = ny - 1; j >= 0; --j) {
-		for (int i = 0; i < nx; ++i) {
-			points.push_back(glm::uvec2(i, j));
-		}
-	}
-
-	concurrency::parallel_for_each(points.begin(), points.end(), [&](const glm::uvec2 & point) {
-		glm::vec3 color = getColor(nx, ny, ns, point.x, point.y, camera, space);
+	std::vector<glm::uvec2> points = film.getPoints();
+	std::for_each(points.begin(), points.end(), [&](const glm::uvec2 &point) {
+		glm::vec3 color = getColor(targetWidth, targetHeight, resolution, point.x, point.y, camera, space);
 		film.updateColor(color, point);
 	});
 
