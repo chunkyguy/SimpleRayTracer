@@ -7,3 +7,7 @@
 //
 
 #include "Ray.hpp"
+
+glm::vec3 Ray::pointAt(float t) const {
+	return _origin + (_direction * t);
+}

@@ -25,7 +25,7 @@ public:
 
 inline
 Ray::Ray()
-: _origin(0), _direction(0)
+: _origin(), _direction()
 {}
 
 inline
@@ -43,12 +43,6 @@ inline
 glm::vec3 Ray::getDirection() const
 {
     return _direction;
-}
-
-inline
-glm::vec3 Ray::pointAt(float t) const
-{
-    return _origin + (_direction * t);
 }
 
 #endif /* Ray_hpp */

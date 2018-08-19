@@ -20,29 +20,27 @@
 #include "Space.hpp"
 #include "Utils.hpp"
 
+#define USE_CONCURRENT 1
+
 glm::vec3 getColor(
 	const int targetWidth, const int targetHeight, const int resolution, 
 	const int pointX, const int pointY,
 	const Camera &camera, const Space &space)
 {
-	float r = float(pointX) / float(targetWidth);
-	float g = float(pointY) / float(targetHeight);
-	float b = 0.2f;
-
-	return glm::vec3(r, g, b);
-
-	//RandomNumGen rand;
-	//glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
-	//for (int s = 0; s < resolution; ++s) {
-	//	glm::vec2 uv = glm::vec2(float(pointX + rand.generate()) / float(targetWidth),
-	//		float(pointY + rand.generate()) / float(targetHeight));
-	//	Ray ray = camera.getRay(uv);
-	//	color += Utils::trace(ray, space, 0);
-	//}
-	//glm::vec3 aggregateColor = color / float(resolution);
-	//return glm::vec3(glm::sqrt(aggregateColor.x),
-	//	glm::sqrt(aggregateColor.y),
-	//	glm::sqrt(aggregateColor.z));
+	RandomNumGen rand;
+	glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
+	for (int s = 0; s < resolution; ++s) {
+		glm::vec2 uv = glm::vec2(
+			float(pointX + rand.generate()) / float(targetWidth),
+			float(pointY + rand.generate()) / float(targetHeight)
+		);
+		Ray ray = camera.getRay(uv);
+		color += Utils::trace(ray, space, 0);
+	}
+	glm::vec3 aggregateColor = color / float(resolution);
+	return glm::vec3(glm::sqrt(aggregateColor.x),
+		glm::sqrt(aggregateColor.y),
+		glm::sqrt(aggregateColor.z));
 }
 
 int main(int argc, const char * argv[]) 
@@ -59,25 +57,31 @@ int main(int argc, const char * argv[])
 	float aperture = 0.1f;
 	float focalDistance = 10.0f;
 	Camera camera(from, target, up, fov, aspectRatio, aperture, focalDistance);
-
-	Film film(glm::uvec2(targetWidth, targetHeight));
-
 	Scene scene;
 	const Space space = scene.getSpace();
+	Film film(glm::uvec2(targetWidth, targetHeight));
 
+	// trace rays
 	std::vector<glm::uvec2> points = film.getPoints();
+
+#if USE_CONCURRENT
 	concurrency::concurrent_vector<PixelData> pixelData;
-	concurrency::parallel_for_each(points.begin(), points.end(), [&](const glm::uvec2 &point) {
+	concurrency::parallel_for_each(
+#else
+	std::vector<PixelData> pixelData;
+	std::for_each(
+#endif
+		points.begin(), points.end(), [&](const glm::uvec2 &point) {
 		PixelData data = {};
 		data.point = point;
 		data.color = getColor(targetWidth, targetHeight, resolution, point.x, point.y, camera, space);
 		pixelData.push_back(data);
 	});
 
-	std::for_each(pixelData.begin(), pixelData.end(), [&](const PixelData &data) {
-		film.updateData(data);
+	// generate image
+	std::for_each(pixelData.begin(), pixelData.end(), [&](const PixelData &pixelData) {
+		film.updateData(pixelData);
 	});
-
 	film.process();
 
 	return 0;

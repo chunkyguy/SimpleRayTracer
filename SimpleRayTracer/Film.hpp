@@ -21,6 +21,7 @@ struct PixelData {
 class Film {
 public:
     Film(const glm::uvec2 &size);
+	~Film();
 	void updateData(const PixelData &data);
     void process() const;
 	std::vector<glm::uvec2> getPoints() const;
@@ -30,7 +31,7 @@ private:
     int getPosition(const glm::uvec2 &point) const;
     
 	glm::uvec2 size_;
-    std::map<int, glm::vec3> _pixelData;
-};
+	glm::vec3 *pixelData_;
+ };
 
 #endif /* Film_hpp */

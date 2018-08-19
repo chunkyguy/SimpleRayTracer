@@ -10,11 +10,18 @@
 #include <fstream>
 
 Film::Film(const glm::uvec2 & size) 
-	: size_(size) {}
+	: size_(size) {
+	pixelData_ = new glm::vec3[size.x * size.y];
+}
+
+Film::~Film() 
+{
+	delete[] pixelData_;
+}
 
 void Film::updateData(const PixelData & data) 
 {
-    _pixelData[getPosition(data.point)] = data.color;
+    pixelData_[getPosition(data.point)] = data.color;
 }
 
 std::vector<glm::uvec2> Film::getPoints() const {
@@ -42,7 +49,7 @@ void Film::process() const
 
 	std::vector<glm::uvec2> points = getPoints();
 	for (std::vector<glm::uvec2>::const_iterator it = points.begin(); it != points.end(); ++it) {
-		glm::vec3 color = _pixelData.at(getPosition(*it));
+		glm::vec3 color = pixelData_[getPosition(*it)];
 		glm::vec3 colorRGB = color * 255.0f;
 		int rr = int(ceil(colorRGB.r));
 		int gg = int(ceil(colorRGB.g));

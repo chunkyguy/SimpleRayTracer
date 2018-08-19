@@ -7,7 +7,6 @@
 //
 
 #include "Utils.hpp"
-#include <cassert>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm\gtx\norm.hpp>
 #include "Intersection.hpp"
@@ -15,6 +14,38 @@
 #include "Material.h"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
+#include "WLAssert.h"
+
+namespace {
+	glm::vec3 getBackgroundColor(const Ray &ray) {
+		glm::vec3 startColor = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::vec3 endColor = glm::vec3(0.5f, 0.7f, 1.0f);
+
+		glm::vec3 direction = glm::normalize(ray.getDirection());
+		float t = (direction.y + 1.0f) * 0.5f;
+
+		if (t < 0.0f) {
+			return startColor;
+		} else if (t > 1.0f) {
+			return endColor;
+		}
+
+		//wlAssert(t >= 0.0f && t <= 1.0f, "Out of range");
+		return ((1.0f - t) * startColor) + (t * endColor);
+	}
+
+	glm::vec3 getHitColor(const Ray &ray, const HitTestable &item, const int &depth, const Intersection &intersect) {
+		// return sphere color
+		assert(intersect.getMaterial());
+		Ray bounceRay;
+		glm::vec3 attenuation;
+		if (depth < 50 && intersect.getMaterial()->scatter(ray, intersect, attenuation, bounceRay)) {
+			return Utils::trace(bounceRay, item, depth + 1) * attenuation;
+		} else {
+			return glm::vec3(0.0f, 0.0f, 0.0f);
+		}
+	}
+}
 
 glm::vec3 Utils::pointInUnitSphere()
 {
@@ -49,30 +80,17 @@ glm::vec3 Utils::toNormalSpace(glm::vec3 p)
     return (p * 2.0f) - glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-glm::vec3 Utils::trace(const Ray &ray, const HitTestable &item, const int &depth)
-{
-    std::array<float, 2> range = {0.001f, std::numeric_limits<float>::max() };
-    Intersection intersect;
-    if (item.hit(ray, range, intersect)) {
-        // return sphere color
-        assert(intersect.getMaterial());
-        Ray bounceRay;
-        glm::vec3 attenuation;
-        if (depth < 50 && intersect.getMaterial()->scatter(ray, intersect, attenuation, bounceRay)) {
-            return Utils::trace(bounceRay, item, depth + 1) * attenuation;
-        } else {
-            return glm::vec3(0.0f, 0.0f, 0.0f);
-        }
-    } else {
-        // return background
-        glm::vec3 direction = glm::normalize(ray.getDirection());
-        float t = (direction.y + 1.0f) * 0.5f;
-        assert(t >= 0.0f && t <= 1.0f);
-        glm::vec3 startColor = glm::vec3(1.0f, 1.0f, 1.0f);
-        glm::vec3 endColor = glm::vec3(0.5f, 0.7f, 1.0f);
-        return ((1.0f - t) * startColor) + (t * endColor);
-    }
+glm::vec3 Utils::trace(const Ray &ray, const HitTestable &item, const int &depth) {
+	std::array<float, 2> range = { 0.001f, std::numeric_limits<float>::max() };
+	Intersection intersect;
+	if (!item.hit(ray, range, intersect)) {
+		// return background
+		return getBackgroundColor(ray);
+	}
+
+	return getHitColor(ray, item, depth, intersect);
 }
+
 // https://en.wikipedia.org/wiki/Schlick%27s_approximation
 float Utils::fresnel(const float cosine, const float referactiveIndex)
 {

@@ -128,6 +128,7 @@
     <ClCompile Include="SimpleRayTracer\Space.cpp" />
     <ClCompile Include="SimpleRayTracer\Sphere.cpp" />
     <ClCompile Include="SimpleRayTracer\Utils.cpp" />
+    <ClCompile Include="SimpleRayTracer\WLAssert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleRayTracer\Camera.hpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="SimpleRayTracer\Space.hpp" />
     <ClInclude Include="SimpleRayTracer\Sphere.hpp" />
     <ClInclude Include="SimpleRayTracer\Utils.hpp" />
+    <ClInclude Include="SimpleRayTracer\WLAssert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

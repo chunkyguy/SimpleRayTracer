@@ -24,8 +24,9 @@ Scene::Scene()
                                  new LambertianMaterial(glm::vec3(0.5f, 0.5f, 0.5f))));
     
     // fill random spheres
-    for (int a = -11; a < 11; ++a) {
-        for (int b = -11; b < 11; ++b) {
+	int fillRange = 3;
+    for (int a = -fillRange; a < fillRange; ++a) {
+        for (int b = -fillRange; b < fillRange; ++b) {
             glm::vec3 center = glm::vec3(a+0.9f*rand.generate(), 0.2f, b+0.9f*rand.generate());
             float distance = glm::length(center - glm::vec3(4.0f, 0.2f, 0.0f));
             if (distance > 0.9f) {
