@@ -34,7 +34,7 @@ namespace {
 		return ((1.0f - t) * startColor) + (t * endColor);
 	}
 
-	glm::vec3 getHitColor(const Ray &ray, const HitTestable &item, const int &depth, const Intersection &intersect) {
+	glm::vec3 getHitColor(const Ray &ray, const HitTestable *item, const int &depth, const Intersection &intersect) {
 		// return sphere color
 		assert(intersect.getMaterial());
 		Ray bounceRay;
@@ -80,10 +80,10 @@ glm::vec3 Utils::toNormalSpace(glm::vec3 p)
     return (p * 2.0f) - glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-glm::vec3 Utils::trace(const Ray &ray, const HitTestable &item, const int &depth) {
+glm::vec3 Utils::trace(const Ray &ray, const HitTestable *item, const int &depth) {
 	std::array<float, 2> range = { 0.001f, std::numeric_limits<float>::max() };
 	Intersection intersect;
-	if (!item.hit(ray, range, intersect)) {
+	if (!item->hit(ray, range, intersect)) {
 		// return background
 		return getBackgroundColor(ray);
 	}

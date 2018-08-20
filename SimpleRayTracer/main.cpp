@@ -23,21 +23,22 @@
 #define USE_CONCURRENT 1
 
 glm::vec3 getColor(
-	const int targetWidth, const int targetHeight, const int resolution, 
-	const int pointX, const int pointY,
-	const Camera &camera, const Space &space)
+    const glm::uvec3 &targetSize,
+	const glm::uvec2 point,
+    const Camera *camera,
+    const Space *space)
 {
 	RandomNumGen rand;
 	glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
-	for (int s = 0; s < resolution; ++s) {
+	for (int s = 0; s < targetSize.z; ++s) {
 		glm::vec2 uv = glm::vec2(
-			float(pointX + rand.generate()) / float(targetWidth),
-			float(pointY + rand.generate()) / float(targetHeight)
+			float(point.x + rand.generate()) / float(targetSize.x),
+			float(point.y + rand.generate()) / float(targetSize.y)
 		);
-		Ray ray = camera.getRay(uv);
+		Ray ray = camera->getRay(uv);
 		color += Utils::trace(ray, space, 0);
 	}
-	glm::vec3 aggregateColor = color / float(resolution);
+	glm::vec3 aggregateColor = color / float(targetSize.z);
 	return glm::vec3(glm::sqrt(aggregateColor.x),
 		glm::sqrt(aggregateColor.y),
 		glm::sqrt(aggregateColor.z));
@@ -45,21 +46,8 @@ glm::vec3 getColor(
 
 int main(int argc, const char * argv[]) 
 {
-	int targetWidth = 1200;
-	int targetHeight = 800;
-	int resolution = 10;
-
-	glm::vec3 from = glm::vec3(13.0f, 2.0f, 3.0f);
-	glm::vec3 target = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-	float fov = 20.0f;
-	float aspectRatio = float(targetWidth) / float(targetHeight);
-	float aperture = 0.1f;
-	float focalDistance = 10.0f;
-	Camera camera(from, target, up, fov, aspectRatio, aperture, focalDistance);
 	Scene scene;
-	const Space space = scene.getSpace();
-	Film film(glm::uvec2(targetWidth, targetHeight));
+	Film film(scene.getFilmSize());
 
 	// trace rays
 	std::vector<glm::uvec2> points = film.getPoints();
@@ -74,7 +62,12 @@ int main(int argc, const char * argv[])
 		points.begin(), points.end(), [&](const glm::uvec2 &point) {
 		PixelData data = {};
 		data.point = point;
-		data.color = getColor(targetWidth, targetHeight, resolution, point.x, point.y, camera, space);
+		data.color = getColor(
+            glm::vec3(scene.getFilmSize(), scene.getFilmResolution()),
+           point,
+            scene.getCamera(),
+            scene.getSpace()
+        );
 		pixelData.push_back(data);
 	});
 

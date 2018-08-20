@@ -14,7 +14,7 @@
 Camera::Camera(const glm::vec3 &from, const glm::vec3 &at, const glm::vec3 &up,
 	const float fov, const float aspectRatio, const float aperture, const float focalDistance) {
 
-	float angle = fov * M_PI / 180.0f;
+	float angle = float(fov * M_PI) / 180.0f;
 	float halfHeight = glm::tan(angle / 2.0f);
 	float halfWidth = halfHeight * aspectRatio;
 
