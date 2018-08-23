@@ -7,37 +7,53 @@
 //
 
 #include "Film.hpp"
+#include <fstream>
 
-#include <iostream>
-
-Film::Film(const int x, const int y)
-: _x(x), _y(y), _pixelData()
-{}
-
-void Film::updateColor(const simd::float3 &color, const int i, const int j)
-{
-    _pixelData[getPosition(i, j)] = color;
+Film::Film(const glm::uvec2 & size) 
+	: size_(size) {
+	pixelData_ = new glm::vec3[size.x * size.y];
 }
 
-int Film::getPosition(const int i, const int j) const
+Film::~Film() 
 {
-    return j * _x + i;
+	delete[] pixelData_;
+}
+
+void Film::updateData(const PixelData & data) 
+{
+    pixelData_[getPosition(data.point)] = data.color;
+}
+
+std::vector<glm::uvec2> Film::getPoints() const {
+	std::vector<glm::uvec2> points;
+	for (int j = size_.y - 1; j >= 0; --j) {
+		for (int i = 0; i < size_.x; ++i) {
+			points.push_back(glm::uvec2(i, j));
+		}
+	}
+	return points;
+}
+
+int Film::getPosition(const glm::uvec2 &point) const
+{
+	return point.x + (point.y * size_.x);
 }
 
 void Film::process() const
 {
-    std::cout << "P3" << std::endl;
-    std::cout << _x << " " << _y << std::endl;
-    std::cout << "255" << std::endl;
+	std::ofstream file("image.ppm");
 
-    for (int j = _y - 1; j >= 0; --j) {
-        for (int i = 0; i < _x; ++i) {
-            simd::float3 color = _pixelData.at(getPosition(i, j));
-            simd::float3 colorRGB = color * 255.0f;
-            int rr = int(ceil(colorRGB.r));
-            int gg = int(ceil(colorRGB.g));
-            int bb = int(ceil(colorRGB.b));
-            std::cout << rr << " " << gg << " " << bb << std::endl;
-        }
-    }
+	file << "P3\n";
+	file << size_.x << " " << size_.y << "\n";
+	file << "255\n";
+
+	std::vector<glm::uvec2> points = getPoints();
+	for (std::vector<glm::uvec2>::const_iterator it = points.begin(); it != points.end(); ++it) {
+		glm::vec3 color = pixelData_[getPosition(*it)];
+		glm::vec3 colorRGB = color * 255.0f;
+		int rr = int(ceil(colorRGB.r));
+		int gg = int(ceil(colorRGB.g));
+		int bb = int(ceil(colorRGB.b));
+		file << rr << " " << gg << " " << bb << "\n";
+	}
 }

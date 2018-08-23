@@ -9,22 +9,29 @@
 #ifndef Film_hpp
 #define Film_hpp
 #include <map>
-#include <simd/simd.h>
+#include <vector>
+#include <glm\glm.hpp>
+
+struct PixelData {
+	glm::vec3 color;
+	glm::uvec2 point;
+};
 
 // Store all color information. Not threadsafe
 class Film {
 public:
-    Film(const int x, const int y);
-    void updateColor(const simd::float3 &color, const int i, const int j);
+    Film(const glm::uvec2 &size);
+	~Film();
+	void updateData(const PixelData &data);
     void process() const;
-    
+	std::vector<glm::uvec2> getPoints() const;
+
 private:
     
-    int getPosition(const int i, const int j) const;
+    int getPosition(const glm::uvec2 &point) const;
     
-    int _x;
-    int _y;
-    std::map<int, simd::float3> _pixelData;
-};
+	glm::uvec2 size_;
+	glm::vec3 *pixelData_;
+ };
 
 #endif /* Film_hpp */

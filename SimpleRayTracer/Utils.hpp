@@ -8,8 +8,8 @@
 
 #ifndef Utils_hpp
 #define Utils_hpp
-
-#include <simd/simd.h>
+#include <memory>
+#include <glm\glm.hpp>
 
 class Ray;
 class HitTestable;
@@ -17,19 +17,19 @@ class HitTestable;
 struct Utils {
     
     static
-    simd::float3 pointInUnitSphere();
+    glm::vec3 pointInUnitSphere();
     
     static
-    simd::float3 pointInUnitDisk();
+    glm::vec3 pointInUnitDisk();
 
     static
-    simd::float3 toColorSpace(simd::float3 point);
+    glm::vec3 toColorSpace(glm::vec3 point);
 
     static
-    simd::float3 toNormalSpace(simd::float3 p);
+    glm::vec3 toNormalSpace(glm::vec3 p);
 
     static
-    simd::float3 trace(const Ray &ray, const HitTestable &item, const int &depth);
+    glm::vec3 trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int &depth);
     
     static
     float fresnel(const float cosine, const float referactiveIndex);

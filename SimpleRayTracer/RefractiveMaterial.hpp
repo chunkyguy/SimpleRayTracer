@@ -15,10 +15,7 @@ class RefractiveMaterial : public Material {
 public:
     
     RefractiveMaterial(const float refractiveIndex);
-    
-    virtual
-    bool scatter (const Ray &ray, const Intersection &intersect,
-                          simd::float3 &attenuation, Ray &bounce) const;
+    virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
     
 private:
     float _refractiveIndex;

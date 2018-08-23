@@ -12,11 +12,9 @@
 #include "Ray.hpp"
 #include "Utils.hpp"
 
-bool LambertianMaterial::scatter(const Ray &ray, const Intersection &intersect,
-                                         simd::float3 &attenuation, Ray &bounce) const
+std::unique_ptr<Ray> LambertianMaterial::scatter(const Ray *ray, const Intersection * intersect, glm::vec3 & attenuation) const
 {
-    simd::float3 target = intersect.getTarget() + Utils::pointInUnitSphere();
-    bounce = Ray(intersect.getPoint(), target - intersect.getPoint());
+    glm::vec3 target = intersect->getTarget() + Utils::pointInUnitSphere();
     attenuation = _albedo;
-    return true;
+    return std::make_unique<Ray>(intersect->getPoint(), target - intersect->getPoint(), ray->getTime());
 }

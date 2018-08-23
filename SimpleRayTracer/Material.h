@@ -8,21 +8,14 @@
 
 #ifndef Material_h
 #define Material_h
-#include <simd/simd.h>
+#include <memory>
+#include <glm\glm.hpp>
 
 class Ray;
 class Intersection;
 
-struct Material {
-    virtual
-    ~Material();
-    
-    virtual
-    bool scatter (const Ray &ray, const Intersection &intersect,
-                          simd::float3 &attenuation, Ray &bounce) const = 0;
+class Material {
+public:
+    virtual std::unique_ptr<Ray> scatter (const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const = 0;
 };
-
-inline
-Material::~Material()
-{}
 #endif /* Material_h */

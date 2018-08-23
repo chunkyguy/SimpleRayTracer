@@ -9,7 +9,10 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 #include <vector>
+#include <memory>
+#include <glm\glm.hpp>
 
+class Camera;
 class HitTestable;
 class Space;
 
@@ -17,12 +20,18 @@ class Scene {
 public:
     Scene();
     ~Scene();
-    
-    const Space getSpace() const;
+
+    const glm::uvec2 getFilmSize() const;
+    const float getFilmResolution() const;
+	const Camera *getCamera() const;
+    const Space *getSpace() const;
     
 private:
-    
-    std::vector<HitTestable *> _spheres;
+    glm::uvec2 filmSize_;
+    float filmResolution_;
+	Camera *camera_;
+    Space *space_;
+    std::vector<HitTestable *> spheres_;
 };
 
 #endif /* Scene_hpp */

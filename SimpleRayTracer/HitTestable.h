@@ -9,17 +9,14 @@
 #ifndef HitTestable_h
 #define HitTestable_h
 #include <array>
+#include <memory>
 
 class Intersection;
 class Ray;
 
-struct HitTestable {
-    virtual ~HitTestable();
-    virtual bool hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const = 0;
+class HitTestable {
+public:
+    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const std::array<float, 2> &range) const = 0;
 };
-
-inline
-HitTestable::~HitTestable()
-{}
 
 #endif /* HitTestable_h */
