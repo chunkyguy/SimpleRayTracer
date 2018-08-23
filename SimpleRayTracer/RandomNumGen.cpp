@@ -9,12 +9,12 @@
 #include "RandomNumGen.hpp"
 #include <cstdlib>
 
-float RandomNumGen::generate()
+float RandomNumGen::generate() const
 {
 	return rand() / float(RAND_MAX);
 }
 
-float RandomNumGen::generate(const float min, const float max)
+float RandomNumGen::generate(const glm::vec2 & range) const
 {
-    return min + (generate() * (max - min));
+    return range[0] + (generate() * (range[1] - range[0]));
 }

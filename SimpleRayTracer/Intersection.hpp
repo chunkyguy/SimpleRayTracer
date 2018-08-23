@@ -15,7 +15,6 @@ class Ray;
 
 class Intersection {
 public:
-    Intersection();
     Intersection(const float distance, const glm::vec3 &point,
                  const glm::vec3 &normal, const Material *material);
 
@@ -33,14 +32,10 @@ private:
 };
 
 inline
-Intersection::Intersection()
-: _distance(0), _point(0), _normal(0), _material(nullptr)
-{}
-
-inline
-Intersection::Intersection(const float distance, const glm::vec3 &point,
-             const glm::vec3 &normal, const Material *material)
-: _distance(distance), _point(point), _normal(normal), _material(material)
+Intersection::Intersection(
+    const float distance, const glm::vec3 &point,
+    const glm::vec3 &normal, const Material *material)
+    : _distance(distance), _point(point), _normal(normal), _material(material)
 {}
 
 inline

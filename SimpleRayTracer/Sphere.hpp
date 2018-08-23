@@ -18,8 +18,7 @@ public:
     Sphere(const glm::vec3 &center, float radius, const Material *material);
     virtual ~Sphere();
     
-    virtual
-    bool hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const;
+    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const std::array<float, 2> &range) const;
 
 private:
     glm::vec3 _center;

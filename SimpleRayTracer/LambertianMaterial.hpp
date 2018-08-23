@@ -14,9 +14,8 @@
 class LambertianMaterial : public Material {
 public:
     LambertianMaterial(const glm::vec3 &albedo);
-    
-    virtual
-    bool scatter(const Ray &ray, const Intersection &intersect, glm::vec3 &attenuation, Ray &bounce) const;
+
+    virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
     
 private:
     glm::vec3 _albedo;

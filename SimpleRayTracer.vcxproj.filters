@@ -57,6 +57,9 @@
     <ClCompile Include="SimpleRayTracer\WLAssert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleRayTracer\MovingSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleRayTracer\Camera.hpp">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimpleRayTracer\Utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleRayTracer\MovingSphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

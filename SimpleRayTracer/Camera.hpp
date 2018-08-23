@@ -8,17 +8,22 @@
 
 #ifndef Camera_hpp
 #define Camera_hpp
+#include <memory>
 #include <glm/glm.hpp>
+#include "RandomNumGen.hpp"
 
 class Ray;
 
 class Camera {
 public:
     
-    Camera(const glm::vec3 &from, const glm::vec3 &at, const glm::vec3 &up,
-           const float fov, const float aspectRatio, const float aperture, const float focalDistance);
+    Camera(
+        const glm::vec3 &from, const glm::vec3 &at, const glm::vec3 &up,
+        const float fov, const float aspectRatio, const float aperture, const float focalDistance,
+        const glm::vec2 &timeRange
+    );
 
-    Ray getRay(const glm::vec2 &uv) const;
+    std::unique_ptr<Ray> getRay(const glm::vec2 &uv) const;
     
 private:
     
@@ -28,6 +33,8 @@ private:
 	glm::vec3 _vertical;
     glm::mat3x3 _uvw;
     float _apperture;
+    glm::vec2 timeRange_;
+    RandomNumGen randGen_;
 };
 
 #endif /* Camera_hpp */

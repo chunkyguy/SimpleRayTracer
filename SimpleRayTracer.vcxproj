@@ -120,6 +120,7 @@
     <ClCompile Include="SimpleRayTracer\Intersection.cpp" />
     <ClCompile Include="SimpleRayTracer\LambertianMaterial.cpp" />
     <ClCompile Include="SimpleRayTracer\main.cpp" />
+    <ClCompile Include="SimpleRayTracer\MovingSphere.cpp" />
     <ClCompile Include="SimpleRayTracer\RandomNumGen.cpp" />
     <ClCompile Include="SimpleRayTracer\Ray.cpp" />
     <ClCompile Include="SimpleRayTracer\ReflectiveMaterial.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="SimpleRayTracer\Intersection.hpp" />
     <ClInclude Include="SimpleRayTracer\LambertianMaterial.hpp" />
     <ClInclude Include="SimpleRayTracer\Material.h" />
+    <ClInclude Include="SimpleRayTracer\MovingSphere.h" />
     <ClInclude Include="SimpleRayTracer\RandomNumGen.hpp" />
     <ClInclude Include="SimpleRayTracer\Ray.hpp" />
     <ClInclude Include="SimpleRayTracer\ReflectiveMaterial.hpp" />

@@ -8,11 +8,12 @@
 
 #ifndef RandomNumGen_hpp
 #define RandomNumGen_hpp
+#include <glm\glm.hpp>
 
 class RandomNumGen {
 public:
-    float generate();
-    float generate(const float min, const float max);
+    float generate() const ;
+    float generate(const glm::vec2 &range) const;
     
 private:
 };

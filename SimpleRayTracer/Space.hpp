@@ -14,7 +14,7 @@
 class Space: public HitTestable {
 public:
     Space(const std::vector<HitTestable *> &objects);
-    virtual bool hit(const Ray &ray, const std::array<float, 2> &range, Intersection &intersect) const;
+    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const std::array<float, 2> &range) const;
     
 private:
     std::vector<HitTestable *> _objects;

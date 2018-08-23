@@ -16,6 +16,7 @@
 #include "RefractiveMaterial.hpp"
 #include "Space.hpp"
 #include "Sphere.hpp"
+#include "MovingSphere.h"
 
 Scene::Scene()
 {
@@ -34,7 +35,8 @@ Scene::Scene()
 		20.0f, // fov
 		float(filmSize_.x) / float(filmSize_.y), // aspect ratio
 		0.1f, // aperture
-		10.0f // focal distance
+		10.0f, // focal distance
+        glm::vec2(0.0f, 1.0f)
 	);
 
     // background
@@ -75,18 +77,24 @@ Scene::Scene()
     //}
         
     // fill focus spheres
-    spheres_.push_back(new Sphere(
+    spheres_.push_back(new MovingSphere(
         glm::vec3(-4, 1, 0), 
+        glm::vec3(-4, 1.3f, 0),
+        glm::vec2(0.0f, 1.0f),
         1.0f,
         new LambertianMaterial(glm::vec3(0.4f, 0.2f, 0.1f))
     ));
-    spheres_.push_back(new Sphere(
+    spheres_.push_back(new MovingSphere(
         glm::vec3(4, 1, 0),
+        glm::vec3(4, 1.5f, 0),
+        glm::vec2(0.0f, 1.0f),
         1.0f,
         new ReflectiveMaterial(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f)
     ));
-    spheres_.push_back(new Sphere(
+    spheres_.push_back(new MovingSphere(
         glm::vec3(0, 1, 0),
+        glm::vec3(0, 1.2f, 0),
+        glm::vec2(0.0f, 1.0f),
         1.0f,
         new RefractiveMaterial(1.5f)
     ));

@@ -15,9 +15,7 @@
 class ReflectiveMaterial : public Material {
 public:
     ReflectiveMaterial(const glm::vec3 &albedo, const float fuzziness);
-    
-    virtual
-    bool scatter(const Ray &ray, const Intersection &intersect, glm::vec3 &attenuation, Ray &bounce) const;
+    virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
     
 private:
     glm::vec3 _albedo;

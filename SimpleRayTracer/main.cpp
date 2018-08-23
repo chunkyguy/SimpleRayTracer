@@ -30,13 +30,12 @@ glm::vec3 getColor(
 {
 	RandomNumGen rand;
 	glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
-	for (int s = 0; s < targetSize.z; ++s) {
+	for (unsigned int s = 0; s < targetSize.z; ++s) {
 		glm::vec2 uv = glm::vec2(
 			float(point.x + rand.generate()) / float(targetSize.x),
 			float(point.y + rand.generate()) / float(targetSize.y)
 		);
-		Ray ray = camera->getRay(uv);
-		color += Utils::trace(ray, space, 0);
+		color += Utils::trace(std::move(camera->getRay(uv)), space, 0);
 	}
 	glm::vec3 aggregateColor = color / float(targetSize.z);
 	return glm::vec3(glm::sqrt(aggregateColor.x),

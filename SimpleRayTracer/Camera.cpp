@@ -11,9 +11,12 @@
 #include "Ray.hpp"
 #include "Utils.hpp"
 
-Camera::Camera(const glm::vec3 &from, const glm::vec3 &at, const glm::vec3 &up,
-	const float fov, const float aspectRatio, const float aperture, const float focalDistance) {
-
+Camera::Camera(
+    const glm::vec3 & from, const glm::vec3 & at, const glm::vec3 & up, 
+    const float fov, const float aspectRatio, const float aperture, const float focalDistance, 
+    const glm::vec2 &timeRange)
+    : timeRange_(timeRange)
+{
 	float angle = float(fov * M_PI) / 180.0f;
 	float halfHeight = glm::tan(angle / 2.0f);
 	float halfWidth = halfHeight * aspectRatio;
@@ -31,10 +34,10 @@ Camera::Camera(const glm::vec3 &from, const glm::vec3 &at, const glm::vec3 &up,
 	_uvw = glm::mat3x3(u, v, w);
 }
 
-Ray Camera::getRay(const glm::vec2 &uv) const {
-	glm::vec3 point = (_apperture / 2.0f) * Utils::pointInUnitDisk();
+std::unique_ptr<Ray> Camera::getRay(const glm::vec2 &uv) const {
+ 	glm::vec3 point = (_apperture / 2.0f) * Utils::pointInUnitDisk();
 	glm::vec3 offset = (_uvw[0] * point.x) + (_uvw[1] * point.y);
 	glm::vec3 origin = _origin + offset;
 	glm::vec3 direction = _lowerLeft + (_horizontal * uv.x) + (_vertical * uv.y) - _origin - offset;
-	return Ray(origin, direction);
+    return std::make_unique<Ray>(origin, direction, randGen_.generate(timeRange_));
 }

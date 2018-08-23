@@ -9,6 +9,7 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 #include <vector>
+#include <memory>
 #include <glm\glm.hpp>
 
 class Camera;
