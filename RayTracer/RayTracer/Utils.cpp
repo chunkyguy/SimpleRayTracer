@@ -92,13 +92,11 @@ glm::vec3 Utils::pointInUnitDisk()
     return point;
 }
 
-// [-1, +1] -> [0, 1]
 glm::vec3 Utils::toColorSpace(glm::vec3 point)
 {
     return (point + glm::vec3(1.0f, 1.0f, 1.0f)) * glm::vec3(0.5f, 0.5f, 0.5f);
 }
 
-// [0, 1] -> [-1, +1]
 glm::vec3 Utils::toNormalSpace(glm::vec3 p)
 {
     return (p * 2.0f) - glm::vec3(1.0f, 1.0f, 1.0f);

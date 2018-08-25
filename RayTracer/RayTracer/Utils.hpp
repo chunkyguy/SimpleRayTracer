@@ -22,9 +22,11 @@ struct Utils {
     static
     glm::vec3 pointInUnitDisk();
 
+    // [-1, +1] -> [0, 1]
     static
     glm::vec3 toColorSpace(glm::vec3 point);
 
+    // [0, 1] -> [-1, +1]
     static
     glm::vec3 toNormalSpace(glm::vec3 p);
 
