@@ -20,36 +20,37 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{F609EE69-2260-49A2-AB35-86316C5528A3}</ProjectGuid>
-    <RootNamespace>SimpleRayTracer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{B0DBC00C-1DFF-482E-9246-219B9148C1FD}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RayTracer</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -69,87 +70,126 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SimpleRayTracer\AABB.cpp" />
-    <ClCompile Include="SimpleRayTracer\Camera.cpp" />
-    <ClCompile Include="SimpleRayTracer\Film.cpp" />
-    <ClCompile Include="SimpleRayTracer\Intersection.cpp" />
-    <ClCompile Include="SimpleRayTracer\LambertianMaterial.cpp" />
-    <ClCompile Include="SimpleRayTracer\main.cpp" />
-    <ClCompile Include="SimpleRayTracer\MovingSphere.cpp" />
-    <ClCompile Include="SimpleRayTracer\RandomNumGen.cpp" />
-    <ClCompile Include="SimpleRayTracer\Ray.cpp" />
-    <ClCompile Include="SimpleRayTracer\ReflectiveMaterial.cpp" />
-    <ClCompile Include="SimpleRayTracer\RefractiveMaterial.cpp" />
-    <ClCompile Include="SimpleRayTracer\Scene.cpp" />
-    <ClCompile Include="SimpleRayTracer\Space.cpp" />
-    <ClCompile Include="SimpleRayTracer\Sphere.cpp" />
-    <ClCompile Include="SimpleRayTracer\Utils.cpp" />
-    <ClCompile Include="SimpleRayTracer\WLAssert.cpp" />
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Film.hpp" />
+    <ClInclude Include="HitTestable.h" />
+    <ClInclude Include="Intersection.hpp" />
+    <ClInclude Include="LambertianMaterial.hpp" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="MovingSphere.h" />
+    <ClInclude Include="RandomNumGen.hpp" />
+    <ClInclude Include="Ray.hpp" />
+    <ClInclude Include="ReflectiveMaterial.hpp" />
+    <ClInclude Include="RefractiveMaterial.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="Space.hpp" />
+    <ClInclude Include="Sphere.hpp" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Utils.hpp" />
+    <ClInclude Include="WLAssert.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SimpleRayTracer\AABB.h" />
-    <ClInclude Include="SimpleRayTracer\Camera.hpp" />
-    <ClInclude Include="SimpleRayTracer\Film.hpp" />
-    <ClInclude Include="SimpleRayTracer\HitTestable.h" />
-    <ClInclude Include="SimpleRayTracer\Intersection.hpp" />
-    <ClInclude Include="SimpleRayTracer\LambertianMaterial.hpp" />
-    <ClInclude Include="SimpleRayTracer\Material.h" />
-    <ClInclude Include="SimpleRayTracer\MovingSphere.h" />
-    <ClInclude Include="SimpleRayTracer\RandomNumGen.hpp" />
-    <ClInclude Include="SimpleRayTracer\Ray.hpp" />
-    <ClInclude Include="SimpleRayTracer\ReflectiveMaterial.hpp" />
-    <ClInclude Include="SimpleRayTracer\RefractiveMaterial.hpp" />
-    <ClInclude Include="SimpleRayTracer\Scene.hpp" />
-    <ClInclude Include="SimpleRayTracer\Space.hpp" />
-    <ClInclude Include="SimpleRayTracer\Sphere.hpp" />
-    <ClInclude Include="SimpleRayTracer\Utils.hpp" />
-    <ClInclude Include="SimpleRayTracer\WLAssert.h" />
+    <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Film.cpp" />
+    <ClCompile Include="Intersection.cpp" />
+    <ClCompile Include="LambertianMaterial.cpp" />
+    <ClCompile Include="MovingSphere.cpp" />
+    <ClCompile Include="RandomNumGen.cpp" />
+    <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="RayTracer.cpp" />
+    <ClCompile Include="ReflectiveMaterial.cpp" />
+    <ClCompile Include="RefractiveMaterial.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WLAssert.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

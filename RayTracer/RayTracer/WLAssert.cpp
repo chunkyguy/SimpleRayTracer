@@ -8,6 +8,6 @@ void wlAssert(const bool condition, const char * message)
 		return;
 	}
 
-	OutputDebugString(message);
+	OutputDebugStringA(message);
 	assert(condition);
 }

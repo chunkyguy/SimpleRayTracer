@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5f78d3c1-53b1-4ba9-9d58-ab059f6b67d4}</ProjectGuid>
+    <ProjectGuid>{be4502cb-5fb8-4a34-a5cb-34f1606a3288}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
@@ -45,12 +45,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleRayTracer.vcxproj">
-      <Project>{f609ee69-2260-49a2-ab35-86316c5528a3}</Project>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\RayTracer\RayTracer.vcxproj">
+      <Project>{b0dbc00c-1dff-482e-9246-219b9148c1fd}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
