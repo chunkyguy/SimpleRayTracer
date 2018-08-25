@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SimpleRayTracer\AABB.cpp" />
     <ClCompile Include="SimpleRayTracer\Camera.cpp" />
     <ClCompile Include="SimpleRayTracer\Film.cpp" />
     <ClCompile Include="SimpleRayTracer\Intersection.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="SimpleRayTracer\WLAssert.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SimpleRayTracer\AABB.h" />
     <ClInclude Include="SimpleRayTracer\Camera.hpp" />
     <ClInclude Include="SimpleRayTracer\Film.hpp" />
     <ClInclude Include="SimpleRayTracer\HitTestable.h" />
