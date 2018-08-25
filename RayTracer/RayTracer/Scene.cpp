@@ -20,6 +20,8 @@
 
 Scene::Scene()
 {
+    Material *material;
+
     // film size
     filmSize_ = glm::uvec2(
         200.0f, // width
@@ -40,11 +42,9 @@ Scene::Scene()
 	);
 
     // background
-    spheres_.push_back(new Sphere(
-        glm::vec3(0, -1000, 0),
-        1000,
-        new LambertianMaterial(glm::vec3(0.5f, 0.5f, 0.5f))
-    ));
+    material = new LambertianMaterial(glm::vec3(0.5f, 0.5f, 0.5f));
+    materials_.push_back(material);
+    spheres_.push_back(new Sphere(glm::vec3(0, -1000, 0), 1000, material));
     
     ///* fill random spheres */
     // RandomNumGen rand;
@@ -77,26 +77,33 @@ Scene::Scene()
     //}
         
     // fill focus spheres
+
+    material = new LambertianMaterial(glm::vec3(0.4f, 0.2f, 0.1f));
+    materials_.push_back(material);
     spheres_.push_back(new MovingSphere(
         glm::vec3(-4, 1, 0), 
         glm::vec3(-4, 1.3f, 0),
         glm::vec2(0.0f, 1.0f),
         1.0f,
-        new LambertianMaterial(glm::vec3(0.4f, 0.2f, 0.1f))
+        material
     ));
+
+    material = new ReflectiveMaterial(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
+    materials_.push_back(material);
     spheres_.push_back(new MovingSphere(
         glm::vec3(4, 1, 0),
         glm::vec3(4, 1.5f, 0),
         glm::vec2(0.0f, 1.0f),
-        1.0f,
-        new ReflectiveMaterial(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f)
+        1.0f, material
     ));
+
+    material = new RefractiveMaterial(1.5f);
+    materials_.push_back(material);
     spheres_.push_back(new MovingSphere(
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1.2f, 0),
         glm::vec2(0.0f, 1.0f),
-        1.0f,
-        new RefractiveMaterial(1.5f)
+        1.0f, material
     ));
 
     space_ = new Space(spheres_);
@@ -108,6 +115,9 @@ Scene::~Scene()
     delete space_;
     for (HitTestable *sphere : spheres_) {
         delete sphere;
+    }
+    for (Material *material : materials_) {
+        delete material;
     }
 }
 

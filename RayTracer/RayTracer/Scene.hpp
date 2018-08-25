@@ -14,6 +14,7 @@
 
 class Camera;
 class HitTestable;
+class Material;
 class Space;
 
 class Scene {
@@ -32,6 +33,7 @@ private:
 	Camera *camera_;
     Space *space_;
     std::vector<HitTestable *> spheres_;
+    std::vector<Material *> materials_;
 };
 
 #endif /* Scene_hpp */

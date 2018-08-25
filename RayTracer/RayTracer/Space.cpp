@@ -7,6 +7,8 @@
 //
 
 #include "Space.hpp"
+
+#include "AABB.h"
 #include "Intersection.hpp"
 
 Space::Space(const std::vector<HitTestable *> &objects) :
@@ -26,4 +28,24 @@ std::unique_ptr<Intersection> Space::hit(const Ray *ray, const std::array<float,
         }
     }
     return intersect;
+}
+
+std::unique_ptr<AABB> Space::boundingBox(const glm::vec2 & timeRange) const
+{    
+    std::unique_ptr<AABB> box, currBox;
+    for (const HitTestable * object: _objects) {
+        currBox = std::move(object->boundingBox(timeRange));
+
+        if (!currBox) {
+            // bounding box not possible - exit
+            return currBox;
+        }
+
+        if (box) {
+            box = std::move(std::make_unique<AABB>(currBox.get(), box.get()));
+        } else {
+            box = std::move(currBox);
+        }
+    }
+    return box;
 }

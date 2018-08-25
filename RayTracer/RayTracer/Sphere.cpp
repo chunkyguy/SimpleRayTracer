@@ -5,8 +5,8 @@
 //  Created by Sidharth on 12/10/17.
 //  Copyright © 2017 whackylabs. All rights reserved.
 //
-
 #include "Sphere.hpp"
+#include "AABB.h"
 #include "Intersection.hpp"
 #include "Material.h"
 #include "Ray.hpp"
@@ -14,11 +14,6 @@
 Sphere::Sphere(const glm::vec3 &center, float radius, const Material *material)
 : _center(center), _radius(radius), _material(material)
 {}
-
-Sphere::~Sphere()
-{
-    delete _material;
-}
 
 std::unique_ptr<Intersection> Sphere::hit(const Ray *ray, const std::array<float, 2>& range) const
 {
@@ -43,4 +38,9 @@ std::unique_ptr<Intersection> Sphere::hit(const Ray *ray, const std::array<float
     }
 
     return std::unique_ptr<Intersection>();
+}
+
+std::unique_ptr<AABB> Sphere::boundingBox(const glm::vec2 & timeRange) const
+{
+    return std::make_unique<AABB>(_center - glm::vec3(_radius), _center + glm::vec3(_radius));
 }

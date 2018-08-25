@@ -2,6 +2,17 @@
 #include <algorithm>
 #include "Ray.hpp"
 
+AABB::AABB(const AABB *left, const AABB *right)
+{
+    glm::vec3 lMin = left->getMin();
+    glm::vec3 rMin = right->getMin();
+    glm::vec3 lMax = left->getMax();
+    glm::vec3 rMax = right->getMax();
+
+    min_ = glm::vec3(std::min(lMin.x, rMin.x), std::min(lMin.y, rMin.y), std::min(lMin.z, rMin.z));
+    max_ = glm::vec3(std::max(lMax.x, rMax.x), std::max(lMax.y, rMax.y), std::max(lMax.z, rMax.z));
+}
+
 AABB::AABB(const glm::vec3 & min, const glm::vec3 & max)
     : min_(min), max_(max)
 {}
