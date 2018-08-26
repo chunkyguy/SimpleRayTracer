@@ -18,7 +18,7 @@ class AABB;
 
 class HitTestable {
 public:
-    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const std::array<float, 2> &range) const = 0;
+    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const glm::vec2 &timeRange) const = 0;
     virtual std::unique_ptr<AABB> boundingBox(const glm::vec2 &timeRange) const = 0;
 };
 

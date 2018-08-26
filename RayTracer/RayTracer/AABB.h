@@ -13,7 +13,7 @@ public:
     glm::vec3 getMin() const;
     glm::vec3 getMax() const;
 
-    bool hit(const Ray &ray, glm::vec2 timeRange) const;
+    bool hit(const Ray *ray, glm::vec2 timeRange) const;
 
 private:
     float getTime(const int d, const glm::vec3 & origin, const glm::vec3 & direction, const glm::vec3 & v) const;

@@ -17,11 +17,11 @@ MovingSphere::MovingSphere(
     : center0_(center0), center1_(center1), timeRange_(timeRange), radius_(radius), material_(material)
 {}
 
-std::unique_ptr<Intersection> MovingSphere::hit(const Ray *ray, const std::array<float, 2>& range) const
+std::unique_ptr<Intersection> MovingSphere::hit(const Ray * ray, const glm::vec2 & timeRange) const
 {
     // get the sphere at current ray time
     Sphere s(getCenter(ray->getTime()), radius_, material_);
-    return s.hit(ray, range);
+    return s.hit(ray, timeRange);
 }
 
 glm::vec3 MovingSphere::getCenter(const float time) const

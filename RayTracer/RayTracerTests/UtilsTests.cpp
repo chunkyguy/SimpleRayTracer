@@ -1,6 +1,4 @@
 #include "pch.h"
-#include <glm\glm.hpp>
-#include "../RayTracer/Utils.hpp"
 
 TEST(UtilsCase, ColorMapping)
 {

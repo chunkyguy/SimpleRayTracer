@@ -15,7 +15,7 @@ Sphere::Sphere(const glm::vec3 &center, float radius, const Material *material)
 : _center(center), _radius(radius), _material(material)
 {}
 
-std::unique_ptr<Intersection> Sphere::hit(const Ray *ray, const std::array<float, 2>& range) const
+std::unique_ptr<Intersection> Sphere::hit(const Ray * ray, const glm::vec2 & timeRange) const
 {
     glm::vec3 center = ray->getOrigin() - _center;
     glm::vec3 direction = ray->getDirection();
@@ -28,10 +28,10 @@ std::unique_ptr<Intersection> Sphere::hit(const Ray *ray, const std::array<float
     if (d > 0) {
         float root0 = (-b - glm::sqrt(d))/ (a * 2.0f);
         float root1 = (-b + glm::sqrt(d))/ (a * 2.0f);
-        if (root0 > range[0] && root0 < range[1]) {
+        if (root0 > timeRange[0] && root0 < timeRange[1]) {
             glm::vec3 point = ray->pointAt(root0);
             return std::make_unique<Intersection>(root0, point, (point - _center) / _radius, _material);
-        } else if (root1 > range[0] && root1 < range[1]) {
+        } else if (root1 > timeRange[0] && root1 < timeRange[1]) {
             glm::vec3 point = ray->pointAt(root1);
             return std::make_unique<Intersection>(root1, point, (point - _center) / _radius, _material);
         }

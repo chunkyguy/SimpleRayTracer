@@ -20,10 +20,10 @@ AABB::AABB(const glm::vec3 & min, const glm::vec3 & max)
 AABB::~AABB()
 {}
 
-bool AABB::hit(const Ray &ray, glm::vec2 timeRange) const
+bool AABB::hit(const Ray *ray, glm::vec2 timeRange) const
 {
-    const glm::vec3 rayOrigin = ray.getOrigin();
-    const glm::vec3 rayDirection = ray.getDirection();
+    const glm::vec3 rayOrigin = ray->getOrigin();
+    const glm::vec3 rayDirection = ray->getDirection();
 
     for (int d = 0; d < 3; ++d) {
         // get time where ray hits the min plane

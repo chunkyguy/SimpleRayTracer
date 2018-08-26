@@ -15,7 +15,7 @@ public:
         const Material *material
     );
 
-    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const std::array<float, 2> &range) const;
+    virtual std::unique_ptr<Intersection> hit(const Ray *ray, const glm::vec2 &timeRange) const;
     virtual std::unique_ptr<AABB> boundingBox(const glm::vec2 & timeRange) const;
 
     glm::vec3 getCenter(const float time) const;

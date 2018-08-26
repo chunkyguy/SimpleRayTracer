@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\RayTracer\AABB.cpp" />
+    <ClCompile Include="..\RayTracer\BVH.cpp" />
     <ClCompile Include="..\RayTracer\Camera.cpp" />
     <ClCompile Include="..\RayTracer\Film.cpp" />
     <ClCompile Include="..\RayTracer\Intersection.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="..\RayTracer\Sphere.cpp" />
     <ClCompile Include="..\RayTracer\Utils.cpp" />
     <ClCompile Include="..\RayTracer\WLAssert.cpp" />
+    <ClCompile Include="BVHTests.cpp" />
     <ClCompile Include="UtilsTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -54,8 +54,8 @@ namespace {
 }
 
 glm::vec3 Utils::trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int &depth) {
-	std::array<float, 2> range = { 0.001f, std::numeric_limits<float>::max() };
-	std::unique_ptr<Intersection> intersect = std::move(item->hit(ray.get(), range));
+    glm::vec2 timeRange(0.001f, std::numeric_limits<float>::max());
+	std::unique_ptr<Intersection> intersect = std::move(item->hit(ray.get(), timeRange));
     if (!intersect) {
 		// return background
 		return getBackgroundColor(ray.get());

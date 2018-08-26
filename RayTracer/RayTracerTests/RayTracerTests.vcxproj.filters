@@ -47,8 +47,10 @@
     <ClCompile Include="..\RayTracer\WLAssert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UtilsTests.cpp">
-      <Filter>Tests</Filter>
+    <ClCompile Include="BVHTests.cpp" />
+    <ClCompile Include="UtilsTests.cpp" />
+    <ClCompile Include="..\RayTracer\BVH.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,8 +60,8 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{04703109-b950-40d3-9703-a0ccfb8db2a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tests">
-      <UniqueIdentifier>{a126a753-8e9e-434e-9266-2ac38788ff0d}</UniqueIdentifier>
-    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
