@@ -150,6 +150,7 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="BVH.h" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="ColorTexture.h" />
     <ClInclude Include="Film.hpp" />
     <ClInclude Include="HitTestable.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="BVH.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CheckerTexture.cpp" />
     <ClCompile Include="ColorTexture.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Intersection.cpp" />

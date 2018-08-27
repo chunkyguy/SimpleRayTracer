@@ -9,6 +9,7 @@
 #include "Scene.hpp"
 
 #include "Camera.hpp"
+#include "CheckerTexture.h"
 #include "ColorTexture.h"
 #include "HitTestable.h"
 #include "LambertianMaterial.hpp"
@@ -26,8 +27,8 @@ Scene::Scene()
 
     // film size
     filmSize_ = glm::uvec2(
-        200.0f, // width
-        100.0f // height
+        480.0f, // width
+        320.0f // height
     );
     filmResolution_ = 100.0f;
 
@@ -44,7 +45,13 @@ Scene::Scene()
 	);
 
     // background
-    texture = new ColorTexture(glm::vec3(0.5f));
+    Texture *bgTexture01 = new ColorTexture(glm::vec3(0.3f));
+    textures_.push_back(bgTexture01);
+
+    Texture *bgTexture02 = new ColorTexture(glm::vec3(0.8f));
+    textures_.push_back(bgTexture02);
+
+    texture = new CheckerTexture(bgTexture01, bgTexture02);
     textures_.push_back(texture);
 
     material = new LambertianMaterial(texture);
