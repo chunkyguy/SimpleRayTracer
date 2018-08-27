@@ -150,6 +150,7 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="BVH.h" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="ColorTexture.h" />
     <ClInclude Include="Film.hpp" />
     <ClInclude Include="HitTestable.h" />
     <ClInclude Include="Intersection.hpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Utils.hpp" />
     <ClInclude Include="WLAssert.h" />
   </ItemGroup>
@@ -172,6 +174,7 @@
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="BVH.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ColorTexture.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />

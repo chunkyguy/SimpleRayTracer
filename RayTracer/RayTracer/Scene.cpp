@@ -9,18 +9,20 @@
 #include "Scene.hpp"
 
 #include "Camera.hpp"
+#include "ColorTexture.h"
 #include "HitTestable.h"
 #include "LambertianMaterial.hpp"
+#include "MovingSphere.h"
 #include "RandomNumGen.hpp"
 #include "ReflectiveMaterial.hpp"
 #include "RefractiveMaterial.hpp"
 #include "Space.hpp"
 #include "Sphere.hpp"
-#include "MovingSphere.h"
 
 Scene::Scene()
 {
     Material *material;
+    Texture *texture;
 
     // film size
     filmSize_ = glm::uvec2(
@@ -42,7 +44,10 @@ Scene::Scene()
 	);
 
     // background
-    material = new LambertianMaterial(glm::vec3(0.5f, 0.5f, 0.5f));
+    texture = new ColorTexture(glm::vec3(0.5f));
+    textures_.push_back(texture);
+
+    material = new LambertianMaterial(texture);
     materials_.push_back(material);
     spheres_.push_back(new Sphere(glm::vec3(0, -1000, 0), 1000, material));
     
@@ -78,7 +83,9 @@ Scene::Scene()
         
     // fill focus spheres
 
-    material = new LambertianMaterial(glm::vec3(0.4f, 0.2f, 0.1f));
+    texture = new ColorTexture(glm::vec3(0.4f, 0.2f, 0.1f));
+    textures_.push_back(texture);
+    material = new LambertianMaterial(texture);
     materials_.push_back(material);
     spheres_.push_back(new MovingSphere(
         glm::vec3(-4, 1, 0), 
@@ -118,6 +125,10 @@ Scene::~Scene()
     }
     for (Material *material : materials_) {
         delete material;
+    }
+
+    for (const Texture *texture : textures_) {
+        delete texture;
     }
 }
 

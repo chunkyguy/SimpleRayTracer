@@ -11,19 +11,22 @@
 #include <glm\glm.hpp>
 #include "Material.h"
 
+class Texture;
+
 class LambertianMaterial : public Material {
 public:
-    LambertianMaterial(const glm::vec3 &albedo);
+    LambertianMaterial(const Texture *albedo);
 
     virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
     
 private:
-    glm::vec3 _albedo;
+
+    const Texture *albedo_;
 };
 
 inline
-LambertianMaterial::LambertianMaterial(const glm::vec3 &albedo)
-: _albedo(albedo)
+LambertianMaterial::LambertianMaterial(const Texture *albedo)
+: albedo_(albedo)
 {}
 
 #endif /* LambertianMaterial_hpp */
