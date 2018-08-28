@@ -11,6 +11,7 @@
 #include <vector>
 #include <memory>
 #include <glm\glm.hpp>
+#include "Scene.h"
 
 class Camera;
 class HitTestable;
@@ -18,24 +19,25 @@ class Material;
 class Space;
 class Texture;
 
-class Scene {
+class RandomSpheresScene : public Scene {
 public:
-    Scene();
-    ~Scene();
 
-    const glm::uvec2 getFilmSize() const;
-    const float getFilmResolution() const;
-	const Camera *getCamera() const;
-    const Space *getSpace() const;
-    
+    RandomSpheresScene(const glm::uvec2 &filmSize, const float resolution);
+    ~RandomSpheresScene();
+
+    virtual const Camera *getCamera() const;
+    virtual std::unique_ptr<HitTestable> getScene() const;
+
 private:
-    glm::uvec2 filmSize_;
-    float filmResolution_;
 	Camera *camera_;
-    Space *space_;
-    std::vector<HitTestable *> spheres_;
+    std::vector<const HitTestable *> spheres_;
     std::vector<Material *> materials_;
     std::vector<const Texture *> textures_;
 };
+
+inline const Camera *RandomSpheresScene::getCamera() const
+{
+    return camera_;
+}
 
 #endif /* Scene_hpp */

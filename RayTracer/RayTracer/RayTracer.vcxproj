@@ -153,6 +153,7 @@
     <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="ColorTexture.h" />
     <ClInclude Include="Film.hpp" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="HitTestable.h" />
     <ClInclude Include="Intersection.hpp" />
     <ClInclude Include="LambertianMaterial.hpp" />
@@ -162,9 +163,10 @@
     <ClInclude Include="Ray.hpp" />
     <ClInclude Include="ReflectiveMaterial.hpp" />
     <ClInclude Include="RefractiveMaterial.hpp" />
-    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="RandomSpheresScene.hpp" />
     <ClInclude Include="Space.hpp" />
     <ClInclude Include="Sphere.hpp" />
+    <ClInclude Include="SphereScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -186,9 +188,10 @@
     <ClCompile Include="RayTracer.cpp" />
     <ClCompile Include="ReflectiveMaterial.cpp" />
     <ClCompile Include="RefractiveMaterial.cpp" />
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="RandomSpheresScene.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="SphereScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

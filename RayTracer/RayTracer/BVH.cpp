@@ -50,8 +50,6 @@ BVH::BVH(std::vector<HitTestable *> list, const glm::vec2 & timeRange)
         hasChildren_ = true;
         break;
     }
-
-    // generate bounding box
 }
 
 BVH::~BVH()
