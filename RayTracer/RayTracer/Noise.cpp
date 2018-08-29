@@ -33,10 +33,22 @@ float Noise::generate(const glm::vec3 & p) const
     float u = p.x - floorf(p.x);
     float v = p.y - floorf(p.y);
     float w = p.z - floorf(p.z);
+    glm::vec3 uvw(u, v, w);
 
-    int i = (static_cast<int>(p.x) * 4) & 255;
-    int j = (static_cast<int>(p.y) * 4) & 255;
-    int k = (static_cast<int>(p.z) * 4) & 255;
+    int i = static_cast<int>(floorf(p.x));
+    int j = static_cast<int>(floorf(p.y));
+    int k = static_cast<int>(floorf(p.z));
 
-    return random_[xIndices_[i] ^ yIndices_[j] ^ zIndices_[k]];
+    float value = 0.0f;
+
+    for (int a = 0; a < 2; ++a) {
+        for (int b = 0; b < 2; ++b) {
+            for (int c = 0; c < 2; ++c) {
+               float f = random_[xIndices_[(i + a) & 255] ^ yIndices_[(j + b) & 255] ^ zIndices_[(k + c) & 255]];
+               value += (a * u + (1 - a) * (1 - u)) * (b * v + (1 - b) * (1 - v)) * (c * w + (1 - c) * (1 - w)) * f;
+            }
+        }
+    }
+
+    return value;
 }
