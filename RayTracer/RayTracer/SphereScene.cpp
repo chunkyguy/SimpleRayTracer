@@ -1,8 +1,7 @@
 #include "SphereScene.h"
 
 #include "Camera.hpp"
-#include "CheckerTexture.h"
-#include "ColorTexture.h"
+#include "NoiseTexture.h"
 #include "LambertianMaterial.hpp"
 #include "Sphere.hpp"
 #include "Space.hpp"
@@ -11,23 +10,20 @@ using namespace glm;
 
 SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
 {
-    const Texture *t1 = new ColorTexture(vec3(0.2f, 0.2f, 0.1f));
-    const Texture *t2 = new ColorTexture(vec3(0.9f));
-    const Texture *t = new CheckerTexture(t1, t2);
-    textures_.push_back(t1);
-    textures_.push_back(t2);
-    textures_.push_back(t);
+    const Texture *noiseTexture = new NoiseTexture();
+    textures_.push_back(noiseTexture);
 
-    const Material *m = new LambertianMaterial(t);
-    materials_.push_back(m);
+    const Material *noiseMaterial = new LambertianMaterial(noiseTexture);
+    materials_.push_back(noiseMaterial);
 
-    const HitTestable *h1 = new Sphere(vec3(0.0f, -10.0f, 0.0f), 10.0f, m);
-    const HitTestable *h2 = new Sphere(vec3(0.0f, 10.0f, 0.0f), 10.0f, m);
-    shapes_.push_back(h1);
-    shapes_.push_back(h2);
+    const HitTestable *background = new Sphere(vec3(0.0f, -1000.0f, 0.0f), 1000.0f, noiseMaterial);
+    shapes_.push_back(background);
+
+    const HitTestable *sphere = new Sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, noiseMaterial);
+    shapes_.push_back(sphere);
 
     camera_ = new Camera(
-        vec3(13.0f, 2.0f, 13.0f), /* from */
+        vec3(13.0f, 2.0f, 3.0f), /* from */
         vec3(0.0f), /* at */
         vec3(0.0f, 1.0f, 0.0f), /* up */
         20.0f, /* fov */

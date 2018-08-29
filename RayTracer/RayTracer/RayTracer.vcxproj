@@ -153,6 +153,8 @@
     <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="ColorTexture.h" />
     <ClInclude Include="Film.hpp" />
+    <ClInclude Include="Noise.h" />
+    <ClInclude Include="NoiseTexture.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="HitTestable.h" />
     <ClInclude Include="Intersection.hpp" />
@@ -183,6 +185,8 @@
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />
     <ClCompile Include="MovingSphere.cpp" />
+    <ClCompile Include="Noise.cpp" />
+    <ClCompile Include="NoiseTexture.cpp" />
     <ClCompile Include="RandomNumGen.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="RayTracer.cpp" />
