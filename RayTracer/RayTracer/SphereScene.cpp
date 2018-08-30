@@ -10,7 +10,7 @@ using namespace glm;
 
 SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
 {
-    const Texture *noiseTexture = new NoiseTexture();
+    const Texture *noiseTexture = new NoiseTexture(4.0f);
     textures_.push_back(noiseTexture);
 
     const Material *noiseMaterial = new LambertianMaterial(noiseTexture);

@@ -2,7 +2,8 @@
 
 #include <glm\glm.hpp>
 
-NoiseTexture::NoiseTexture()
+NoiseTexture::NoiseTexture(const float scale)
+    : scale_(scale)
 {}
 
 NoiseTexture::~NoiseTexture()
@@ -10,5 +11,5 @@ NoiseTexture::~NoiseTexture()
 
 glm::vec3 NoiseTexture::color(const glm::vec2 & uv, const glm::vec3 & location) const
 {
-    return glm::vec3(1.0f) * noise_.generate(location);
+    return glm::vec3(1.0f) * noise_.generate(location * scale_);
 }
