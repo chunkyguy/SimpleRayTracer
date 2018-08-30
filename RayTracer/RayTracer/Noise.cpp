@@ -33,7 +33,11 @@ float Noise::generate(const glm::vec3 & p) const
     float u = p.x - floorf(p.x);
     float v = p.y - floorf(p.y);
     float w = p.z - floorf(p.z);
-    glm::vec3 uvw(u, v, w);
+
+    // hermite cubic smoothing
+    u = u * u * (3 - 2 * u);
+    v = v * v * (3 - 2 * v);
+    w = w * w * (3 - 2 * w);
 
     int i = static_cast<int>(floorf(p.x));
     int j = static_cast<int>(floorf(p.y));
@@ -45,6 +49,7 @@ float Noise::generate(const glm::vec3 & p) const
         for (int b = 0; b < 2; ++b) {
             for (int c = 0; c < 2; ++c) {
                float f = random_[xIndices_[(i + a) & 255] ^ yIndices_[(j + b) & 255] ^ zIndices_[(k + c) & 255]];
+               // trilinear interpolation
                value += (a * u + (1 - a) * (1 - u)) * (b * v + (1 - b) * (1 - v)) * (c * w + (1 - c) * (1 - w)) * f;
             }
         }
