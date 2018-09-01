@@ -21,6 +21,9 @@ public:
     virtual std::unique_ptr<AABB> boundingBox(const glm::vec2 &timeRange) const;
 
 private:
+    std::unique_ptr<Intersection> intersect(const Ray * ray, const float time) const;
+    glm::vec2 getSphericalCoords(const glm::vec3 & p) const;
+
     glm::vec3 _center;
     float _radius;
     const Material *_material;

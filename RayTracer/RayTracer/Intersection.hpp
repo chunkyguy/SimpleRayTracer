@@ -15,57 +15,21 @@ class Ray;
 
 class Intersection {
 public:
-    Intersection(const float distance, const glm::vec3 &point,
-                 const glm::vec3 &normal, const Material *material);
+    Intersection(const float time, const glm::vec3 &point, const glm::vec3 &normal, const glm::vec2 &uv, const Material *material);
 
     glm::vec3 getTarget() const;
     glm::vec3 getPoint() const;
-    float getDistance() const;
+    glm::vec2 getUV() const;
+    float getTime() const;
     glm::vec3 getNormal() const;
     const Material *getMaterial() const;
 
 private:
-    float _distance;
-    glm::vec3 _point;
-    glm::vec3 _normal;
-    const Material *_material;
+    float time_;
+    glm::vec2 uv_;
+    glm::vec3 point_;
+    glm::vec3 normal_;
+    const Material *material_;
 };
-
-inline
-Intersection::Intersection(
-    const float distance, const glm::vec3 &point,
-    const glm::vec3 &normal, const Material *material)
-    : _distance(distance), _point(point), _normal(normal), _material(material)
-{}
-
-inline
-float Intersection::getDistance() const
-{
-    return _distance;
-}
-
-inline
-glm::vec3 Intersection::getPoint() const
-{
-    return _point;
-}
-
-inline
-glm::vec3 Intersection::getNormal() const
-{
-    return _normal;
-}
-
-inline
-const Material *Intersection::getMaterial() const
-{
-    return _material;
-}
-
-inline 
-glm::vec3 Intersection::getTarget() const
-{
-    return _point + _normal;
-}
 
 #endif /* Intersection_hpp */

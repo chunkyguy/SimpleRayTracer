@@ -1,6 +1,8 @@
 #include "SphereScene.h"
 
 #include "Camera.hpp"
+#include "Image.h"
+#include "ImageTexture.h"
 #include "NoiseTexture.h"
 #include "LambertianMaterial.hpp"
 #include "Sphere.hpp"
@@ -10,6 +12,7 @@ using namespace glm;
 
 SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
 {
+
     const Texture *noiseTexture = new NoiseTexture(4.0f);
     textures_.push_back(noiseTexture);
 
@@ -19,11 +22,20 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
     const HitTestable *background = new Sphere(vec3(0.0f, -1000.0f, 0.0f), 1000.0f, noiseMaterial);
     shapes_.push_back(background);
 
-    const HitTestable *sphere = new Sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, noiseMaterial);
+    const Image *image = new Image("astronomy-discovery-earth-2422.jpg");
+    images_.push_back(image);
+
+    const Texture *imageTexture = new ImageTexture(image);
+    textures_.push_back(imageTexture);
+
+    const Material *imageMaterial = new LambertianMaterial(imageTexture);
+    materials_.push_back(imageMaterial);
+
+    const HitTestable *sphere = new Sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, imageMaterial);
     shapes_.push_back(sphere);
 
     camera_ = new Camera(
-        vec3(13.0f, 2.0f, 3.0f), /* from */
+        vec3(0.0f, 3.0f, 20.0f), /* from */
         vec3(0.0f), /* at */
         vec3(0.0f, 1.0f, 0.0f), /* up */
         20.0f, /* fov */
@@ -36,6 +48,10 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
 
 SphereScene::~SphereScene()
 {
+    for (const Image *i : images_) {
+        delete i;
+    }
+
     for (const Texture *t : textures_) {
         delete t;
     }

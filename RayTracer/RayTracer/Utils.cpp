@@ -16,58 +16,62 @@
 #include "Ray.hpp"
 #include "WLAssert.h"
 
-namespace {
-	glm::vec3 getBackgroundColor(const Ray *ray) {
-		glm::vec3 startColor = glm::vec3(1.0f, 1.0f, 1.0f);
-		glm::vec3 endColor = glm::vec3(0.5f, 0.7f, 1.0f);
+namespace
+{
+    glm::vec3 getBackgroundColor(const Ray *ray)
+    {
+        glm::vec3 startColor = glm::vec3(1.0f, 1.0f, 1.0f);
+        glm::vec3 endColor = glm::vec3(0.5f, 0.7f, 1.0f);
 
-		glm::vec3 direction = glm::normalize(ray->getDirection());
-		float t = (direction.y + 1.0f) * 0.5f;
+        glm::vec3 direction = glm::normalize(ray->getDirection());
+        float t = (direction.y + 1.0f) * 0.5f;
 
-		if (t < 0.0f) {
-			return startColor;
-		} else if (t > 1.0f) {
-			return endColor;
-		}
+        if (t < 0.0f) {
+            return startColor;
+        } else if (t > 1.0f) {
+            return endColor;
+        }
 
-		//wlAssert(t >= 0.0f && t <= 1.0f, "Out of range");
-		return ((1.0f - t) * startColor) + (t * endColor);
-	}
+        wlAssert(t >= 0.0f && t <= 1.0f, "Out of range");
+        return ((1.0f - t) * startColor) + (t * endColor);
+    }
 
-	glm::vec3 getHitColor(const Ray *ray, const HitTestable *item, const int &depth, const Intersection *intersect) {
-		// return sphere color
+    glm::vec3 getHitColor(const Ray *ray, const HitTestable *item, const Intersection *intersect, const int depth, const int maxDepth)
+    {
+        // return sphere color
         assert(intersect);
-		assert(intersect->getMaterial());
+        assert(intersect->getMaterial());
 
-        if (depth >= 50) {
+        if (depth >= maxDepth) {
             return glm::vec3(0.0f, 0.0f, 0.0f);
         }
 
         glm::vec3 attenuation;
         std::unique_ptr<Ray> bounceRay = intersect->getMaterial()->scatter(ray, intersect, attenuation);
         if (bounceRay) {
-            return Utils::trace(std::move(bounceRay), item, depth + 1) * attenuation;
+            return Utils::trace(std::move(bounceRay), item, depth + 1, maxDepth) * attenuation;
         } else {
             return glm::vec3(0.0f, 0.0f, 0.0f);
         }
-	}
+    }
 }
 
-glm::vec3 Utils::trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int &depth) {
+glm::vec3 Utils::trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int depth, const int maxDepth)
+{
     glm::vec2 timeRange(0.001f, std::numeric_limits<float>::max());
-	std::unique_ptr<Intersection> intersect = std::move(item->hit(ray.get(), timeRange));
+    std::unique_ptr<Intersection> intersect = std::move(item->hit(ray.get(), timeRange));
     if (!intersect) {
-		// return background
-		return getBackgroundColor(ray.get());
-	}
+        // return background
+        return getBackgroundColor(ray.get());
+    }
 
-	return getHitColor(ray.get(), item, depth, intersect.get());
+    return getHitColor(ray.get(), item, intersect.get(), depth, maxDepth);
 }
 
 // https://en.wikipedia.org/wiki/Schlick%27s_approximation
 float Utils::fresnel(const float cosine, const float referactiveIndex)
 {
-    float r = glm::pow((1 - referactiveIndex)/(1 + referactiveIndex), 2.0f);
+    float r = glm::pow((1 - referactiveIndex) / (1 + referactiveIndex), 2.0f);
     return r + (1 - r) * glm::pow(1 - cosine, 5.0f);
 }
 

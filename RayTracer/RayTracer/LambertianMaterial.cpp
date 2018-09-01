@@ -16,6 +16,6 @@
 std::unique_ptr<Ray> LambertianMaterial::scatter(const Ray *ray, const Intersection * intersect, glm::vec3 & attenuation) const
 {
     glm::vec3 target = intersect->getTarget() + Utils::pointInUnitSphere();
-    attenuation = albedo_->color(glm::vec2(0.0f), intersect->getPoint());
+    attenuation = albedo_->color(intersect->getUV(), intersect->getPoint());
     return std::make_unique<Ray>(intersect->getPoint(), target - intersect->getPoint(), ray->getTime());
 }

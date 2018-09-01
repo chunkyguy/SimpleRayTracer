@@ -31,7 +31,7 @@ struct Utils {
     glm::vec3 toNormalSpace(glm::vec3 p);
 
     static
-    glm::vec3 trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int &depth);
+    glm::vec3 trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int depth, const int maxDepth);
     
     static
     float fresnel(const float cosine, const float referactiveIndex);

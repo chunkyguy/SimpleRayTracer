@@ -70,7 +70,7 @@ std::unique_ptr<Intersection> BVH::hit(const Ray * ray, const glm::vec2 & timeRa
     std::unique_ptr<Intersection> rIntersect = std::move(right_->hit(ray, timeRange));
 
     if (lIntersect && rIntersect) {
-        if (lIntersect->getDistance() < rIntersect->getDistance()) {
+        if (lIntersect->getTime() < rIntersect->getTime()) {
             return lIntersect;
         } else {
             return rIntersect;

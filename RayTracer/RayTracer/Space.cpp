@@ -18,11 +18,11 @@ _objects(objects)
 std::unique_ptr<Intersection> Space::hit(const Ray * ray, const glm::vec2 & timeRange) const
 {
     std::unique_ptr<Intersection> intersect;
-    float lastDistance = timeRange[1];
+    float lastTime = timeRange[1];
     for (std::vector<const HitTestable *>::const_iterator it = _objects.begin(); it != _objects.end(); ++it) {
-        std::unique_ptr<Intersection> localIntersects = (*it)->hit(ray, glm::vec2(timeRange[0], lastDistance));
+        std::unique_ptr<Intersection> localIntersects = (*it)->hit(ray, glm::vec2(timeRange[0], lastTime));
         if (localIntersects != nullptr) {
-            lastDistance = localIntersects->getDistance();
+            lastTime = localIntersects->getTime();
             intersect = std::move(localIntersects);
         }
     }
