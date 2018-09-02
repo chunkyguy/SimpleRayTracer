@@ -195,6 +195,7 @@
     <ClCompile Include="ImageTexture.cpp" />
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MovingSphere.cpp" />
     <ClCompile Include="Noise.cpp" />
