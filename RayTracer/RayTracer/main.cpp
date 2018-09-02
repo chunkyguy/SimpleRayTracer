@@ -19,7 +19,7 @@
 #include "Utils.hpp"
 
 #define USE_CONCURRENT 1
-#define MODE_RELEASE 0
+#define MODE_RELEASE 1
 
 glm::vec3 getColor(
     const glm::uvec3 &targetSize,

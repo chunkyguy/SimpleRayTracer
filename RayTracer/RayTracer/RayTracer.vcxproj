@@ -162,6 +162,7 @@
     <ClInclude Include="ImageTexture.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="NoiseTexture.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="HitTestable.h" />
     <ClInclude Include="Intersection.hpp" />
@@ -200,9 +201,9 @@
     <ClCompile Include="MovingSphere.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="NoiseTexture.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RandomNumGen.cpp" />
     <ClCompile Include="Ray.cpp" />
-    <ClCompile Include="RayTracer.cpp" />
     <ClCompile Include="ReflectiveMaterial.cpp" />
     <ClCompile Include="RefractiveMaterial.cpp" />
     <ClCompile Include="RandomSpheresScene.cpp" />

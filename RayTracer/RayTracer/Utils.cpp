@@ -20,20 +20,7 @@ namespace
 {
     glm::vec3 getBackgroundColor(const Ray *ray)
     {
-        glm::vec3 startColor = glm::vec3(1.0f, 1.0f, 1.0f);
-        glm::vec3 endColor = glm::vec3(0.5f, 0.7f, 1.0f);
-
-        glm::vec3 direction = glm::normalize(ray->getDirection());
-        float t = (direction.y + 1.0f) * 0.5f;
-
-        if (t < 0.0f) {
-            return startColor;
-        } else if (t > 1.0f) {
-            return endColor;
-        }
-
-        wlAssert(t >= 0.0f && t <= 1.0f, "Out of range");
-        return ((1.0f - t) * startColor) + (t * endColor);
+        return glm::vec3(0.0f);
     }
 
     glm::vec3 getHitColor(const Ray *ray, const HitTestable *item, const Intersection *intersect, const int depth, const int maxDepth)

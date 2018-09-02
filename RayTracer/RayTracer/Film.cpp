@@ -26,8 +26,8 @@ void Film::updateData(const PixelData & data)
 
 std::vector<glm::uvec2> Film::getPoints() const {
 	std::vector<glm::uvec2> points;
-	for (unsigned int j = size_.y - 1; j >= 0; --j) {
-		for (unsigned int i = 0; i < size_.x; ++i) {
+	for (int j = int(size_.y) - 1; j >= 0; --j) {
+		for (int i = 0; i < int(size_.x); ++i) {
 			points.push_back(glm::uvec2(i, j));
 		}
 	}
