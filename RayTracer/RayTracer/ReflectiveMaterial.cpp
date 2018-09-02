@@ -19,13 +19,17 @@ ReflectiveMaterial::ReflectiveMaterial(const glm::vec3 &albedo, const float fuzz
     _fuzziness = glm::clamp(fuzziness, 0.0f, 1.0f);
 }
 
-std::unique_ptr<Ray> ReflectiveMaterial::scatter(const Ray *ray, const Intersection * intersect, glm::vec3 & attenuation) const
+Material::Info ReflectiveMaterial::getScatterRay(const Ray * ray, const Intersection * intersect) const
 {
     glm::vec3 reflect = glm::reflect(glm::normalize((ray->getDirection())), intersect->getNormal());
-    attenuation = _albedo;
+    std::unique_ptr<Ray> scatterRay;
     if (glm::dot(reflect, intersect->getNormal()) > 0.0f) {
-        return std::make_unique<Ray>(intersect->getPoint(), reflect + (Utils::pointInUnitSphere() * _fuzziness), ray->getTime());
-    } else {
-        return std::unique_ptr<Ray>();
+        scatterRay = std::make_unique<Ray>(intersect->getPoint(), reflect + (Utils::pointInUnitSphere() * _fuzziness), ray->getTime());
     }
+    return Material::Info(std::move(scatterRay), _albedo);
+}
+
+std::optional<glm::vec3> ReflectiveMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const
+{
+    return std::nullopt;
 }

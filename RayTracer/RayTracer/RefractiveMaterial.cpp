@@ -15,12 +15,15 @@
 #include "Ray.hpp"
 #include "Utils.hpp"
 
-std::unique_ptr<Ray> RefractiveMaterial::scatter(const Ray *ray, const Intersection * intersect, glm::vec3 & attenuation) const
+RefractiveMaterial::RefractiveMaterial(const float refractiveIndex)
+    : _refractiveIndex(refractiveIndex)
+{}
+
+Material::Info RefractiveMaterial::getScatterRay(const Ray * ray, const Intersection * intersect) const
 {
     glm::vec3 rayDirection = ray->getDirection();
     glm::vec3 reflect = glm::reflect(rayDirection, intersect->getNormal());
-    attenuation = glm::vec3(1.0f, 1.0f, 1.0f);
-
+    
     glm::vec3 outNormal;
     float refractiveIndex;
     float cosine;
@@ -35,11 +38,11 @@ std::unique_ptr<Ray> RefractiveMaterial::scatter(const Ray *ray, const Intersect
         cosine = (dotProduct/glm::length(ray->getDirection())) * -1.0f;
     }
     
-    std::unique_ptr<Ray> bounce;
+    std::unique_ptr<Ray> scatterRay;
     float reflectionProb;
     glm::vec3 refract = glm::refract(ray->getDirection(), outNormal, refractiveIndex);
     if (refract.x == 0.0f && refract.y == 0.0f && refract.z == 0.0f) {
-        bounce = std::move(std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime()));
+        scatterRay = std::move(std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime()));
         reflectionProb = 1.0f;
     } else {
         reflectionProb = Utils::fresnel(cosine, refractiveIndex);
@@ -47,10 +50,15 @@ std::unique_ptr<Ray> RefractiveMaterial::scatter(const Ray *ray, const Intersect
     
     RandomNumGen rGen;
     if (rGen.generate() < reflectionProb) {
-        bounce = std::move(std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime()));
+        scatterRay = std::move(std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime()));
     } else {
-        bounce = std::move(std::make_unique<Ray>(intersect->getPoint(), refract, ray->getTime()));
+        scatterRay = std::move(std::make_unique<Ray>(intersect->getPoint(), refract, ray->getTime()));
     }
-    
-    return bounce;
+
+    return Material::Info(std::move(scatterRay), glm::vec3(1.0f));
+}
+
+std::optional<glm::vec3> RefractiveMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const
+{
+    return std::nullopt;
 }

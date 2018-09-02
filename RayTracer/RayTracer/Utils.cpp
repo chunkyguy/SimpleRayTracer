@@ -46,13 +46,13 @@ namespace
             return glm::vec3(0.0f, 0.0f, 0.0f);
         }
 
-        glm::vec3 attenuation;
-        std::unique_ptr<Ray> bounceRay = intersect->getMaterial()->scatter(ray, intersect, attenuation);
-        if (bounceRay) {
-            return Utils::trace(std::move(bounceRay), item, depth + 1, maxDepth) * attenuation;
-        } else {
-            return glm::vec3(0.0f, 0.0f, 0.0f);
+        const Material *material = intersect->getMaterial();
+        glm::vec3 color = material->getEmittedColor(intersect->getUV(), intersect->getPoint()).value_or(glm::vec3(0.0f));
+        Material::Info scatterRayInfo = material->getScatterRay(ray, intersect);
+        if (scatterRayInfo.ray) {
+            color += Utils::trace(std::move(scatterRayInfo.ray), item, depth + 1, maxDepth) * scatterRayInfo.attenuation;
         }
+        return color;
     }
 }
 

@@ -13,9 +13,19 @@
 #include "Texture.h"
 #include "Utils.hpp"
 
-std::unique_ptr<Ray> LambertianMaterial::scatter(const Ray *ray, const Intersection * intersect, glm::vec3 & attenuation) const
+LambertianMaterial::LambertianMaterial(const Texture *albedo)
+    : albedo_(albedo)
+{}
+
+Material::Info LambertianMaterial::getScatterRay(const Ray * ray, const Intersection * intersect) const
 {
     glm::vec3 target = intersect->getTarget() + Utils::pointInUnitSphere();
-    attenuation = albedo_->color(intersect->getUV(), intersect->getPoint());
-    return std::make_unique<Ray>(intersect->getPoint(), target - intersect->getPoint(), ray->getTime());
+    std::unique_ptr<Ray> scatterRay = std::make_unique<Ray>(intersect->getPoint(), target - intersect->getPoint(), ray->getTime());
+
+    return Material::Info(std::move(scatterRay), albedo_->color(intersect->getUV(), intersect->getPoint()));
+}
+
+std::optional<glm::vec3> LambertianMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const
+{
+    return std::nullopt;
 }

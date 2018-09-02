@@ -15,15 +15,12 @@ class RefractiveMaterial : public Material {
 public:
     
     RefractiveMaterial(const float refractiveIndex);
-    virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
-    
+
+    virtual Info getScatterRay(const Ray *ray, const Intersection *intersect) const;
+    virtual std::optional<glm::vec3> getEmittedColor(const glm::vec2 &uv, const glm::vec3 &location) const;
+
 private:
     float _refractiveIndex;
 };
-
-inline
-RefractiveMaterial::RefractiveMaterial(const float refractiveIndex)
-: _refractiveIndex(refractiveIndex)
-{}
 
 #endif /* RefractiveMaterial_hpp */

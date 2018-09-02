@@ -15,8 +15,10 @@
 class ReflectiveMaterial : public Material {
 public:
     ReflectiveMaterial(const glm::vec3 &albedo, const float fuzziness);
-    virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
-    
+
+    virtual Info getScatterRay(const Ray *ray, const Intersection *intersect) const;
+    virtual std::optional<glm::vec3> getEmittedColor(const glm::vec2 &uv, const glm::vec3 &location) const;
+
 private:
     glm::vec3 _albedo;
     float _fuzziness;

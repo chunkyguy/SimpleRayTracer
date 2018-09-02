@@ -8,6 +8,7 @@
 
 #ifndef Material_h
 #define Material_h
+#include <optional>
 #include <memory>
 #include <glm\glm.hpp>
 
@@ -16,6 +17,16 @@ class Intersection;
 
 class Material {
 public:
-    virtual std::unique_ptr<Ray> scatter (const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const = 0;
+
+    struct Info
+    {
+        Info(std::unique_ptr<Ray> ray, const glm::vec3 &attenuation);
+
+        std::unique_ptr<Ray> ray;
+        glm::vec3 attenuation;
+    };
+
+    virtual Info getScatterRay(const Ray *ray, const Intersection *intersect) const = 0;
+    virtual std::optional<glm::vec3> getEmittedColor(const glm::vec2 &uv, const glm::vec3 &location) const = 0;
 };
 #endif /* Material_h */

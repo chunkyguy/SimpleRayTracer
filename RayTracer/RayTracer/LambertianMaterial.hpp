@@ -17,16 +17,12 @@ class LambertianMaterial : public Material {
 public:
     LambertianMaterial(const Texture *albedo);
 
-    virtual std::unique_ptr<Ray> scatter(const Ray *ray, const Intersection *intersect, glm::vec3 &attenuation) const;
+    virtual Material::Info getScatterRay(const Ray *ray, const Intersection *intersect) const;
+    virtual std::optional<glm::vec3> getEmittedColor(const glm::vec2 &uv, const glm::vec3 &location) const;
     
 private:
 
     const Texture *albedo_;
 };
-
-inline
-LambertianMaterial::LambertianMaterial(const Texture *albedo)
-: albedo_(albedo)
-{}
 
 #endif /* LambertianMaterial_hpp */
