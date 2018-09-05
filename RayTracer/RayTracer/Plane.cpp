@@ -17,8 +17,23 @@ namespace
     }
 }
 
-Plane::Plane(const glm::vec2 & min, const glm::vec2 & max, const float z, const Material * material)
-    : min_(min), max_(max), z_(z), material_(material)
+Plane *Plane::makeYZ(const glm::vec2 & min, const glm::vec2 & max, const float x, const Material * material)
+{
+    return new Plane(min, max, Edge::X, x, material);
+}
+
+Plane *Plane::makeXZ(const glm::vec2 & min, const glm::vec2 & max, const float y, const Material * material)
+{
+    return new Plane(min, max, Edge::Y, y, material);
+}
+
+Plane *Plane::makeXY(const glm::vec2 & min, const glm::vec2 & max, const float z, const Material * material)
+{
+    return new Plane(min, max, Edge::Z, z, material);
+}
+
+Plane::Plane(const glm::vec2 & min, const glm::vec2 & max, const Edge edge, const float value, const Material * material)
+    : min_(min), max_(max), edge_(edge), value_(value), material_(material)
 {}
 
 Plane::~Plane()
@@ -26,29 +41,75 @@ Plane::~Plane()
 
 std::unique_ptr<Intersection> Plane::hit(const Ray * ray, const glm::vec2 & timeRange) const
 {
-    float t = (z_ - ray->getOrigin().z) / ray->getDirection().z;
+    int edge, aEdge, bEdge;
+    switch (edge_) {
+    case Edge::X:
+        edge = 0;
+        aEdge = 1;
+        bEdge = 2;
+        break;
+
+    case Edge::Y:
+        aEdge = 0;
+        edge = 1;
+        bEdge = 2;
+        break;
+
+    case Edge::Z:
+        aEdge = 0;
+        bEdge = 1;
+        edge = 2;
+        break;
+    }
+
+    return hit(ray, timeRange, edge, aEdge, bEdge);
+}
+
+std::unique_ptr<Intersection> Plane::hit(const Ray * ray, const glm::vec2 & timeRange, const int edge, const int aEdge, const int bEdge) const
+{
+    float t = (value_ - ray->getOrigin()[edge]) / ray->getDirection()[edge];
 
     if (!contains(t, timeRange)) {
         return std::unique_ptr<Intersection>();
     }
 
     glm::vec3 point = ray->pointAt(t);
-    glm::vec2 xRange = glm::vec2(min_.x, max_.x);
-    glm::vec2 yRange = glm::vec2(min_.y, max_.y);
-    if (!contains(point.x, xRange) || !contains(point.y, yRange)) {
+    glm::vec2 aRange = glm::vec2(min_[0], max_[0]);
+    glm::vec2 bRange = glm::vec2(min_[1], max_[1]);
+    if (!contains(point[aEdge], aRange) || !contains(point[bEdge], bRange)) {
         return std::unique_ptr<Intersection>();
     }
-    
-    return std::make_unique<Intersection>(
-        t,
-        point,
-        glm::vec3(0.0f, 0.0f, 1.0f),
-        glm::vec2(normalize(point.x, xRange), normalize(point.y, yRange)),
-        material_
-    );
+
+    glm::vec3 normal(0.0f, 0.0f, 0.0f);
+    normal[edge] = 1.0f;
+
+    glm::vec2 uv(normalize(point[aEdge], aRange), normalize(point[bEdge], bRange));
+
+    return std::make_unique<Intersection>(t, point, normal, uv, material_);
 }
 
 std::unique_ptr<AABB> Plane::boundingBox(const glm::vec2 & timeRange) const
 {
-    return std::make_unique<AABB>(glm::vec3(min_, z_ - 0.0001f), glm::vec3(max_, z_ + 0.0001f));
+    float minValue = value_ - 0.0001f;
+    float maxValue = value_ + 0.0001f;
+
+    glm::vec3 min, max;
+    switch (edge_) {
+    case Edge::X: 
+        min = glm::vec3(minValue, min_[0], min_[1]);
+        max = glm::vec3(maxValue, max_[0], max_[1]);
+        break;
+
+    case Edge::Y:
+        min = glm::vec3(min_[0], minValue, min_[1]);
+        max = glm::vec3(max_[0], maxValue, max_[1]);
+        break;
+
+    case Edge::Z:
+        min = glm::vec3(min_[0], min_[1], minValue);
+        max = glm::vec3(max_[0], max_[1], maxValue);
+        break;
+    }
+
+    return std::make_unique<AABB>(min, max);
 }

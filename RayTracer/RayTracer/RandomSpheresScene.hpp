@@ -21,23 +21,7 @@ class Texture;
 
 class RandomSpheresScene : public Scene {
 public:
-
     RandomSpheresScene(const glm::uvec2 &filmSize, const float resolution);
-    ~RandomSpheresScene();
-
-    virtual const Camera *getCamera() const;
-    virtual std::unique_ptr<HitTestable> getScene() const;
-
-private:
-	Camera *camera_;
-    std::vector<const HitTestable *> spheres_;
-    std::vector<Material *> materials_;
-    std::vector<const Texture *> textures_;
 };
-
-inline const Camera *RandomSpheresScene::getCamera() const
-{
-    return camera_;
-}
 
 #endif /* Scene_hpp */

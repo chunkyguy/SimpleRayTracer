@@ -17,6 +17,7 @@
 #include "RandomSpheresScene.hpp"
 #include "SphereScene.h"
 #include "Utils.hpp"
+#include "CornellBox.h"
 
 #define USE_CONCURRENT 1
 #define MODE_RELEASE 1
@@ -41,9 +42,10 @@ int main(int argc, const char * argv[])
     glm::uvec2 filmSize(120.0f, 80.0f);
     float filmResolution = 10.0f;
 #endif
-    Scene *scene;
-    // scene = new RandomSpheresScene(
-    scene = new SphereScene(
+    Scene *scene =
+    // new RandomSpheresScene(
+    // new SphereScene(
+        new CornellBox(
         filmSize,
         filmResolution
     );

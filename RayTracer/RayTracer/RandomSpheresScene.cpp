@@ -50,7 +50,7 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
 
     material = new LambertianMaterial(texture);
     materials_.push_back(material);
-    spheres_.push_back(new Sphere(glm::vec3(0, -1000, 0), 1000, material));
+    shapes_.push_back(new Sphere(glm::vec3(0, -1000, 0), 1000, material));
     
     /* fill random spheres */
      RandomNumGen rand;
@@ -70,7 +70,7 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
                     );
                     texture = new ColorTexture(albedo);
                     textures_.push_back(texture);
-                    spheres_.push_back(new Sphere(center, 0.2f, new LambertianMaterial(texture)));
+                    shapes_.push_back(new Sphere(center, 0.2f, new LambertianMaterial(texture)));
                 } else if (materialType < 0.95f) {
                     // metal
                     glm::vec3 albedo = glm::vec3(
@@ -79,10 +79,10 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
                         rand.generate(glm::vec2(1.0f, 2.0f))
                         );
                     float fuzziness = rand.generate(glm::vec2(0.0f, 0.5f));
-                    spheres_.push_back(new Sphere(center, 0.2f, new ReflectiveMaterial(albedo, fuzziness)));
+                    shapes_.push_back(new Sphere(center, 0.2f, new ReflectiveMaterial(albedo, fuzziness)));
                 } else {
                     //glass
-                    spheres_.push_back(new Sphere(center, 0.2f, new RefractiveMaterial(1.5f)));
+                    shapes_.push_back(new Sphere(center, 0.2f, new RefractiveMaterial(1.5f)));
                 }
             }
         }
@@ -93,7 +93,7 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
     textures_.push_back(texture);
     material = new LambertianMaterial(texture);
     materials_.push_back(material);
-    spheres_.push_back(new MovingSphere(
+    shapes_.push_back(new MovingSphere(
         glm::vec3(-4, 1, 0), 
         glm::vec3(-4, 1.3f, 0),
         glm::vec2(0.0f, 1.0f),
@@ -103,7 +103,7 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
 
     material = new ReflectiveMaterial(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
     materials_.push_back(material);
-    spheres_.push_back(new MovingSphere(
+    shapes_.push_back(new MovingSphere(
         glm::vec3(4, 1, 0),
         glm::vec3(4, 1.5f, 0),
         glm::vec2(0.0f, 1.0f),
@@ -112,31 +112,10 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
 
     material = new RefractiveMaterial(1.5f);
     materials_.push_back(material);
-    spheres_.push_back(new MovingSphere(
+    shapes_.push_back(new MovingSphere(
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1.2f, 0),
         glm::vec2(0.0f, 1.0f),
         1.0f, material
     ));
-
-}
-
-RandomSpheresScene::~RandomSpheresScene()
-{
-    delete camera_;
-    for (const HitTestable *sphere : spheres_) {
-        delete sphere;
-    }
-    for (Material *material : materials_) {
-        delete material;
-    }
-
-    for (const Texture *texture : textures_) {
-        delete texture;
-    }
-}
-
-std::unique_ptr<HitTestable> RandomSpheresScene::getScene() const
-{
-    return std::unique_ptr<HitTestable>(new Space(spheres_));
 }

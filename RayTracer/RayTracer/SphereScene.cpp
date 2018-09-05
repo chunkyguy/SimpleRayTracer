@@ -37,7 +37,7 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
     const HitTestable *sphere1 = new Sphere(vec3(0.0f, 7.0f, 0.0f), 2.0f, lightMaterial);
     shapes_.push_back(sphere1);
 
-    const HitTestable *lightPlane = new Plane(vec2(3, 1), vec2(5, 3), -2, lightMaterial);
+    const HitTestable *lightPlane = new Plane(vec2(3, 1), vec2(5, 3), Plane::Edge::Z, -2, lightMaterial);
     shapes_.push_back(lightPlane);
 
     camera_ = new Camera(
@@ -50,33 +50,4 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
         10.0f, /* focal length */
         vec2(0.0f, 1.0f) /* time range */
     );
-}
-
-SphereScene::~SphereScene()
-{
-    for (const Image *i : images_) {
-        delete i;
-    }
-
-    for (const Texture *t : textures_) {
-        delete t;
-    }
-
-    for (const HitTestable *s : shapes_) {
-        delete s;
-    }
-
-    for (const Material *m : materials_) {
-        delete m;
-    }
-}
-
-const Camera * SphereScene::getCamera() const
-{
-    return camera_;
-}
-
-std::unique_ptr<HitTestable> SphereScene::getScene() const
-{
-    return std::unique_ptr<HitTestable>(new Space(shapes_));
 }

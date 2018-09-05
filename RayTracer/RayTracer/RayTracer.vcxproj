@@ -156,6 +156,7 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="ColorTexture.h" />
+    <ClInclude Include="CornellBox.h" />
     <ClInclude Include="DiffuseLightMaterial.h" />
     <ClInclude Include="Film.hpp" />
     <ClInclude Include="Image.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CheckerTexture.cpp" />
     <ClCompile Include="ColorTexture.cpp" />
+    <ClCompile Include="CornellBox.cpp" />
     <ClCompile Include="DiffuseLightMaterial.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -207,6 +209,7 @@
     <ClCompile Include="ReflectiveMaterial.cpp" />
     <ClCompile Include="RefractiveMaterial.cpp" />
     <ClCompile Include="RandomSpheresScene.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereScene.cpp" />
