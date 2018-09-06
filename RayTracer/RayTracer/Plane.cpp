@@ -17,23 +17,8 @@ namespace
     }
 }
 
-Plane *Plane::makeYZ(const glm::vec2 & min, const glm::vec2 & max, const float x, const Material * material)
-{
-    return new Plane(min, max, Edge::X, x, material);
-}
-
-Plane *Plane::makeXZ(const glm::vec2 & min, const glm::vec2 & max, const float y, const Material * material)
-{
-    return new Plane(min, max, Edge::Y, y, material);
-}
-
-Plane *Plane::makeXY(const glm::vec2 & min, const glm::vec2 & max, const float z, const Material * material)
-{
-    return new Plane(min, max, Edge::Z, z, material);
-}
-
-Plane::Plane(const glm::vec2 & min, const glm::vec2 & max, const Edge edge, const float value, const Material * material)
-    : min_(min), max_(max), edge_(edge), value_(value), material_(material)
+Plane::Plane(const glm::vec2 & min, const glm::vec2 & max, const Edge edge, const float value, const Material * material, const bool flipNormal)
+    : min_(min), max_(max), edge_(edge), value_(value), material_(material), flipNormal_(flipNormal)
 {}
 
 Plane::~Plane()
@@ -81,7 +66,7 @@ std::unique_ptr<Intersection> Plane::hit(const Ray * ray, const glm::vec2 & time
     }
 
     glm::vec3 normal(0.0f, 0.0f, 0.0f);
-    normal[edge] = 1.0f;
+    normal[edge] = flipNormal_ ? -1.0f : 1.0f;
 
     glm::vec2 uv(normalize(point[aEdge], aRange), normalize(point[bEdge], bRange));
 

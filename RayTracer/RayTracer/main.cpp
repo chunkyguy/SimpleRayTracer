@@ -30,7 +30,6 @@ glm::vec3 getColor(
     const int maxDepth
 );
 
-
 int main(int argc, const char * argv[])
 {
 #if MODE_RELEASE
@@ -39,7 +38,7 @@ int main(int argc, const char * argv[])
     float filmResolution = 100.0f;
 #else 
     int maxDepth = 5;
-    glm::uvec2 filmSize(120.0f, 80.0f);
+    glm::uvec2 filmSize(240.0f, 160.0f);
     float filmResolution = 10.0f;
 #endif
     Scene *scene =

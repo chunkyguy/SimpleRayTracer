@@ -31,19 +31,22 @@ CornellBox::CornellBox(const uvec2 & filmSize, const float resolution)
     textures_.push_back(lightTexure);
     materials_.push_back(lightMat);
 
-    const HitTestable *left = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::X, 555, greenMat);
+    const HitTestable *left = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::X, 0, redMat, false);
     shapes_.push_back(left);
 
-    const HitTestable *right = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::X, 0, redMat);
+    const HitTestable *right = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::X, 555, greenMat, true);
     shapes_.push_back(right);
 
-    const HitTestable *top = new Plane(vec2(213,227), vec2(343,332), Plane::Edge::Y, 554, lightMat);
-    shapes_.push_back(top);
+    const HitTestable *light = new Plane(vec2(213,227), vec2(343,332), Plane::Edge::Y, 554, lightMat, true);
+    shapes_.push_back(light);
     
-    const HitTestable *bottom = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::Y, 0, whiteMat);
+    const HitTestable *top = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::Y, 555, whiteMat, true);
+    shapes_.push_back(top);
+
+    const HitTestable *bottom = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::Y, 0, whiteMat, false);
     shapes_.push_back(bottom);
     
-    const HitTestable *far = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::Z, 555, whiteMat);
+    const HitTestable *far = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::Z, 555, whiteMat, true);
     shapes_.push_back(far);
 
     camera_ = new Camera(

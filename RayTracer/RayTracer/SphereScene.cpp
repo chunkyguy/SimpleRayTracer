@@ -37,7 +37,7 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
     const HitTestable *sphere1 = new Sphere(vec3(0.0f, 7.0f, 0.0f), 2.0f, lightMaterial);
     shapes_.push_back(sphere1);
 
-    const HitTestable *lightPlane = new Plane(vec2(3, 1), vec2(5, 3), Plane::Edge::Z, -2, lightMaterial);
+    const HitTestable *lightPlane = new Plane(vec2(3, 1), vec2(5, 3), Plane::Edge::Z, -2, lightMaterial, false);
     shapes_.push_back(lightPlane);
 
     camera_ = new Camera(
