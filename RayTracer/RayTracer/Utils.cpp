@@ -30,7 +30,7 @@ namespace
         assert(intersect->getMaterial());
 
         if (depth >= maxDepth) {
-            return glm::vec3(0.0f, 0.0f, 0.0f);
+            return glm::vec3(0.0f);
         }
 
         const Material *material = intersect->getMaterial();

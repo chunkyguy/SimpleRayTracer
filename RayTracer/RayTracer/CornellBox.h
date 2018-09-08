@@ -9,4 +9,3 @@ class CornellBox :
 public:
     CornellBox(const glm::uvec2 &filmSize, const float resolution);
 };
-

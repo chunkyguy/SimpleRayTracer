@@ -1,5 +1,6 @@
 #include "CornellBox.h"
 
+#include "Box.h"
 #include "Camera.hpp"
 #include "ColorTexture.h"
 #include "DiffuseLightMaterial.h"
@@ -43,11 +44,17 @@ CornellBox::CornellBox(const uvec2 & filmSize, const float resolution)
     const HitTestable *top = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::Y, 555, whiteMat, true);
     shapes_.push_back(top);
 
-    const HitTestable *bottom = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::Y, 0, whiteMat, false);
+    const HitTestable *bottom = new Plane(vec2(0,0), vec2(555, 555), Plane::Edge::Y, 0, whiteMat, false);
     shapes_.push_back(bottom);
     
-    const HitTestable *far = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::Z, 555, whiteMat, true);
+    const HitTestable *far = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::Z, 555, whiteMat, true);
     shapes_.push_back(far);
+
+    const HitTestable *box0 = new Box(vec3(130, 0, 65), vec3(295, 165, 230), whiteMat);
+    shapes_.push_back(box0);
+
+    const HitTestable *box1 = new Box(vec3(265, 0, 295), vec3(430, 330, 460), whiteMat);
+    shapes_.push_back(box1);
 
     camera_ = new Camera(
         vec3(278, 278, -800), /* from */

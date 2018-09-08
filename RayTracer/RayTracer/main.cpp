@@ -20,7 +20,17 @@
 #include "CornellBox.h"
 
 #define USE_CONCURRENT 1
-#define MODE_RELEASE 1
+
+/*
+Render Quality:
+LOW: Renders in few seconds
+MED: Renders within a minute
+HIGH: Renders in a few minutes
+*/
+
+//#define RENDER_QUALITY_LOW  0
+// #define RENDER_QUALITY_MED 1
+#define RENDER_QUALITY_HIGH 2 
 
 glm::vec3 getColor(
     const glm::uvec3 &targetSize,
@@ -32,15 +42,20 @@ glm::vec3 getColor(
 
 int main(int argc, const char * argv[])
 {
-#if MODE_RELEASE
-    int maxDepth = 50;
-    glm::uvec2 filmSize(480.0f, 320.0f);
-    float filmResolution = 100.0f;
-#else 
+#if RENDER_QUALITY_LOW
     int maxDepth = 5;
     glm::uvec2 filmSize(240.0f, 160.0f);
     float filmResolution = 10.0f;
+#elif RENDER_QUALITY_MED
+    int maxDepth = 50;
+    glm::uvec2 filmSize(240.0f, 160.0f);
+    float filmResolution = 20.0f;
+#else
+    int maxDepth = 50;
+    glm::uvec2 filmSize(480.0f, 320.0f);
+    float filmResolution = 100.0f;
 #endif
+
     Scene *scene =
     // new RandomSpheresScene(
     // new SphereScene(
