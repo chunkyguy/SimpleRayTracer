@@ -24,27 +24,4 @@ private:
     glm::vec3 _direction;
     float time_;
 };
-
-inline
-Ray::Ray(const glm::vec3 &origin, const glm::vec3 &direction, const float &time)
-: _origin(origin), _direction(direction), time_(time)
-{}
-
-inline
-glm::vec3 Ray::getOrigin() const
-{
-    return _origin;
-}
-
-inline
-glm::vec3 Ray::getDirection() const
-{
-    return _direction;
-}
-
-inline
-float Ray::getTime() const
-{
-    return time_;
-}
 #endif /* Ray_hpp */

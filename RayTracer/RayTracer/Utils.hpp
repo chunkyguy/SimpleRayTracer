@@ -11,11 +11,20 @@
 #include <memory>
 #include <glm\glm.hpp>
 
+class Camera;
 class Ray;
 class HitTestable;
 
 struct Utils {
-    
+    static
+    glm::vec3 getColor(
+        const glm::uvec3 &targetSize,
+        const glm::uvec2 point,
+        const Camera *camera,
+        const HitTestable *space,
+        const int maxDepth
+    );
+
     static
     glm::vec3 pointInUnitSphere();
     
@@ -30,9 +39,6 @@ struct Utils {
     static
     glm::vec3 toNormalSpace(glm::vec3 p);
 
-    static
-    glm::vec3 trace(const std::unique_ptr<Ray> ray, const HitTestable *item, const int depth, const int maxDepth);
-    
     static
     float fresnel(const float cosine, const float referactiveIndex);
 };

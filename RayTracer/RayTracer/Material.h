@@ -20,13 +20,15 @@ public:
 
     struct Info
     {
-        Info(std::unique_ptr<Ray> ray, const glm::vec3 &attenuation);
+        Info(std::unique_ptr<Ray> ray, const glm::vec3 &attenuation, const float pdf);
 
         std::unique_ptr<Ray> ray;
         glm::vec3 attenuation;
+        float pdf;
     };
 
     virtual Info getScatterRay(const Ray *ray, const Intersection *intersect) const = 0;
     virtual std::optional<glm::vec3> getEmittedColor(const glm::vec2 &uv, const glm::vec3 &location) const = 0;
+    virtual float getScatterPDF(const Ray *ray, const Ray *scatterRay, const Intersection *intersect) const = 0;
 };
 #endif /* Material_h */

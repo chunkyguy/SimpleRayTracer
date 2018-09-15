@@ -21,50 +21,69 @@
 
 #define USE_CONCURRENT 1
 
-/*
-Render Quality:
-LOW: Renders in few seconds
-MED: Renders within a minute
-HIGH: Renders in a few minutes
-*/
+struct RenderConfig
+{
+    // Render Quality LOW: Renders in few seconds
+    static RenderConfig low()
+    {
+        return RenderConfig(5, glm::uvec2(240.0f, 160.0f), 10.0f);
+    }
 
-//#define RENDER_QUALITY_LOW  0
-// #define RENDER_QUALITY_MED 1
-#define RENDER_QUALITY_HIGH 2 
+    // Render Quality MED: Renders within a minute
+    static RenderConfig medium()
+    {
+        return RenderConfig(50, glm::uvec2(240.0f, 160.0f), 20.0f);
+    }
 
-glm::vec3 getColor(
-    const glm::uvec3 &targetSize,
-    const glm::uvec2 point,
-    const Camera *camera,
-    const HitTestable *space,
-    const int maxDepth
-);
+    // Render Quality HIGH: Renders in a few minutes
+    static RenderConfig high()
+    {
+        return RenderConfig(50, glm::uvec2(480.0f, 320.0f), 100.0f);
+    }
+
+    RenderConfig(int maxDepth, glm::uvec2 filmSize, float filmResolution)
+        : maxDepth(maxDepth), filmSize(filmSize), filmResolution(filmResolution)
+    {}
+
+    int maxDepth;
+    glm::uvec2 filmSize;
+    float filmResolution;
+};
+
+struct SceneFactory
+{
+    enum class Name
+    {
+        randomSpheres,
+        sphere,
+        cornellBox
+    };
+
+    static std::unique_ptr<Scene> makeSceneNamed(const Name name, const RenderConfig &config)
+    {
+        switch (name) {
+        case Name::sphere:
+            return std::make_unique<SphereScene>(config.filmSize, config.filmResolution);
+            break;
+        case Name::randomSpheres:
+            return std::make_unique<RandomSpheresScene>(config.filmSize, config.filmResolution);
+            break;
+        case Name::cornellBox:
+            return std::make_unique<CornellBox>(config.filmSize, config.filmResolution);
+            break;
+        }
+        
+        return nullptr;
+    }
+};
 
 int main(int argc, const char * argv[])
 {
-#if RENDER_QUALITY_LOW
-    int maxDepth = 5;
-    glm::uvec2 filmSize(240.0f, 160.0f);
-    float filmResolution = 10.0f;
-#elif RENDER_QUALITY_MED
-    int maxDepth = 50;
-    glm::uvec2 filmSize(240.0f, 160.0f);
-    float filmResolution = 20.0f;
-#else
-    int maxDepth = 50;
-    glm::uvec2 filmSize(480.0f, 320.0f);
-    float filmResolution = 100.0f;
-#endif
+    RenderConfig config = RenderConfig::high();
 
-    Scene *scene =
-    // new RandomSpheresScene(
-    // new SphereScene(
-        new CornellBox(
-        filmSize,
-        filmResolution
-    );
+    std::unique_ptr<Scene> scene = std::move(SceneFactory::makeSceneNamed(SceneFactory::Name::cornellBox, config));
 
-    Film film(filmSize);
+    Film film(config.filmSize);
 
     // trace rays
     std::vector<glm::uvec2> points = film.getPoints();
@@ -81,12 +100,12 @@ int main(int argc, const char * argv[])
         points.begin(), points.end(), [&](const glm::uvec2 &point) {
         PixelData data = {};
         data.point = point;
-        data.color = getColor(
-            glm::vec3(filmSize, filmResolution),
+        data.color = Utils::getColor(
+            glm::vec3(config.filmSize, config.filmResolution),
             point,
             scene->getCamera(),
             space.get(),
-            maxDepth
+            config.maxDepth
         );
         pixelData.push_back(data);
     });
@@ -98,29 +117,6 @@ int main(int argc, const char * argv[])
     film.process();
 
     return 0;
-}
-
-glm::vec3 getColor(
-    const glm::uvec3 &targetSize,
-    const glm::uvec2 point,
-    const Camera *camera,
-    const HitTestable *space,
-    const int maxDepth)
-{
-    RandomNumGen rand;
-    glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
-    for (unsigned int s = 0; s < targetSize.z; ++s) {
-        glm::vec2 uv = glm::vec2(
-            float(point.x + rand.generate()) / float(targetSize.x),
-            float(point.y + rand.generate()) / float(targetSize.y)
-        );
-        color += Utils::trace(std::move(camera->getRay(uv)), space, 0, maxDepth);
-    }
-    glm::vec3 aggregateColor = color / float(targetSize.z);
-    return glm::vec3(glm::sqrt(aggregateColor.x),
-        glm::sqrt(aggregateColor.y),
-        glm::sqrt(aggregateColor.z)
-    );
 }
 
 // EOF
