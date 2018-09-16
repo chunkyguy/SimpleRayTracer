@@ -16,58 +16,81 @@
 #include "Material.h"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
+#include "Scene.h"
 #include "WLAssert.h"
+
+using namespace glm;
 
 // private functions
 namespace
 {
-    glm::vec3 getColor(const std::unique_ptr<Ray> ray, const HitTestable *item, const int depth, const int maxDepth);
+    vec3 getColor(const std::unique_ptr<Ray> ray, const Scene *scene, const int depth, const int maxDepth);
 
-    glm::vec3 getBackgroundColor(const Ray *ray)
+    vec3 getHitColor(const Ray *ray, const Scene *scene, const Intersection *intersect, const int depth, const int maxDepth)
     {
-        return glm::vec3(0.0f);
-    }
-
-    glm::vec3 getHitColor(const Ray *ray, const HitTestable *item, const Intersection *intersect, const int depth, const int maxDepth)
-    {
-        // return sphere color
+        // return hit color
         assert(intersect);
         assert(intersect->getMaterial());
 
+        const Material *material = intersect->getMaterial();
+        vec3 emittedColor = material->getEmittedColor(
+            intersect->getUV(),
+            intersect->getPoint()
+        ).value_or(vec3(0.0f, 0.0f, 0.0f));
+
         if (depth >= maxDepth) {
+            // stop bouncing
+            return emittedColor;
+        }
+
+        Material::Info scatterRayInfo = material->getScatterRay(ray, intersect);
+        if (!scatterRayInfo.canScatter) {
+            // no bounce
+            return emittedColor;
+        }
+
+        vec3 lightDir = scene->getRandomLightOrigin() - intersect->getPoint();
+        vec3 nLightDir = glm::normalize(lightDir);
+        float lightAngle = glm::dot(nLightDir, intersect->getNormal());
+        if ( lightAngle < 0.0f) {
+            // not facing light
+            return emittedColor;
+        }
+
+        float lightCosine = fabsf(nLightDir.y);
+        if (lightCosine < 0.00001f) {
+            // on the edge
+            return emittedColor;
+        }
+
+        float pdf = length2(lightDir) / (lightCosine * scene->getLightArea());
+        std::unique_ptr<Ray> scatterRay = std::make_unique<Ray>(intersect->getPoint(), lightDir, intersect->getTime());
+        glm::vec3 hitColor = scatterRayInfo.attenuation;
+        float materialPDF = material->getScatterPDF(ray, scatterRay.get(), intersect);       
+        return emittedColor + hitColor * materialPDF / pdf * getColor(std::move(scatterRay), scene, depth + 1, maxDepth);
+    }
+
+    glm::vec3 getColor(const std::unique_ptr<Ray> ray, const Scene *scene, const int depth, const int maxDepth)
+    {
+        const HitTestable *space = scene->getSpace();
+        glm::vec2 timeRange(0.001f, std::numeric_limits<float>::max());
+        std::unique_ptr<Intersection> intersect = std::move(space->hit(ray.get(), timeRange));
+        if (!intersect) {
+            // return background
             return glm::vec3(0.0f);
         }
 
-        const Material *material = intersect->getMaterial();
-        glm::vec3 color = material->getEmittedColor(intersect->getUV(), intersect->getPoint()).value_or(glm::vec3(0.0f));
-        Material::Info scatterRayInfo = material->getScatterRay(ray, intersect);
-        if (scatterRayInfo.ray) {
-            float f = material->getScatterPDF(ray, scatterRayInfo.ray.get(), intersect) / scatterRayInfo.pdf;
-            color += scatterRayInfo.attenuation * getColor(std::move(scatterRayInfo.ray), item, depth + 1, maxDepth) * f;
-        }
-        return color;
-    }
-
-    glm::vec3 getColor(const std::unique_ptr<Ray> ray, const HitTestable *item, const int depth, const int maxDepth)
-    {
-        glm::vec2 timeRange(0.001f, std::numeric_limits<float>::max());
-        std::unique_ptr<Intersection> intersect = std::move(item->hit(ray.get(), timeRange));
-        if (!intersect) {
-            // return background
-            return getBackgroundColor(ray.get());
-        }
-
-        return getHitColor(ray.get(), item, intersect.get(), depth, maxDepth);
+        return getHitColor(ray.get(), scene, intersect.get(), depth, maxDepth);
     }
 } // private functions
 
 glm::vec3 Utils::getColor(
     const glm::uvec3 &targetSize,
     const glm::uvec2 point,
-    const Camera *camera,
-    const HitTestable *space,
+    const Scene *scene,
     const int maxDepth)
 {
+    const Camera *camera = scene->getCamera();
     RandomNumGen rand;
     glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
     for (unsigned int s = 0; s < targetSize.z; ++s) {
@@ -75,10 +98,11 @@ glm::vec3 Utils::getColor(
             float(point.x + rand.generate()) / float(targetSize.x),
             float(point.y + rand.generate()) / float(targetSize.y)
         );
-        color += ::getColor(std::move(camera->getRay(uv)), space, 0, maxDepth);
+        color += ::getColor(std::move(camera->getRay(uv)), scene, 0, maxDepth);
     }
     glm::vec3 aggregateColor = color / float(targetSize.z);
-    return glm::vec3(glm::sqrt(aggregateColor.x),
+    return glm::vec3(
+        glm::sqrt(aggregateColor.x),
         glm::sqrt(aggregateColor.y),
         glm::sqrt(aggregateColor.z)
     );

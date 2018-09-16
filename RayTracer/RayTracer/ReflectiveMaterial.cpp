@@ -26,7 +26,7 @@ Material::Info ReflectiveMaterial::getScatterRay(const Ray * ray, const Intersec
     if (glm::dot(reflect, intersect->getNormal()) > 0.0f) {
         scatterRay = std::make_unique<Ray>(intersect->getPoint(), reflect + (Utils::pointInUnitSphere() * _fuzziness), ray->getTime());
     }
-    return Material::Info(std::move(scatterRay), _albedo, 1.0f);
+    return Material::Info(scatterRay.get() != nullptr, _albedo, 1.0f);
 }
 
 std::optional<glm::vec3> ReflectiveMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const

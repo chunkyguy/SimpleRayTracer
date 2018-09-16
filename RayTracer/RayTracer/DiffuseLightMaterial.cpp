@@ -11,7 +11,7 @@ DiffuseLightMaterial::~DiffuseLightMaterial()
 
 Material::Info DiffuseLightMaterial::getScatterRay(const Ray * ray, const Intersection * intersect) const
 {
-    return Material::Info(std::unique_ptr<Ray>(), glm::vec3(0.0f), 1.0f);
+    return Material::Info(false, glm::vec3(0.0f), 1.0f);
 }
 
 std::optional<glm::vec3> DiffuseLightMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const

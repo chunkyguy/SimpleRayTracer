@@ -72,7 +72,7 @@ struct SceneFactory
             return std::make_unique<CornellBox>(config.filmSize, config.filmResolution);
             break;
         }
-        
+
         return nullptr;
     }
 };
@@ -88,8 +88,6 @@ int main(int argc, const char * argv[])
     // trace rays
     std::vector<glm::uvec2> points = film.getPoints();
 
-    std::unique_ptr<HitTestable> space = std::move(scene->getScene());
-
 #if USE_CONCURRENT
     concurrency::concurrent_vector<PixelData> pixelData;
     concurrency::parallel_for_each(
@@ -103,8 +101,7 @@ int main(int argc, const char * argv[])
         data.color = Utils::getColor(
             glm::vec3(config.filmSize, config.filmResolution),
             point,
-            scene->getCamera(),
-            space.get(),
+            scene.get(),
             config.maxDepth
         );
         pixelData.push_back(data);

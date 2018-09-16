@@ -13,34 +13,34 @@
 
 class Camera;
 class Ray;
-class HitTestable;
+class Scene;
 
-struct Utils {
+struct Utils
+{
     static
-    glm::vec3 getColor(
-        const glm::uvec3 &targetSize,
-        const glm::uvec2 point,
-        const Camera *camera,
-        const HitTestable *space,
-        const int maxDepth
-    );
+        glm::vec3 getColor(
+            const glm::uvec3 &targetSize,
+            const glm::uvec2 point,
+            const Scene *scene,
+            const int maxDepth
+        );
 
     static
-    glm::vec3 pointInUnitSphere();
-    
+        glm::vec3 pointInUnitSphere();
+
     static
-    glm::vec3 pointInUnitDisk();
+        glm::vec3 pointInUnitDisk();
 
     // [-1, +1] -> [0, 1]
     static
-    glm::vec3 toColorSpace(glm::vec3 point);
+        glm::vec3 toColorSpace(glm::vec3 point);
 
     // [0, 1] -> [-1, +1]
     static
-    glm::vec3 toNormalSpace(glm::vec3 p);
+        glm::vec3 toNormalSpace(glm::vec3 p);
 
     static
-    float fresnel(const float cosine, const float referactiveIndex);
+        float fresnel(const float cosine, const float referactiveIndex);
 };
 
 #endif /* Utils_hpp */

@@ -138,8 +138,14 @@
     <ClInclude Include="CornellBox.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
+    <ClInclude Include="CoordinateSystem.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Edge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,8 +239,11 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Box.cpp">
+    <ClCompile Include="CoordinateSystem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

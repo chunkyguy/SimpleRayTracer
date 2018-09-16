@@ -7,10 +7,12 @@
 #include "HitTestable.h"
 #include "LambertianMaterial.hpp"
 #include "Plane.h"
+#include "RandomNumGen.hpp"
 
 using namespace glm;
 
 CornellBox::CornellBox(const uvec2 & filmSize, const float resolution)
+    : lightRangeX_({ 213.0f, 343.0f }), lightY_(554.0f), lightRangeZ_({227.0f, 332.0f})
 {
     const Texture * redTexture = new ColorTexture(vec3(0.65, 0.05, 0.05));
     const Material *redMat = new LambertianMaterial(redTexture);
@@ -32,22 +34,26 @@ CornellBox::CornellBox(const uvec2 & filmSize, const float resolution)
     textures_.push_back(lightTexure);
     materials_.push_back(lightMat);
 
-    const HitTestable *left = new Plane(vec2(0,0), vec2(555,555), Plane::Edge::X, 0, redMat, false);
+    const HitTestable *left = new Plane(vec2(0,0), vec2(555,555), Edge::X, 0, redMat, 1.0f);
     shapes_.push_back(left);
 
-    const HitTestable *right = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::X, 555, greenMat, true);
+    const HitTestable *right = new Plane(vec2(0, 0), vec2(555, 555), Edge::X, 555, greenMat, -1.0f);
     shapes_.push_back(right);
-
-    const HitTestable *light = new Plane(vec2(213,227), vec2(343,332), Plane::Edge::Y, 554, lightMat, true);
+    
+    const HitTestable *light = new Plane(
+        vec2(lightRangeX_[0], lightRangeZ_[0]), 
+        vec2(lightRangeX_[1], lightRangeZ_[1]), 
+        Edge::Y, lightY_, lightMat, -1.0f
+    );
     shapes_.push_back(light);
     
-    const HitTestable *top = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::Y, 555, whiteMat, true);
+    const HitTestable *top = new Plane(vec2(0, 0), vec2(555, 555), Edge::Y, 555, whiteMat, -1.0f);
     shapes_.push_back(top);
 
-    const HitTestable *bottom = new Plane(vec2(0,0), vec2(555, 555), Plane::Edge::Y, 0, whiteMat, false);
+    const HitTestable *bottom = new Plane(vec2(0,0), vec2(555, 555), Edge::Y, 0, whiteMat, 1.0f);
     shapes_.push_back(bottom);
     
-    const HitTestable *far = new Plane(vec2(0, 0), vec2(555, 555), Plane::Edge::Z, 555, whiteMat, true);
+    const HitTestable *far = new Plane(vec2(0, 0), vec2(555, 555), Edge::Z, 555, whiteMat, -1.0f);
     shapes_.push_back(far);
 
     const HitTestable *box0 = new Box(vec3(130, 0, 65), vec3(295, 165, 230), whiteMat);
@@ -66,4 +72,21 @@ CornellBox::CornellBox(const uvec2 & filmSize, const float resolution)
         10.0f, /* focal length */
         vec2(0.0f, 1.0f) /* time range */
     );
+
+    init();
+}
+
+glm::vec3 CornellBox::getRandomLightOrigin() const
+{
+    RandomNumGen rGen;
+    return glm::vec3 {
+        rGen.generate(lightRangeX_),
+        lightY_,
+        rGen.generate(lightRangeZ_)
+    };
+}
+
+float CornellBox::getLightArea() const
+{
+    return (lightRangeX_[1] - lightRangeX_[0]) * (lightRangeZ_[1] - lightRangeZ_[0]);
 }

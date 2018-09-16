@@ -17,8 +17,14 @@ namespace
     }
 }
 
-Plane::Plane(const glm::vec2 & min, const glm::vec2 & max, const Edge edge, const float value, const Material * material, const bool flipNormal)
-    : min_(min), max_(max), edge_(edge), value_(value), material_(material), flipNormal_(flipNormal)
+Plane::Plane(
+    const glm::vec2 & min,
+    const glm::vec2 & max,
+    const Edge edge,
+    const float value,
+    const Material * material,
+    const float normal)
+    : min_(min), max_(max), edge_(edge), value_(value), material_(material), normal_(normal)
 {}
 
 Plane::~Plane()
@@ -50,7 +56,13 @@ std::unique_ptr<Intersection> Plane::hit(const Ray * ray, const glm::vec2 & time
     return hit(ray, timeRange, edge, aEdge, bEdge);
 }
 
-std::unique_ptr<Intersection> Plane::hit(const Ray * ray, const glm::vec2 & timeRange, const int edge, const int aEdge, const int bEdge) const
+std::unique_ptr<Intersection> Plane::hit(
+    const Ray * ray,
+    const glm::vec2 & timeRange,
+    const int edge,
+    const int aEdge,
+    const int bEdge
+) const
 {
     float t = (value_ - ray->getOrigin()[edge]) / ray->getDirection()[edge];
 
@@ -65,8 +77,8 @@ std::unique_ptr<Intersection> Plane::hit(const Ray * ray, const glm::vec2 & time
         return std::unique_ptr<Intersection>();
     }
 
-    glm::vec3 normal(0.0f, 0.0f, 0.0f);
-    normal[edge] = flipNormal_ ? -1.0f : 1.0f;
+    glm::vec3 normal(0.0f);
+    normal[edge] = normal_;
 
     glm::vec2 uv(normalize(point[aEdge], aRange), normalize(point[bEdge], bRange));
 

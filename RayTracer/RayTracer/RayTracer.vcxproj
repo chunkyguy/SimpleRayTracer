@@ -157,8 +157,10 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="ColorTexture.h" />
+    <ClInclude Include="CoordinateSystem.h" />
     <ClInclude Include="CornellBox.h" />
     <ClInclude Include="DiffuseLightMaterial.h" />
+    <ClInclude Include="Edge.h" />
     <ClInclude Include="Film.hpp" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageTexture.h" />
@@ -193,6 +195,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CheckerTexture.cpp" />
     <ClCompile Include="ColorTexture.cpp" />
+    <ClCompile Include="CoordinateSystem.cpp" />
     <ClCompile Include="CornellBox.cpp" />
     <ClCompile Include="DiffuseLightMaterial.cpp" />
     <ClCompile Include="Film.cpp" />

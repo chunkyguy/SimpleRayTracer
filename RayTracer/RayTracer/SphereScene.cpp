@@ -37,7 +37,7 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
     const HitTestable *sphere1 = new Sphere(vec3(0.0f, 7.0f, 0.0f), 2.0f, lightMaterial);
     shapes_.push_back(sphere1);
 
-    const HitTestable *lightPlane = new Plane(vec2(3, 1), vec2(5, 3), Plane::Edge::Z, -2, lightMaterial, false);
+    const HitTestable *lightPlane = new Plane(vec2(3, 1), vec2(5, 3), Edge::Z, -2, lightMaterial, false);
     shapes_.push_back(lightPlane);
 
     camera_ = new Camera(
@@ -50,4 +50,16 @@ SphereScene::SphereScene(const uvec2 & filmSize, const float resolution)
         10.0f, /* focal length */
         vec2(0.0f, 1.0f) /* time range */
     );
+
+    init();
+}
+
+glm::vec3 SphereScene::getRandomLightOrigin() const
+{
+    return vec3{3,1,-2};
+}
+
+float SphereScene::getLightArea() const 
+{
+    return 4;
 }

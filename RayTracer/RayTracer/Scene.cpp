@@ -5,6 +5,12 @@
 #include "Material.h"
 #include "Space.hpp"
 #include "Texture.h"
+#include "WLAssert.h"
+
+void Scene::init()
+{
+    space_.reset(new Space(shapes_));
+}
 
 Scene::~Scene()
 {
@@ -30,7 +36,8 @@ const Camera * Scene::getCamera() const
     return camera_;
 }
 
-std::unique_ptr<HitTestable> Scene::getScene() const
+const HitTestable* Scene::getSpace() const
 {
-    return std::unique_ptr<HitTestable>(new Space(shapes_));
+    wlAssert(space_.get() != nullptr, "Did not call init()");
+    return space_.get();
 }

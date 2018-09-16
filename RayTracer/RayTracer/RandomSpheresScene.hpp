@@ -22,6 +22,10 @@ class Texture;
 class RandomSpheresScene : public Scene {
 public:
     RandomSpheresScene(const glm::uvec2 &filmSize, const float resolution);
+
+    virtual glm::vec3 getRandomLightOrigin() const;
+    virtual float getLightArea() const;
+
 };
 
 #endif /* Scene_hpp */

@@ -14,5 +14,8 @@ class SphereScene :
 public:
     SphereScene(const glm::uvec2 &filmSize, const float resolution);
 
+    virtual glm::vec3 getRandomLightOrigin() const;
+    virtual float getLightArea() const;
+
 private:
 };

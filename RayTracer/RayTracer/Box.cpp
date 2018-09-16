@@ -34,22 +34,22 @@ Box::Box(const vec3 &min, const vec3 &max, const Material *material)
 {
     std::vector<const HitTestable *> shapes;
     
-    const HitTestable *left = new Plane(yz(min), yz(max), Plane::Edge::X, max.x, material, false);
+    const HitTestable *left = new Plane(yz(min), yz(max), Edge::X, max.x, material, -1.0f);
     shapes.push_back(left);
 
-    const HitTestable *right = new Plane(yz(min), yz(max), Plane::Edge::X, min.x, material, true);
+    const HitTestable *right = new Plane(yz(min), yz(max), Edge::X, min.x, material, 1.0f);
     shapes.push_back(right);
 
-    const HitTestable *top = new Plane(xz(min), xz(max), Plane::Edge::Y, max.y, material, false);
+    const HitTestable *top = new Plane(xz(min), xz(max), Edge::Y, max.y, material, 1.0f);
     shapes.push_back(top);
 
-    const HitTestable *bottom = new Plane(xz(min), xz(max), Plane::Edge::Y, min.y, material, true);
+    const HitTestable *bottom = new Plane(xz(min), xz(max), Edge::Y, min.y, material, -1.0f);
     shapes.push_back(bottom);
 
-    const HitTestable *far = new Plane(xy(min), xy(max), Plane::Edge::Z, max.z, material, true);
+    const HitTestable *far = new Plane(xy(min), xy(max), Edge::Z, max.z, material, 1.0f);
     shapes.push_back(far);
 
-    const HitTestable *near = new Plane(xy(min), xy(max), Plane::Edge::Z, min.z, material, false);
+    const HitTestable *near = new Plane(xy(min), xy(max), Edge::Z, min.z, material, -1.0f);
     shapes.push_back(near);
 
     space_ = new Space(shapes);

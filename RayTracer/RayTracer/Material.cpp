@@ -1,6 +1,6 @@
 #include "Material.h"
 #include "Ray.hpp"
 
-Material::Info::Info(std::unique_ptr<Ray> ray, const glm::vec3 & attenuation, const float pdf)
-    : ray(std::move(ray)), attenuation(attenuation), pdf(pdf)
+Material::Info::Info(const bool canScatter, const glm::vec3 & attenuation, const float pdf)
+    : canScatter(canScatter), attenuation(attenuation), pdf(pdf)
 {}

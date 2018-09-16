@@ -118,4 +118,16 @@ RandomSpheresScene::RandomSpheresScene(const glm::uvec2 & filmSize, const float 
         glm::vec2(0.0f, 1.0f),
         1.0f, material
     ));
+
+    init();
+}
+
+glm::vec3 RandomSpheresScene::getRandomLightOrigin() const
+{
+    return glm::vec3();
+}
+
+float RandomSpheresScene::getLightArea() const
+{
+    return 0.0f;
 }

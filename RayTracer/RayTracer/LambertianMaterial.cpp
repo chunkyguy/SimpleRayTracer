@@ -7,7 +7,10 @@
 //
 #define _USE_MATH_DEFINES
 #include <cmath>
+
 #include "LambertianMaterial.hpp"
+
+#include "CoordinateSystem.h"
 #include "Intersection.hpp"
 #include "RandomNumGen.hpp"
 #include "Ray.hpp"
@@ -20,11 +23,15 @@ LambertianMaterial::LambertianMaterial(const Texture *albedo)
 
 Material::Info LambertianMaterial::getScatterRay(const Ray * ray, const Intersection * intersect) const
 {
-    glm::vec3 target = intersect->getTarget() + Utils::pointInUnitSphere();
-    std::unique_ptr<Ray> scatterRay = std::make_unique<Ray>(intersect->getPoint(), target - intersect->getPoint(), ray->getTime());
+    CoordinateSystem cs{ intersect->getNormal() };
+    glm::vec3 randomAngle = Utils::pointInUnitSphere();
+    glm::vec3 direction = cs.convert(randomAngle);
+    std::unique_ptr<Ray> scatterRay = std::make_unique<Ray>(intersect->getPoint(), direction, ray->getTime());
     glm::vec3 attenuation = albedo_->color(intersect->getUV(), intersect->getPoint());
-    float scatterPDF = 0.5f;
-    return Material::Info(std::move(scatterRay), attenuation, scatterPDF);
+    
+    float scatterPDF = glm::dot(cs.getW(), scatterRay->getDirection()) / static_cast<float>(M_PI);
+    
+    return Material::Info(true, attenuation, scatterPDF);
 }
 
 std::optional<glm::vec3> LambertianMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const

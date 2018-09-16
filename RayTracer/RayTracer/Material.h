@@ -20,9 +20,9 @@ public:
 
     struct Info
     {
-        Info(std::unique_ptr<Ray> ray, const glm::vec3 &attenuation, const float pdf);
+        Info(const bool canScatter, const glm::vec3 &attenuation, const float pdf);
 
-        std::unique_ptr<Ray> ray;
+        bool canScatter;
         glm::vec3 attenuation;
         float pdf;
     };

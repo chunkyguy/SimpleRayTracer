@@ -1,6 +1,7 @@
 #pragma once
 #include "HitTestable.h"
 #include <glm\glm.hpp>
+#include "Edge.h"
 
 class Material;
 
@@ -8,9 +9,7 @@ class Plane :
     public HitTestable
 {
 public:
-    enum class Edge { X, Y, Z };
-
-    Plane(const glm::vec2 &min, const glm::vec2 &max, const Edge edge, const float value, const Material *material, const bool flipNormal);
+    Plane(const glm::vec2 &min, const glm::vec2 &max, const Edge edge, const float value, const Material *material, const float normal);
     ~Plane();
 
     virtual std::unique_ptr<Intersection> hit(const Ray *ray, const glm::vec2 &timeRange) const;
@@ -24,6 +23,6 @@ private:
     const glm::vec2 max_;
     const Edge edge_;
     const float value_;
-    const bool flipNormal_;
+    const float normal_;
 };
 
