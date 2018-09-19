@@ -79,7 +79,7 @@ struct SceneFactory
 
 int main(int argc, const char * argv[])
 {
-    RenderConfig config = RenderConfig::high();
+    RenderConfig config = RenderConfig::medium();
 
     std::unique_ptr<Scene> scene = std::move(SceneFactory::makeSceneNamed(SceneFactory::Name::cornellBox, config));
 

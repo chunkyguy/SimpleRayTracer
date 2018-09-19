@@ -58,11 +58,6 @@ Material::Info RefractiveMaterial::getScatterRay(const Ray * ray, const Intersec
     return Material::Info(true, glm::vec3(1.0f), 1.0f);
 }
 
-std::optional<glm::vec3> RefractiveMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const
-{
-    return std::nullopt;
-}
-
 float RefractiveMaterial::getScatterPDF(const Ray * ray, const Ray * scatterRay, const Intersection * intersect) const
 {
     return 1.0f;

@@ -24,7 +24,7 @@ LambertianMaterial::LambertianMaterial(const Texture *albedo)
 Material::Info LambertianMaterial::getScatterRay(const Ray * ray, const Intersection * intersect) const
 {
     CoordinateSystem cs{ intersect->getNormal() };
-    glm::vec3 randomAngle = Utils::pointInUnitSphere();
+    glm::vec3 randomAngle = Utils::randomCosineDirection();
     glm::vec3 direction = cs.convert(randomAngle);
     std::unique_ptr<Ray> scatterRay = std::make_unique<Ray>(intersect->getPoint(), direction, ray->getTime());
     glm::vec3 attenuation = albedo_->color(intersect->getUV(), intersect->getPoint());
@@ -32,11 +32,6 @@ Material::Info LambertianMaterial::getScatterRay(const Ray * ray, const Intersec
     float scatterPDF = glm::dot(cs.getW(), scatterRay->getDirection()) / static_cast<float>(M_PI);
     
     return Material::Info(true, attenuation, scatterPDF);
-}
-
-std::optional<glm::vec3> LambertianMaterial::getEmittedColor(const glm::vec2 & uv, const glm::vec3 & location) const
-{
-    return std::nullopt;
 }
 
 float LambertianMaterial::getScatterPDF(const Ray * ray, const Ray * scatterRay, const Intersection * intersect) const

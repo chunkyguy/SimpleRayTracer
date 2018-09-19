@@ -6,6 +6,9 @@
 //  Copyright © 2017 whackylabs. All rights reserved.
 //
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "Utils.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm\gtx\norm.hpp>
@@ -34,6 +37,8 @@ namespace
 
         const Material *material = intersect->getMaterial();
         vec3 emittedColor = material->getEmittedColor(
+            ray,
+            intersect,
             intersect->getUV(),
             intersect->getPoint()
         ).value_or(vec3(0.0f, 0.0f, 0.0f));
@@ -134,6 +139,20 @@ glm::vec3 Utils::pointInUnitDisk()
         point.z = 0.0f;
     } while (glm::dot(point, point) >= 1.0f);
     return glm::normalize(point);   
+}
+
+glm::vec3 Utils::randomCosineDirection()
+{
+    RandomNumGen rGen;
+    float r1 = rGen.generate();
+    float r2 = rGen.generate();
+    float phi = 2.0f * static_cast<float>(M_PI) * r1;
+    float a = 2.0f * sqrtf(r2);
+    return glm::vec3{
+    cosf(phi) * a,
+    sinf(phi) * a,
+    sqrtf(1.0f - r2)
+    };
 }
 
 glm::vec3 Utils::toColorSpace(glm::vec3 point)
