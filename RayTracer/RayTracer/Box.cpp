@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <memory>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 #include "AABB.h"
 #include "HitTestable.h"

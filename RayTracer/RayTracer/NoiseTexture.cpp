@@ -1,6 +1,6 @@
 #include "NoiseTexture.h"
 
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 NoiseTexture::NoiseTexture(const float scale)
     : scale_(scale)

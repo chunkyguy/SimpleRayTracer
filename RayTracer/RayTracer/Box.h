@@ -1,6 +1,6 @@
 #pragma once
 #include "HitTestable.h"
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Material;
 class Space;

@@ -11,7 +11,11 @@
 
 #include "Utils.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
-#include <glm\gtx\norm.hpp>
+#ifdef __APPLE__
+  #include <glm/gtx/norm.hpp>
+#else
+  #include <glm\gtx\norm.hpp>
+#endif
 
 #include "Camera.hpp"
 #include "Intersection.hpp"
@@ -79,7 +83,7 @@ namespace
     {
         const HitTestable *space = scene->getSpace();
         glm::vec2 timeRange(0.001f, std::numeric_limits<float>::max());
-        std::unique_ptr<Intersection> intersect = std::move(space->hit(ray.get(), timeRange));
+        std::unique_ptr<Intersection> intersect = space->hit(ray.get(), timeRange);
         if (!intersect) {
             // return background
             return glm::vec3(0.0f);
@@ -103,7 +107,7 @@ glm::vec3 Utils::getColor(
             float(point.x + rand.generate()) / float(targetSize.x),
             float(point.y + rand.generate()) / float(targetSize.y)
         );
-        color += ::getColor(std::move(camera->getRay(uv)), scene, 0, maxDepth);
+        color += ::getColor(camera->getRay(uv), scene, 0, maxDepth);
     }
     glm::vec3 aggregateColor = color / float(targetSize.z);
     return glm::vec3(

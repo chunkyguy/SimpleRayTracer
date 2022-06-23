@@ -259,3 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Xcode
+.DS_Store
+RayTracer/SimpleRayTracer.xcodeproj/xcuserdata/
+RayTracer/SimpleRayTracer.xcodeproj/project.xcworkspace/xcuserdata

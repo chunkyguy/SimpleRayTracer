@@ -8,7 +8,7 @@
 
 #ifndef RandomNumGen_hpp
 #define RandomNumGen_hpp
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class RandomNumGen {
 public:

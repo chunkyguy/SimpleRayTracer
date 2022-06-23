@@ -35,8 +35,8 @@ std::unique_ptr<AABB> MovingSphere::boundingBox(const glm::vec2 & timeRange) con
     Sphere sLo(getCenter(timeRange[0]), radius_, material_);
     Sphere sHi(getCenter(timeRange[1]), radius_, material_);
 
-    std::unique_ptr<AABB> boxLo = std::move(sLo.boundingBox(timeRange));
-    std::unique_ptr<AABB> boxHi = std::move(sHi.boundingBox(timeRange));
+    std::unique_ptr<AABB> boxLo = sLo.boundingBox(timeRange);
+    std::unique_ptr<AABB> boxHi = sHi.boundingBox(timeRange);
 
     return std::make_unique<AABB>(boxLo.get(), boxHi.get());
 }

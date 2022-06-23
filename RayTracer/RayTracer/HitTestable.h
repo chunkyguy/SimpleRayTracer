@@ -10,7 +10,7 @@
 #define HitTestable_h
 #include <array>
 #include <memory>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Intersection;
 class Ray;
@@ -18,6 +18,7 @@ class AABB;
 
 class HitTestable {
 public:
+    virtual ~HitTestable() {};
     virtual std::unique_ptr<Intersection> hit(const Ray *ray, const glm::vec2 &timeRange) const = 0;
     virtual std::unique_ptr<AABB> boundingBox(const glm::vec2 &timeRange) const = 0;
 };

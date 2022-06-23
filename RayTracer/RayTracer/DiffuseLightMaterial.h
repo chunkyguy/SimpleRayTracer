@@ -1,5 +1,5 @@
 #pragma once
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 #include "Material.h"
 #include "Texture.h"
 

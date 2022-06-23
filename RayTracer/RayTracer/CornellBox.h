@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class CornellBox :
     public Scene

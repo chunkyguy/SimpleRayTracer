@@ -10,7 +10,7 @@
 #define Material_h
 #include <optional>
 #include <memory>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Ray;
 class Intersection;
@@ -26,6 +26,8 @@ public:
         glm::vec3 attenuation;
         float pdf;
     };
+
+    virtual ~Material() {};
 
     virtual Info getScatterRay(const Ray *ray, const Intersection *intersect) const = 0;
 

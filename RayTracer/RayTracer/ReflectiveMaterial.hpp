@@ -10,7 +10,7 @@
 #define MetalMaterial_hpp
 
 #include "Material.h"
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class ReflectiveMaterial : public Material {
 public:
