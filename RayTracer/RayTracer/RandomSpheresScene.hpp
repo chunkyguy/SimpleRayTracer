@@ -10,7 +10,7 @@
 #define Scene_hpp
 #include <vector>
 #include <memory>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 #include "Scene.h"
 
 class Camera;

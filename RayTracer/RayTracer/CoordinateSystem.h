@@ -1,5 +1,5 @@
 #pragma once
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 #include "Edge.h"
 
 class CoordinateSystem

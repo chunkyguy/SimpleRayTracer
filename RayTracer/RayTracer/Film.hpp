@@ -10,7 +10,7 @@
 #define Film_hpp
 #include <map>
 #include <vector>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 struct PixelData {
 	glm::vec3 color;

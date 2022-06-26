@@ -33,7 +33,7 @@ std::unique_ptr<AABB> Space::boundingBox(const glm::vec2 & timeRange) const
 {   
     std::unique_ptr<AABB> box, currBox;
     for (const HitTestable * object: _objects) {
-        currBox = std::move(object->boundingBox(timeRange));
+        currBox = object->boundingBox(timeRange);
 
         if (!currBox) {
             // bounding box not possible - exit
@@ -41,7 +41,7 @@ std::unique_ptr<AABB> Space::boundingBox(const glm::vec2 & timeRange) const
         }
 
         if (box) {
-            box = std::move(std::make_unique<AABB>(currBox.get(), box.get()));
+            box = std::make_unique<AABB>(currBox.get(), box.get());
         } else {
             box = std::move(currBox);
         }

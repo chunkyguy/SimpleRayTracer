@@ -9,7 +9,7 @@
 #ifndef Ray_hpp
 #define Ray_hpp
 
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Ray {
 public:

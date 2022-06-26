@@ -8,7 +8,7 @@
 
 #ifndef Intersection_hpp
 #define Intersection_hpp
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Material;
 class Ray;

@@ -2,7 +2,7 @@
 #include <memory>
 #include <vector>
 
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Camera;
 class HitTestable;

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 #include "HitTestable.h"
 
 class AABB;

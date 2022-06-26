@@ -9,7 +9,7 @@
 #ifndef Utils_hpp
 #define Utils_hpp
 #include <memory>
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 
 class Camera;
 class Ray;

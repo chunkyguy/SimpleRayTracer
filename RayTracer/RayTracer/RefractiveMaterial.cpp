@@ -42,7 +42,7 @@ Material::Info RefractiveMaterial::getScatterRay(const Ray * ray, const Intersec
     float reflectionProb;
     glm::vec3 refract = glm::refract(ray->getDirection(), outNormal, refractiveIndex);
     if (refract.x == 0.0f && refract.y == 0.0f && refract.z == 0.0f) {
-        scatterRay = std::move(std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime()));
+        scatterRay = std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime());
         reflectionProb = 1.0f;
     } else {
         reflectionProb = Utils::fresnel(cosine, refractiveIndex);
@@ -50,9 +50,9 @@ Material::Info RefractiveMaterial::getScatterRay(const Ray * ray, const Intersec
     
     RandomNumGen rGen;
     if (rGen.generate() < reflectionProb) {
-        scatterRay = std::move(std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime()));
+        scatterRay = std::make_unique<Ray>(intersect->getPoint(), reflect, ray->getTime());
     } else {
-        scatterRay = std::move(std::make_unique<Ray>(intersect->getPoint(), refract, ray->getTime()));
+        scatterRay = std::make_unique<Ray>(intersect->getPoint(), refract, ray->getTime());
     }
 
     return Material::Info(true, glm::vec3(1.0f), 1.0f);

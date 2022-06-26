@@ -8,7 +8,7 @@
 
 #ifndef LambertianMaterial_hpp
 #define LambertianMaterial_hpp
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 #include "Material.h"
 
 class Texture;

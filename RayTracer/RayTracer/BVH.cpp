@@ -13,8 +13,8 @@ BVH::BVH(std::vector<HitTestable *> list, const glm::vec2 & timeRange)
     int axis = static_cast<int>(rGen.generate() * 3.0f);
     std::sort(list.begin(), list.end(), [axis](HitTestable *l, HitTestable *r) {
         glm::vec2 zeroRange(0.0f);
-        std::unique_ptr<AABB> lBox = std::move(l->boundingBox(zeroRange));
-        std::unique_ptr<AABB> rBox = std::move(r->boundingBox(zeroRange));
+        std::unique_ptr<AABB> lBox = l->boundingBox(zeroRange);
+        std::unique_ptr<AABB> rBox = r->boundingBox(zeroRange);
 
         wlAssert(lBox.get() != nullptr, "No left bounding box available");
         wlAssert(rBox.get() != nullptr, "No right bounding box available");
@@ -66,8 +66,8 @@ std::unique_ptr<Intersection> BVH::hit(const Ray * ray, const glm::vec2 & timeRa
         return std::unique_ptr<Intersection>();
     }
 
-    std::unique_ptr<Intersection> lIntersect = std::move(left_->hit(ray, timeRange));
-    std::unique_ptr<Intersection> rIntersect = std::move(right_->hit(ray, timeRange));
+    std::unique_ptr<Intersection> lIntersect = left_->hit(ray, timeRange);
+    std::unique_ptr<Intersection> rIntersect = right_->hit(ray, timeRange);
 
     if (lIntersect && rIntersect) {
         if (lIntersect->getTime() < rIntersect->getTime()) {
@@ -86,8 +86,8 @@ std::unique_ptr<Intersection> BVH::hit(const Ray * ray, const glm::vec2 & timeRa
 
 std::unique_ptr<AABB> BVH::boundingBox() const
 {
-    std::unique_ptr<AABB> lBox = std::move(left_->boundingBox(timeRange_));
-    std::unique_ptr<AABB> rBox = std::move(right_->boundingBox(timeRange_));
+    std::unique_ptr<AABB> lBox = left_->boundingBox(timeRange_);
+    std::unique_ptr<AABB> rBox = right_->boundingBox(timeRange_);
 
     wlAssert(lBox.get() != nullptr, "No left bounding box available");
     wlAssert(rBox.get() != nullptr, "No right bounding box available");

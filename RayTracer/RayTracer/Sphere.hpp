@@ -8,7 +8,7 @@
 
 #ifndef Sphere_hpp
 #define Sphere_hpp
-#include <glm\glm.hpp>
+#include "WLMath.hpp"
 #include "HitTestable.h"
 
 class Material;

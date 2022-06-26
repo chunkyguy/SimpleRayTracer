@@ -1,6 +1,12 @@
 #include "WLAssert.h"
 #include <cassert>
-#include <Windows.h>
+
+#ifdef __APPLE__
+  #include <cstdio>
+#else
+  #include <Windows.h>
+#endif
+
 
 void wlAssert(const bool condition, const char * message) 
 {
@@ -8,6 +14,11 @@ void wlAssert(const bool condition, const char * message)
 		return;
 	}
 
-	OutputDebugStringA(message);
+#ifdef __APPLE__
+  printf("%s\n", message);
+#else
+  OutputDebugStringA(message);
+#endif
+
 	assert(condition);
 }

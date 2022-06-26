@@ -1,6 +1,6 @@
 #include "Image.h"
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include <stb/stb_image.h>
 
 Image::Image(const std::string & filename)
     : pixelData_(nullptr), size_(), componentsPerPixel_(0)
